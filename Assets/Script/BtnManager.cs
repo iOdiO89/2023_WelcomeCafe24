@@ -1,25 +1,21 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class BtnManager : MonoBehaviour
 {
-    GameObject continuePopUp;
 
-    void Start(){
-        //continuePopUp = GameObject.FindWithTag("ContinuePopUp");
-        //continuePopUp.SetActive(false);
+    public void StartNewBtn(){    // StartScene-새로하기
+        SceneManager.LoadScene("PrologScene");
     }
 
-    public void StartSceneStartNewBtn(){    // 새로하기
-
+    public void ExitBtn(){    // StartScene-종료하기 & MainScene-PauseBtn-게임종료
+        Application.Quit();
     }
 
-    public void StartSceneContinueBtn(){    // 이어하기
-        continuePopUp = GameObject.Find("ContinuePopUp");
-        continuePopUp.SetActive(false);
-        //Debug.Log("setactive success");
+    public void SkipBtn(){  // PrologScene-건너뛰기
+        SceneManager.LoadScene("MainScene");
     }
 
 

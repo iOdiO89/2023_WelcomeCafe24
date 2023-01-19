@@ -5,6 +5,7 @@ using UnityEngine;
 public class GameManager : MonoBehaviour
 {   
     private static GameManager instance;
+    public GameObject continuePopUp;
 
     public static GameManager Instance
     {
@@ -34,7 +35,7 @@ public class GameManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+
     }
 
     // Update is called once per frame
