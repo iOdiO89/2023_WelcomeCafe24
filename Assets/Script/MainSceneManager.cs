@@ -3,9 +3,26 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using System;
+using System.Text;
+using UnityEngine.EventSystems;
 
 public class MainSceneManager : MonoBehaviour
-{      
+{
+    [SerializeField]
+    GameObject popupParent;
+    [SerializeField]
+    GameObject popupBackGround;
+    [SerializeField]
+    GameObject shelfPopupBoard;
+    [SerializeField]
+    Button[] itemBtnArray;
+    [SerializeField]
+    GameObject ingredientPopupBoard;
+    [SerializeField]
+    Image ingredientImage;
+    [SerializeField]
+    Field[] fieldsArray;
+
     // 재화, 명성
     int gold=0;
     int reputation=0;
@@ -20,7 +37,11 @@ public class MainSceneManager : MonoBehaviour
     public int orderCount;
     public Text orderText;
     bool orderSuccess;
-    
+
+    [HideInInspector]
+    Sprite nowIngredient;
+
+
     void Start()
     {
         goldText.text = "G: " + gold.ToString();
@@ -51,6 +72,113 @@ public class MainSceneManager : MonoBehaviour
         }
 
         return timerText;
+    }
+
+    public void TouchShelfBtn(int floor)
+    {
+        StringBuilder path = new StringBuilder();
+        path.Append("Images/TempImage/");
+
+        switch (floor)
+        {
+            case 1:
+                path.Append("1stShelf");
+                TouchShelfFloor(path.ToString());
+                break;
+            case 2:
+                path.Append("2ndShelf");
+                TouchShelfFloor(path.ToString());
+                break;
+            case 3:
+                path.Append("3rdShelf");
+                TouchShelfFloor(path.ToString());
+                break;
+        }
+    }
+
+    void TouchShelfFloor(string getPath)
+    {
+        Sprite[] imageArray = Resources.LoadAll<Sprite>(getPath);
+        
+        SetShelfPopup(true);
+
+        for(int i =0; i < itemBtnArray.Length; i++)
+        {
+            if(i < imageArray.Length)
+                itemBtnArray[i].image.sprite = imageArray[i];
+            else
+            {
+                itemBtnArray[i].gameObject.SetActive(false);
+            }
+        }
+    }
+
+    void SetShelfPopup(bool active)
+    {
+        popupParent.SetActive(active);
+        popupBackGround.SetActive(active);
+        popupBackGround.transform.SetAsFirstSibling();
+        shelfPopupBoard.SetActive(active);
+        ingredientPopupBoard.SetActive(false);
+    }
+
+    public void ExitPopup()
+    {
+        SetShelfPopup(false);
+    }
+
+    //선반 팝업창에서 재료를 선택했을 때 재료를 담을 것인지를 선택하는 팝업창 키기.
+    public void TouchIngredientBtn()
+    {
+        SetIngredientPopup(true);
+        nowIngredient = EventSystem.current.currentSelectedGameObject.GetComponent<Image>().sprite;
+        ingredientImage.sprite = nowIngredient;
+    }
+
+    //active가 참이면 재료 팝업창을 키고 아니면 끄고
+    void SetIngredientPopup(bool active)
+    {
+        ingredientPopupBoard.SetActive(active);
+        if(active)
+            popupBackGround.transform.SetSiblingIndex(1);
+        else
+            popupBackGround.transform.SetSiblingIndex(0);
+    }
+
+    public void TouchPickUpBtn()
+    {
+        SetIngredientPopup(false);
+        SetFieldsArray();
+
+    }
+
+    public void TouchPutDownBtn()
+    {
+        SetIngredientPopup(false);
+    }
+
+    void SetFieldsArray()
+    {
+        //1. 필드에 아무것도 없으면 1번
+        //2. 필드에 1개 있으면 2번
+        //3. 필드에 2개 있으면 3번
+        //4. 필드에 다 차있으면 1번을버리고 3번
+        for(int i =0; i<3; i++)
+        {
+            if (!fieldsArray[i].isSpriteExist)
+            {
+                fieldsArray[i].fieldImage.sprite = nowIngredient;
+                fieldsArray[i].isSpriteExist = true;
+                break;
+            }
+            else if (fieldsArray[2].isSpriteExist)
+            {
+                fieldsArray[0].fieldImage.sprite = fieldsArray[1].fieldImage.sprite;
+                fieldsArray[1].fieldImage.sprite = fieldsArray[2].fieldImage.sprite;
+                fieldsArray[2].fieldImage.sprite = nowIngredient;
+                break;
+            }
+        }
     }
 
     /* #305 컵-드리기 버튼 눌렀을 때 성공여부확인
