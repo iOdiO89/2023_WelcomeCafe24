@@ -1,0 +1,88 @@
+{   
+   "machineArray":[
+      {
+         "index":0,
+         "nameEng":"grinder",
+         "nameKor":"그라인더",
+         "level1Price":0,
+         "level2Price":2000,
+         "level3Price":5000,
+         "detail":"원두를 갈 때 사용하는 그라인더다.",
+         "level1Pos":0,
+         "level2Pos":-1,
+         "level3Pos":-1
+      },
+      {
+         "index":1,
+         "nameEng":"espresso machine",
+         "nameKor":"에스프레소 머신",
+         "level1Price":0,
+         "level2Price":5000,
+         "level3Price":10000,
+         "detail":"커피를 만드는 머신이다.",
+         "level1Pos":0,
+         "level2Pos":-1,
+         "level3Pos":-1
+      },
+      {
+         "index":2,
+         "nameEng":"refrigerator",
+         "nameKor":"냉장고",
+         "level1Price":0,
+         "level2Price":5000,
+         "level3Price":10000,
+         "detail":"재료를 보관하는 냉장고다.",
+         "level1Pos":0,
+         "level2Pos":-1,
+         "level3Pos":-1
+      },
+      {
+         "index":3,
+         "nameEng":"ice machine",
+         "nameKor":"제빙기",
+         "level1Price":1000,
+         "level2Price":2000,
+         "level3Price":5000,
+         "detail":"얼음을 만들고 깎는 기기다.",
+         "level1Pos":0.4,
+         "level2Pos":-1,
+         "level3Pos":-1
+      },
+      {
+         "index":4,
+         "nameEng":"blender",
+         "nameKor":"블랜더",
+         "level1Price":1000,
+         "level2Price":2000,
+         "level3Price":5000,
+         "detail":"에이드와 소다를 만들 수 있는 기기다.",
+         "level1Pos":0.4,
+         "level2Pos":-1,
+         "level3Pos":-1
+      },
+      {
+         "index":5,
+         "nameEng":"swing bottle",
+         "nameKor":"스윙보틀",
+         "level1Price":200,
+         "level2Price":500,
+         "level3Price":1000,
+         "detail":"콜드 브루 커피를 만들 수 있는 병이다.",
+         "level1Pos":0.1,
+         "level2Pos":-1,
+         "level3Pos":-1
+      },
+      {
+         "index":6,
+         "nameEng":"tamping machine",
+         "nameKor":"자동탬핑기",
+         "level1Price":1000,
+         "level2Price":2000,
+         "level3Price":5000,
+         "detail":"갈아진 원두를 다져 맛을 일정하게 해주는 장치다.",
+         "level1Pos":0.1,
+         "level2Pos":-1,
+         "level3Pos":-1
+      }
+   ]
+}

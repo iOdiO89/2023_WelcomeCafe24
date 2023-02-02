@@ -23,11 +23,10 @@ public class MainSceneManager : MonoBehaviour
     [SerializeField]
     Field[] fieldsArray;
 
-    // 재화, 명성
-    int gold=0;
-    int reputation=0;
+    public GameObject pausePopUp;
     public Text goldText;
     public Text reputationText;
+    
 
     // 주문 타이머
     public float timeLimit;
@@ -41,18 +40,28 @@ public class MainSceneManager : MonoBehaviour
     [HideInInspector]
     Sprite nowIngredient;
 
-
-    void Start()
-    {
-        goldText.text = "G: " + gold.ToString();
-        reputationText.text = "명성: " + reputation.ToString();
-    }
+    //데이터 관련
+    public JsonManager jsonManager;
+    public GameDataUnit gameDataUnit;
+    public Recipe recipeData;
 
     void Update()
-    { 
-        if(timeLimit>=0){
+    {   
+        SetValues();
+        if(timeLimit>=0 && pausePopUp.activeSelf==false){
             CountDownTimer();
         }
+    }
+
+    public void TempBtn(){
+        GameManager.instance.userData.gold += 10;
+        GameManager.instance.userData.reputation += 10;
+        jsonManager.SaveData<UserDataClass>(GameManager.instance.userData);
+    }
+
+    public void SetValues(){
+        goldText.text = "G: " + GameManager.instance.userData.gold.ToString();
+        reputationText.text = "명성: " + GameManager.instance.userData.reputation.ToString();
     }
 
     public Text CountDownTimer(bool orderSuccess=false){
@@ -73,6 +82,14 @@ public class MainSceneManager : MonoBehaviour
 
         return timerText;
     }
+
+    public void SetOrderText(){
+        gameDataUnit = jsonManager.LoadJson<GameDataUnit>("Recipe");
+        int randNum = UnityEngine.Random.Range(0, 21);
+        recipeData = gameDataUnit.recipeArray[randNum];
+        orderText.text = recipeData.nameKor.ToString() + "\n1잔 주세요!";
+    }
+//-----------------------필드, 선반 관련 함수--------------------------
 
     public void TouchShelfBtn(int floor)
     {
@@ -180,7 +197,7 @@ public class MainSceneManager : MonoBehaviour
             }
         }
     }
-
+// ---------------------------------------------------------
     /* #305 컵-드리기 버튼 눌렀을 때 성공여부확인
     public bool CheckOrderSuccess(){
         
@@ -228,4 +245,10 @@ public class MainSceneManager : MonoBehaviour
         }
 
     }*/
+
+    public void ExitBtn(){    // MainScene-PauseBtn-게임종료
+        jsonManager.SaveData<UserDataClass>(GameManager.instance.userData);
+        Debug.Log("Data Save Complete");
+        Application.Quit();
+    }
 }

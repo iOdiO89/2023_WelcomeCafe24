@@ -10,16 +10,6 @@ public class BtnManager : MonoBehaviour
     public List<GameObject> recipeList = new List<GameObject>();
     public List<GameObject> menuList = new List<GameObject>();
 
-    List<bool> activeMenuList = new List<bool>();
-
-    public void StartNewBtn(){    // StartScene-새로하기
-        SceneManager.LoadScene("PrologScene");
-    }
-
-    public void ExitBtn(){    // StartScene-종료하기 & MainScene-PauseBtn-게임종료
-        Application.Quit();
-    }
-
     public void SkipBtn(){  // PrologScene-건너뛰기
         SceneManager.LoadScene("MainScene");
     }
