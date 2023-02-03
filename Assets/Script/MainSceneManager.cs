@@ -23,35 +23,45 @@ public class MainSceneManager : MonoBehaviour
     [SerializeField]
     Field[] fieldsArray;
 
+    [HideInInspector]
+    Sprite nowIngredient;
+
     public GameObject pausePopUp;
     public Text goldText;
     public Text reputationText;
     
-
     // 주문 타이머
-    public float timeLimit;
+    private float timeLimit;
     public Text timerText;
 
     // 주문
     public int orderCount;
     public Text orderText;
-    bool orderSuccess;
-
-    [HideInInspector]
-    Sprite nowIngredient;
+    private bool orderSuccess;
 
     //데이터 관련
     public JsonManager jsonManager;
-    public GameDataUnit gameDataUnit;
-    public Recipe recipeData;
+    private GameDataUnit gameDataUnit;
+    private Recipe recipeData;
+
+
+    void Start(){
+        timeLimit = 90;
+        PrintOrderText();
+    }
 
     void Update()
     {   
         SetValues();
-        if(timeLimit>=0 && pausePopUp.activeSelf==false){
+
+        if(timeLimit>=0 && pausePopUp.activeSelf==false && orderSuccess==false){
             CountDownTimer();
         }
-    }
+        if(orderSuccess){
+            timerText.text = "00:00";
+            timeLimit = 10;
+        }
+   }
 
     public void TempBtn(){
         GameManager.instance.userData.gold += 10;
@@ -64,31 +74,41 @@ public class MainSceneManager : MonoBehaviour
         reputationText.text = "명성: " + GameManager.instance.userData.reputation.ToString();
     }
 
-    public Text CountDownTimer(bool orderSuccess=false){
+    public void CountDownTimer(){
         
         timeLimit -= Time.deltaTime; // 1초씩 제거
         TimeSpan remainTime = TimeSpan.FromSeconds(timeLimit);
 
-        if(orderSuccess==true){ // 시간남았는데 이미 성공한 경우 조기종료
-            timeLimit = -1;
-            timerText.text = "00:00";
-        }
-        else if(timeLimit<6){ // 5초 이하일 때는 텍스트 색상 변경
+        if(timeLimit<6){ // 5초 이하일 때는 텍스트 색상 변경
             timerText.text = "<color=#DC143C>" + remainTime.ToString(@"mm\:ss") + "</color>";
         }
         else{
             timerText.text = remainTime.ToString(@"mm\:ss");
         }
 
-        return timerText;
+        //return timerText;
     }
 
-    public void SetOrderText(){
-        gameDataUnit = jsonManager.LoadJson<GameDataUnit>("Recipe");
-        int randNum = UnityEngine.Random.Range(0, 21);
-        recipeData = gameDataUnit.recipeArray[randNum];
-        orderText.text = recipeData.nameKor.ToString() + "\n1잔 주세요!";
+    public void PrintOrderText(){
+        orderText.text = MakeOrderText() + "\n1잔 주세요!";
     }
+
+    private string MakeOrderText(){
+        gameDataUnit = jsonManager.LoadJson<GameDataUnit>("Recipe");
+        int randNum;
+        while(true){
+            randNum = UnityEngine.Random.Range(0, 21);
+            if(GameManager.instance.userData.recipeUnlock[randNum])
+                break;
+        }
+        recipeData = gameDataUnit.recipeArray[randNum];
+        return recipeData.nameKor;
+    }
+
+    public void Temp2Btn(){
+        orderSuccess = true;
+    }
+
 //-----------------------필드, 선반 관련 함수--------------------------
 
     public void TouchShelfBtn(int floor)

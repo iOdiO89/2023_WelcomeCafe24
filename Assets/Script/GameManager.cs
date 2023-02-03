@@ -12,10 +12,6 @@ public class GameManager : MonoBehaviour
 
     public JsonManager jsonManager;
     public UserDataClass userData;
-    public GameDataUnit gameDataUnit;
-    public Ingredient ingredientData;
-
-    public Machine machineData;
 
     public static GameManager instance;
     public static GameManager Instance{
@@ -51,6 +47,7 @@ public class GameManager : MonoBehaviour
     }
 
     public void StartNewBtn(){    // StartScene-새로하기
+        userData = new UserDataClass();
         jsonManager.SaveData<UserDataClass>(userData);
         Debug.Log("Start New");
         SceneManager.LoadScene("PrologScene");

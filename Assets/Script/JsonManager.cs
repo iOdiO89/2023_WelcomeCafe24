@@ -44,7 +44,6 @@ public class JsonManager : MonoBehaviour
             userData = JsonUtility.FromJson<UserDataClass>(json);
             Debug.Log("data Load Success");
         }
-        
         return userData;
     }
 
@@ -63,7 +62,7 @@ public class JsonManager : MonoBehaviour
     }
 
 //--------------------------------------------------------------
-    
+
     public T LoadJson<T>(string fileName){ // fileName에 .txt 안들어감
         T tempData;
         fileName = "JsonData/"+fileName;
