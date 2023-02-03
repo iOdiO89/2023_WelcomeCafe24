@@ -503,7 +503,6 @@ GameObject:
   - component: {fileID: 504157378}
   - component: {fileID: 504157377}
   - component: {fileID: 504157376}
-  - component: {fileID: 504157379}
   m_Layer: 0
   m_Name: EventSystem
   m_TagString: Untagged
@@ -559,20 +558,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &504157379
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 504157375}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6ab34bc84b81ed74bb095e8213f6fced, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  recipeList: []
-  menuList: []
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0
@@ -1178,54 +1163,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   jsonManager: {fileID: 1786642414}
-  gameDataUnit:
-    ingredientArray: []
-    recipeArray: []
-    machineArray: []
-  ingredientData:
-    index: 0
-    nameEng: 
-    nameKor: 
-    price: 0
-    unlock: 0
-    detail: 
-    degree: 0
-    bXsX: 0
-    bOsX: 0
-    bXsO: 0
-    bOsO: 0
-  recipeData:
-    index: 0
-    nameEng: 
-    nameKor: 
-    price: 0
-    unlock: 0
-    ing1Index: 0
-    ing2Index: 0
-    ing3Index: 0
-    ing1Ratio: 0
-    ing2Ratio: 0
-    ing3Ratio: 0
-    level1Price: 0
-    level2Price: 0
-    level3Price: 0
-    level1Pos: 0
-    level2Pos: 0
-    level3Pos: 0
-    level1Detail: 
-    level2Detail: 
-    level3Detail: 
-  machineData:
-    index: 0
-    nameEng: 
-    nameKor: 
-    level1Price: 0
-    level2Price: 0
-    level3Price: 0
-    detail: 
-    level1Pos: 0
-    level2Pos: 0
-    level3Pos: 0
 --- !u!4 &1392488981
 Transform:
   m_ObjectHideFlags: 0

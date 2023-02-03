@@ -19,13 +19,14 @@ public class UserDataClass
         ingredientUnlock.Clear();
         for(int i=0; i<14; i++){
             switch(i){
-                case 3: // 얼음
-                case 6: // 자몽청
-                case 8: // 콜드 브루
-                    ingredientUnlock.Add(false);
+                case 0: // 물
+                case 1: // 우유
+                case 4: // 에스프레소
+                case 9: // 민트
+                    ingredientUnlock.Add(true);
                     break;
                 default:
-                    ingredientUnlock.Add(true);
+                    ingredientUnlock.Add(false);
                     break;
             }
         }
@@ -33,18 +34,28 @@ public class UserDataClass
         recipeUnlock = new List<bool>();
         recipeUnlock.Clear();
         for(int i=0; i<21; i++){
-            if((i>5 && i<12) || i==17 || i==20){ 
-                recipeUnlock.Add(false);
-            }
-            else{
-                recipeUnlock.Add(true);
-            }
+            switch(i){
+                case 0: // 에스프레소
+                case 1: // 아메리카노
+                case 15: // 민트 티
+                    recipeUnlock.Add(true);
+                    break;
+                default:
+                    recipeUnlock.Add(false);
+                    break;
+            } 
         }
 
         machineUnlock = new List<bool>();
         machineUnlock.Clear();
         for(int i=0; i<7; i++){
-            machineUnlock.Add(false);
+            if(i<3){
+                machineUnlock.Add(true);
+            }
+            else{
+                machineUnlock.Add(false);
+            }
+            
         }
 
     }
