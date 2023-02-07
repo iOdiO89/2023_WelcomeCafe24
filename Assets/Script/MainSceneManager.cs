@@ -22,9 +22,21 @@ public class MainSceneManager : MonoBehaviour
     Image ingredientImage;
     [SerializeField]
     Field[] fieldsArray;
+    [SerializeField]
+    GameObject cupPopupParnet;
+    [SerializeField]
+    Image[] cupIngredientImageArr;
+    [SerializeField]
+    Image[] cupCapacityImageArr;
+    [SerializeField]
+    Button[] cupPlusBtnArr;
+    [SerializeField]
+    Button[] cupMinusBtnArr;
 
+    public int[] cupCapacityCountArr;          // (재료1의 개수, 재료2의 개수, 재료3의 개수)를 설정하는 배열.
     [HideInInspector]
     Sprite nowIngredient;
+
 
     public GameObject pausePopUp;
     public Text goldText;
@@ -46,6 +58,11 @@ public class MainSceneManager : MonoBehaviour
 
 
     void Start(){
+        cupCapacityCountArr = new int[3];
+        for(int i =0; i<3; i++)
+        {
+            cupCapacityCountArr[i] = 0;
+        }
         timeLimit = 90;
         PrintOrderText();
     }
@@ -217,7 +234,137 @@ public class MainSceneManager : MonoBehaviour
             }
         }
     }
-// ---------------------------------------------------------
+
+    //-----------------------컵 함수----------------------------
+    public void TouchCupBtn()
+    {
+        cupPopupParnet.SetActive(true);
+        for(int i =0; i<3; i++)
+        {
+            if (fieldsArray[i].isSpriteExist)
+            {
+                cupPlusBtnArr[i].enabled = true;
+                cupMinusBtnArr[i].enabled = true;
+                cupIngredientImageArr[i].color = new Color(1, 1, 1);
+                cupIngredientImageArr[i].sprite = fieldsArray[i].fieldImage.sprite;
+            }
+            else
+            {
+                cupPlusBtnArr[i].enabled= false;
+                cupMinusBtnArr[i].enabled= false;
+            }
+        }
+    }
+
+    public void TouchCupPlusBtn(int btnIdx)
+    {
+        int totalCapacity = 0;
+        for(int i=0; i<3; i++)
+        {
+            totalCapacity += cupCapacityCountArr[i];
+        }
+
+        //재료가 10개 차있으면 리턴
+        if (totalCapacity >= 10) return;
+        else
+        {
+            switch (btnIdx)
+            {
+                case 1:
+                    cupCapacityCountArr[0]++;
+                    SetCupCapacity();
+                    break;
+                case 2:
+                    cupCapacityCountArr[1]++;
+                    SetCupCapacity();
+                    break;
+                case 3:
+                    cupCapacityCountArr[2]++;
+                    SetCupCapacity();
+                    break;
+            }
+        }
+    }
+
+    public void TouchCupMinusBtn(int btnIdx)
+    {
+        int totalCapacity = 0;
+        for (int i = 0; i < 3; i++)
+        {
+            totalCapacity += cupCapacityCountArr[i];
+        }
+
+        //아무것도 안들어 있으면 리턴
+        if (totalCapacity <= 0) return;
+        else
+        {
+            switch (btnIdx)
+            {
+                case 1:
+                    if (cupCapacityCountArr[0] == 0)
+                        return;
+                    cupCapacityCountArr[0]--;
+                    SetCupCapacity();
+                    break;
+                case 2:
+                    if (cupCapacityCountArr[1] == 0)
+                        return;
+                    cupCapacityCountArr[1]--;
+                    SetCupCapacity();
+                    break;
+                case 3:
+                    if (cupCapacityCountArr[2] == 0)
+                        return;
+                    cupCapacityCountArr[2]--;
+                    SetCupCapacity();
+                    break;
+            }
+        }
+    }
+
+    void SetCupCapacity()
+    {
+        int capacityIdx = 0;
+        int targetIdx = cupCapacityCountArr[0];
+        for (int i =0; i< cupCapacityImageArr.Length; i++)
+        {
+            cupCapacityImageArr[i].color = new Color(1, 1, 1);
+        }
+
+        //재료 1이 얼마나 있는지 확인 -> 해당 개수만큼 색칠 -> 재료 3까지 반복
+        //i는 재료 인덱스 capacityIdx는 현재 색칠해야할 이미지 인덱스
+        //아직 재료 색깔은 안받아서 그냥 rgb로 설정
+        for (int i=0; i<cupCapacityCountArr.Length; i++)
+        {
+            for (; capacityIdx < targetIdx; capacityIdx++)
+            {
+                switch(i)
+                {
+                    case 0:
+                        Debug.Log("1: " + capacityIdx);
+                        cupCapacityImageArr[capacityIdx].color = new Color(1, 0, 0);
+                        break;
+                    case 1:
+                        Debug.Log("2: " + capacityIdx);
+                        cupCapacityImageArr[capacityIdx].color = new Color(0, 1, 0);
+                        break;
+                    case 2:
+                        Debug.Log("3: " + capacityIdx);
+                        cupCapacityImageArr[capacityIdx].color = new Color(0, 0, 1);
+                        break;
+                }
+            }
+            if(i<2)
+                targetIdx += cupCapacityCountArr[i + 1];
+        }
+    }
+
+    public void TouchCupPutDownBtn()
+    {
+
+    }
+
+    // ---------------------------------------------------------
     /* #305 컵-드리기 버튼 눌렀을 때 성공여부확인
     public bool CheckOrderSuccess(){
         
