@@ -12,6 +12,6 @@ EditorBuildSettings:
     path: Assets/Scenes/PrologScene.unity
     guid: 08fdb257d407b394e959161b54116139
   - enabled: 1
-    path: Assets/Scenes/MainScene.unity
+    path: Assets/Scenes/DayScene.unity
     guid: aa0e34d1c24543342b797faf164045cc
   m_configObjects: {}

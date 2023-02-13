@@ -6,7 +6,7 @@ using System;
 using System.Text;
 using UnityEngine.EventSystems;
 
-public class MainSceneManager : MonoBehaviour
+public class DaySceneManager : MonoBehaviour
 {
     [SerializeField]
     GameObject popupParent;
