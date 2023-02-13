@@ -18312,6 +18312,7 @@ MonoBehaviour:
   timerText: {fileID: 377034776}
   orderText: {fileID: 1176259732}
   jsonManager: {fileID: 309438830}
+  arr: []
 --- !u!1 &2006690989
 GameObject:
   m_ObjectHideFlags: 0

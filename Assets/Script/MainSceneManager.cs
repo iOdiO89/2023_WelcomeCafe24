@@ -129,11 +129,14 @@ public class MainSceneManager : MonoBehaviour
         PrintOrderText();
         orderCount++;
 
-        for(int i=0; i<10; i++){ // 컵 비우기
-            TouchCupMinusBtn(0);
-            TouchCupMinusBtn(1);
-            TouchCupMinusBtn(2);
-        }
+        //for(int i=0; i<10; i++){ // 컵 비우기
+        //    TouchCupMinusBtn(0);
+        //    TouchCupMinusBtn(1);
+        //    TouchCupMinusBtn(2);
+        //}
+        ClearIngredientImages();
+        ClearFields();
+        ClearCupCapacityImages();
     }
 
     public void PrintOrderText(){
@@ -174,7 +177,7 @@ public class MainSceneManager : MonoBehaviour
                 break;
         }
     }
-
+    
     void TouchShelfFloor(string getPath)
     {
         Sprite[] imageArray = Resources.LoadAll<Sprite>(getPath);
@@ -182,8 +185,11 @@ public class MainSceneManager : MonoBehaviour
         SetShelfPopup(true);
         for(int i =0; i < itemBtnArray.Length; i++)
         {
-            if(i < imageArray.Length)
+            if (i < imageArray.Length)
+            {
+                itemBtnArray[i].gameObject.SetActive(true);
                 itemBtnArray[i].image.sprite = imageArray[i];
+            }
             else
             {
                 itemBtnArray[i].gameObject.SetActive(false);
@@ -392,8 +398,7 @@ public class MainSceneManager : MonoBehaviour
         }
         SetGoldandReput(check);
 
-        GameObject cupPopUp = GameObject.Find("CupPopUp");
-        cupPopUp.SetActive(false);
+        cupPopupParnet.SetActive(false);
 
         if(orderCount != orderSum){
             Invoke("SetNewOrder", 1.5f); // 1.5초 후 새로운 주문 시작
@@ -476,6 +481,39 @@ public class MainSceneManager : MonoBehaviour
 
             //명성
             GameManager.instance.userData.reputation -= UnityEngine.Random.Range(0, 2);
+        }
+    }
+
+
+
+    void ClearIngredientImages()
+    {
+        for(int i =0; i<cupIngredientImageArr.Length; i++)
+        {
+            cupIngredientImageArr[i].sprite = null;
+            cupIngredientImageArr[i].color = new Color(0, 0, 0);
+        }
+        
+        for(int i=0; i<cupCapacityCountArr.Length;i++)
+        {
+            cupCapacityCountArr[i] = 0;
+        }
+    }
+
+    void ClearFields()
+    {
+        for(int i =0; i<fieldsArray.Length; i++)
+        {
+            fieldsArray[i].isSpriteExist = false;
+            fieldsArray[i].fieldImage.sprite = null;
+        }
+    }
+
+    void ClearCupCapacityImages()
+    {
+        for(int i=0; i< cupCapacityImageArr.Length; i++)
+        {
+            cupCapacityImageArr[i].color = new Color(1, 1, 1);
         }
     }
 
