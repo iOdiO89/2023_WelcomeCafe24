@@ -104,11 +104,11 @@ public class EveningSceneManager : MonoBehaviour
         recipePurchaseDone.SetActive(false);
         machinePurchaseDone.SetActive(false);
 
-        //여기작성해야함
         ingredientIndex = ChooseIngredient();
         gameDataUnit = jsonManager.LoadJson<GameDataUnit>("Ingredient");
         ingredientData = gameDataUnit.ingredientArray[ingredientIndex];
-        ingredientName.text = ingredientData.nameKor.ToString();
+        ingredientName.text = ingredientData.nameKor;
+        Debug.Log($"{ingredientIndex} : {ingredientData.nameKor}");
         ingredientPrice = ingredientData.price;
         ingredientPriceText.text = ingredientPrice.ToString() + " G";
         

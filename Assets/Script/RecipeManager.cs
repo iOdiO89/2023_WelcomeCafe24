@@ -57,9 +57,6 @@ public class RecipeManager : MonoBehaviour
     }
 
     public void MenuBtn(){
-        /*activeMenuList를 활용하여 해당 메뉴가 해금되지 않은 경우
-        NotActiveRecipe가 출력되지 않게 해야 함(아직 구현X)*/
-
         GameObject clickObject = EventSystem.current.currentSelectedGameObject;
         string name = clickObject.name;
         string stringRes = name.Substring(name.Length-2);
