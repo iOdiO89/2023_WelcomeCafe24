@@ -6,6 +6,7 @@ public class UserDataClass
 {
     public int gold;
     public int reputation;
+    public int day;
 
     public List<bool> ingredientUnlock; // 재료 해금여부
     public List<bool> recipeUnlock; // 레시피 해금여부
@@ -14,6 +15,7 @@ public class UserDataClass
     public UserDataClass(){
         gold = 0;
         reputation = 0;
+        day = 0;
 
         ingredientUnlock = new List<bool>();
         ingredientUnlock.Clear();

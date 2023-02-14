@@ -5,6 +5,7 @@ using UnityEngine.UI;
 using System;
 using System.Text;
 using UnityEngine.EventSystems;
+using UnityEngine.SceneManagement;
 
 public class DaySceneManager : MonoBehaviour
 {
@@ -47,16 +48,17 @@ public class DaySceneManager : MonoBehaviour
     public Text timerText;
 
     // 주문
-    
     private int orderCount; // 현재까지 처리한 주문 수
     private int orderSum; // 하루에 받아야하는 주문 수
     public Text orderText;
     private int orderIndex;
     private bool orderSuccess;
-    [HideInInspector] public int successCount=0;
-    [HideInInspector] public int failCount=0;
-    [HideInInspector] public int todayCoin=0;
-    [HideInInspector] public int todayReputation=0;
+    [HideInInspector] public static int successCount=0;
+    [HideInInspector] public static int failCount=0;
+    [HideInInspector] public static int todayCoin=0;
+    [HideInInspector] public static int todayReputation=0;
+
+    public Text dayText;
 
     //데이터 관련
     public JsonManager jsonManager;
@@ -65,12 +67,22 @@ public class DaySceneManager : MonoBehaviour
     private Ingredient IngredientData;
 
     void Start(){
+        //날짜 관련
+        GameManager.instance.userData.day++;
+        PrintDayText();
+        Debug.Log($"Day {GameManager.instance.userData.day}");
+
         cupCapacityCountArr = new int[3];
         for(int i =0; i<3; i++)
         {
             cupCapacityCountArr[i] = 0;
         }
-        SetNewOrder();
+        
+        //주문 관련
+        CheckOrderCount();
+        timeLimit = 90;
+        PrintOrderText();
+        orderCount++;
     }
 
     void Update()
@@ -80,16 +92,11 @@ public class DaySceneManager : MonoBehaviour
         if(timeLimit>=0 && pausePopUp.activeSelf==false && orderSuccess==false){
             CountDownTimer();
         }
-        if(orderSuccess){
-            timerText.text = "00:00";
-            timeLimit = 10;
-        }
    }
 
-    public void TempBtn(){
-        GameManager.instance.userData.gold += 10;
-        GameManager.instance.userData.reputation += 10;
-        jsonManager.SaveData<UserDataClass>(GameManager.instance.userData);
+    public void FinishBtn(){ // tempBtn 나중에 지울 예정
+        jsonManager.SaveData(GameManager.instance.userData);
+        SceneManager.LoadScene("EveningScene");
     }
 
     //명성, 재화 화면에 출력
@@ -98,13 +105,16 @@ public class DaySceneManager : MonoBehaviour
         reputationText.text = "명성: " + GameManager.instance.userData.reputation.ToString();
     }
 
-
     //90초 주문 타이머
     public void CountDownTimer(){
         timeLimit -= Time.deltaTime; // 1초씩 제거
         TimeSpan remainTime = TimeSpan.FromSeconds(timeLimit);
 
-        if(timeLimit<6){ // 5초 이하일 때는 텍스트 색상 변경
+        if(timeLimit < 1){
+            CupGiveBtn();
+            timerText.text = "00:00";
+        }
+        else if(timeLimit<6){ // 5초 이하일 때는 텍스트 색상 변경
             timerText.text = "<color=#DC143C>" + remainTime.ToString(@"mm\:ss") + "</color>";
         }
         else{
@@ -116,28 +126,32 @@ public class DaySceneManager : MonoBehaviour
     private void CheckOrderCount(){
             if(GameManager.instance.userData.reputation<=30){ // 0 <= 명성 <= 30
                 orderSum = 5;
+                Debug.Log("오늘 주문 수 : 5");
             }
             else if(GameManager.instance.userData.reputation<=60){ // 30 < 명성 <= 60
                 orderSum = 6;
+                Debug.Log("오늘 주문 수 : 6");
             } 
             else if(GameManager.instance.userData.reputation<=90){ // 60 < 명성 <= 90
                 orderSum = 7;
+                Debug.Log("오늘 주문 수 : 7");
             }
             else{ // 90 < 명성 <= 100
                 orderSum = 8;
+                Debug.Log("오늘 주문 수 : 8");
             }
     }
 
+    // 새 주문 설정
     public void SetNewOrder(){
         timeLimit = 90;
         PrintOrderText();
+        Debug.Log($"완료한 주문 수 : {orderCount}");
         orderCount++;
 
-        for(int i=0; i<10; i++){ // 컵 비우기
-            TouchCupMinusBtn(0);
-            TouchCupMinusBtn(1);
-            TouchCupMinusBtn(2);
-        }
+        ClearIngredientImages();
+        ClearFields();
+        ClearCupCapacityImages();
     }
 
     public void PrintOrderText(){
@@ -154,6 +168,8 @@ public class DaySceneManager : MonoBehaviour
         recipeData = gameDataUnit.recipeArray[orderIndex];
         return recipeData.nameKor;
     }
+
+
 
 //-----------------------필드, 선반 관련 함수--------------------------
 
@@ -186,8 +202,11 @@ public class DaySceneManager : MonoBehaviour
         SetShelfPopup(true);
         for(int i =0; i < itemBtnArray.Length; i++)
         {
-            if(i < imageArray.Length)
+            if (i < imageArray.Length)
+            {
+                itemBtnArray[i].gameObject.SetActive(true);
                 itemBtnArray[i].image.sprite = imageArray[i];
+            }
             else
             {
                 itemBtnArray[i].gameObject.SetActive(false);
@@ -396,15 +415,16 @@ public class DaySceneManager : MonoBehaviour
         }
         SetGoldandReput(check);
 
-        GameObject cupPopUp = GameObject.Find("CupPopUp");
-        cupPopUp.SetActive(false);
+        cupPopupParnet.SetActive(false);
 
         if(orderCount != orderSum){
-            Invoke("SetNewOrder", 1.5f); // 1.5초 후 새로운 주문 시작
-            //SetNewOrder();
+            //Invoke("SetNewOrder", 1.5f); // 1.5초 후 새로운 주문 시작
+            SetNewOrder();
         }
         else{ // 낮에 처리해야할 주문이 모두 끝난 경우
-
+            jsonManager.SaveData(GameManager.instance.userData);
+            Debug.Log("Data save Complete");
+            SceneManager.LoadScene("EveningScene");
         }
     }
 
@@ -433,9 +453,9 @@ public class DaySceneManager : MonoBehaviour
         ingAnswerList.Sort((a, b) => a.Item1.CompareTo(b.Item1));
         ingList.Sort((a, b) => a.Item1.CompareTo(b.Item1));
 
-        for(int i=0; i<3; i++){
+        /*for(int i=0; i<3; i++){
             Debug.Log($"answer : {ingAnswerList[i].Item1} : {ingAnswerList[i].Item2} / user : {ingList[i].Item1} : {ingList[i].Item2}");
-        }
+        }*/
 
         for(int i=0; i<3; i++){
             if(!ingAnswerList[i].Equals(ingList[i])){
@@ -453,30 +473,25 @@ public class DaySceneManager : MonoBehaviour
             // 돈
             double tempPrice;
             if(GameManager.instance.userData.reputation<0){
-                Debug.Log("가격 *1");
                 tempPrice = 1.0;   
             }
             else if(GameManager.instance.userData.reputation<=30){ // 0 <= 명성 <= 30
-                Debug.Log("가격 *1.3");
                 tempPrice = (double)recipeData.price * 1.3;
             }
             else if(GameManager.instance.userData.reputation<=60){ // 30 < 명성 <= 60
-                Debug.Log("가격 *1.6");
                 tempPrice = (double)recipeData.price * 1.6;
             } 
             else if(GameManager.instance.userData.reputation<=90){ // 60 < 명성 <= 90
-                Debug.Log("가격 *1.9");
                 tempPrice = (double)recipeData.price * 1.9;
             }
             else{ // 90 < 명성 <= 100
-                Debug.Log("가격 *2.5");
                 tempPrice = (double)recipeData.price * 2.5;
             }
             todayCoin += (int)tempPrice;
             GameManager.instance.userData.gold += (int)tempPrice;
 
             //명성
-            int tempReputation = UnityEngine.Random.Range(0, 2);
+            int tempReputation = UnityEngine.Random.Range(1, 3);
             todayReputation += tempReputation;
             GameManager.instance.userData.reputation += tempReputation;
         }
@@ -484,15 +499,50 @@ public class DaySceneManager : MonoBehaviour
             failCount++;
 
             //명성
-            GameManager.instance.userData.reputation -= UnityEngine.Random.Range(0, 2);
+            GameManager.instance.userData.reputation -= UnityEngine.Random.Range(1, 3);
         }
     }
 
-// ---------------------------------------------------------
-    /*
-    public void ExitBtn(){    // MainScene-PauseBtn-게임종료
-        jsonManager.SaveData<UserDataClass>(GameManager.instance.userData);
-        Debug.Log("Data Save Complete");
+    void ClearIngredientImages()
+    {
+        for(int i =0; i<cupIngredientImageArr.Length; i++)
+        {
+            cupIngredientImageArr[i].sprite = null;
+            cupIngredientImageArr[i].color = new Color(0, 0, 0);
+        }
+        
+        for(int i=0; i<cupCapacityCountArr.Length;i++)
+        {
+            cupCapacityCountArr[i] = 0;
+        }
+    }
+
+    void ClearFields()
+    {
+        for(int i =0; i<fieldsArray.Length; i++)
+        {
+            fieldsArray[i].isSpriteExist = false;
+            fieldsArray[i].fieldImage.sprite = null;
+        }
+    }
+
+    void ClearCupCapacityImages()
+    {
+        for(int i=0; i< cupCapacityImageArr.Length; i++)
+        {
+            cupCapacityImageArr[i].color = new Color(1, 1, 1);
+        }
+    }
+
+// -------------- 일시정지 팝업창 -------------------------------------------
+    
+    public void PrintDayText(){
+        dayText.text = "DAY " + GameManager.instance.userData.day.ToString();
+    }
+    
+    public void ExitBtn(){    // dayScene-PauseBtn-게임종료
+        jsonManager.SaveData(GameManager.instance.userData);
+        Debug.Log("Data save Complete");
         Application.Quit();
-    }*/
+    }
 }

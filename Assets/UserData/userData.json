@@ -1,6 +1,7 @@
 {
-    "gold": 10,
-    "reputation": 10,
+    "gold": 2920,
+    "reputation": 7,
+    "day": 1,
     "ingredientUnlock": [
         true,
         true,
@@ -14,7 +15,7 @@
         true,
         false,
         false,
-        false,
+        true,
         false
     ],
     "recipeUnlock": [
