@@ -1141,8 +1141,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 206330642}
-        m_TargetAssemblyTypeName: RecipeManager, Assembly-CSharp
+      - m_Target: {fileID: 1131194369}
+        m_TargetAssemblyTypeName: DaySceneManager, Assembly-CSharp
         m_MethodName: MenuBtn
         m_Mode: 1
         m_Arguments:
@@ -1274,8 +1274,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 206330642}
-        m_TargetAssemblyTypeName: RecipeManager, Assembly-CSharp
+      - m_Target: {fileID: 1131194369}
+        m_TargetAssemblyTypeName: DaySceneManager, Assembly-CSharp
         m_MethodName: MenuBtn
         m_Mode: 1
         m_Arguments:
@@ -1486,8 +1486,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 206330642}
-        m_TargetAssemblyTypeName: RecipeManager, Assembly-CSharp
+      - m_Target: {fileID: 1131194369}
+        m_TargetAssemblyTypeName: DaySceneManager, Assembly-CSharp
         m_MethodName: MenuBtn
         m_Mode: 1
         m_Arguments:
@@ -1755,118 +1755,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 189070684}
   m_CullTransparentMesh: 1
---- !u!1 &206330641
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 206330643}
-  - component: {fileID: 206330642}
-  m_Layer: 0
-  m_Name: RecipeManager
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &206330642
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 206330641}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6ab34bc84b81ed74bb095e8213f6fced, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  recipeList:
-  - {fileID: 809823458}
-  - {fileID: 1024841441}
-  - {fileID: 224184968}
-  - {fileID: 468525035}
-  - {fileID: 2145719683}
-  - {fileID: 597451583}
-  - {fileID: 1135352998}
-  - {fileID: 680859443}
-  - {fileID: 1288418593}
-  - {fileID: 1160348697}
-  - {fileID: 1866129914}
-  - {fileID: 696028130}
-  - {fileID: 1724184990}
-  - {fileID: 1695961043}
-  - {fileID: 382658430}
-  - {fileID: 611957402}
-  - {fileID: 512338444}
-  - {fileID: 1575594670}
-  - {fileID: 1851449434}
-  - {fileID: 602013670}
-  - {fileID: 1443430495}
-  menuList:
-  - {fileID: 120772421}
-  - {fileID: 672236585}
-  - {fileID: 521623501}
-  - {fileID: 1416999958}
-  - {fileID: 1816066090}
-  - {fileID: 2115085127}
-  - {fileID: 2105060225}
-  - {fileID: 773691843}
-  - {fileID: 901666996}
-  - {fileID: 1527084213}
-  - {fileID: 393594422}
-  - {fileID: 568097060}
-  - {fileID: 464436369}
-  - {fileID: 2102421314}
-  - {fileID: 1073704622}
-  - {fileID: 1270685174}
-  - {fileID: 391733556}
-  - {fileID: 129827607}
-  - {fileID: 171080354}
-  - {fileID: 1234275579}
-  - {fileID: 515341478}
-  menuTextList:
-  - {fileID: 1178952233}
-  - {fileID: 927737045}
-  - {fileID: 649660149}
-  - {fileID: 1975433595}
-  - {fileID: 359099488}
-  - {fileID: 912637002}
-  - {fileID: 1578411530}
-  - {fileID: 1570291030}
-  - {fileID: 1709410158}
-  - {fileID: 589042528}
-  - {fileID: 1512468157}
-  - {fileID: 2140861997}
-  - {fileID: 734821449}
-  - {fileID: 1374409020}
-  - {fileID: 131326559}
-  - {fileID: 1959110489}
-  - {fileID: 2050646529}
-  - {fileID: 1603056052}
-  - {fileID: 398704369}
-  - {fileID: 1317143994}
-  - {fileID: 1859114191}
-  notActiveRecipe: {fileID: 1267405830}
-  notActiveRecipeText: {fileID: 2076433204}
-  jsonManager: {fileID: 309438830}
---- !u!4 &206330643
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 206330641}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 808949551}
-  m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &209475840
 GameObject:
   m_ObjectHideFlags: 0
@@ -3459,8 +3347,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 206330642}
-        m_TargetAssemblyTypeName: RecipeManager, Assembly-CSharp
+      - m_Target: {fileID: 1131194369}
+        m_TargetAssemblyTypeName: DaySceneManager, Assembly-CSharp
         m_MethodName: MenuBtn
         m_Mode: 1
         m_Arguments:
@@ -3672,8 +3560,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 206330642}
-        m_TargetAssemblyTypeName: RecipeManager, Assembly-CSharp
+      - m_Target: {fileID: 1131194369}
+        m_TargetAssemblyTypeName: DaySceneManager, Assembly-CSharp
         m_MethodName: MenuBtn
         m_Mode: 1
         m_Arguments:
@@ -4229,8 +4117,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 206330642}
-        m_TargetAssemblyTypeName: RecipeManager, Assembly-CSharp
+      - m_Target: {fileID: 1131194369}
+        m_TargetAssemblyTypeName: DaySceneManager, Assembly-CSharp
         m_MethodName: MenuBtn
         m_Mode: 1
         m_Arguments:
@@ -4748,8 +4636,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 206330642}
-        m_TargetAssemblyTypeName: RecipeManager, Assembly-CSharp
+      - m_Target: {fileID: 1131194369}
+        m_TargetAssemblyTypeName: DaySceneManager, Assembly-CSharp
         m_MethodName: MenuBtn
         m_Mode: 1
         m_Arguments:
@@ -4881,8 +4769,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 206330642}
-        m_TargetAssemblyTypeName: RecipeManager, Assembly-CSharp
+      - m_Target: {fileID: 1131194369}
+        m_TargetAssemblyTypeName: DaySceneManager, Assembly-CSharp
         m_MethodName: MenuBtn
         m_Mode: 1
         m_Arguments:
@@ -5468,8 +5356,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 206330642}
-        m_TargetAssemblyTypeName: RecipeManager, Assembly-CSharp
+      - m_Target: {fileID: 1131194369}
+        m_TargetAssemblyTypeName: DaySceneManager, Assembly-CSharp
         m_MethodName: MenuBtn
         m_Mode: 1
         m_Arguments:
@@ -6350,8 +6238,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 206330642}
-        m_TargetAssemblyTypeName: RecipeManager, Assembly-CSharp
+      - m_Target: {fileID: 1131194369}
+        m_TargetAssemblyTypeName: DaySceneManager, Assembly-CSharp
         m_MethodName: MenuBtn
         m_Mode: 1
         m_Arguments:
@@ -7464,8 +7352,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 206330642}
-        m_TargetAssemblyTypeName: RecipeManager, Assembly-CSharp
+      - m_Target: {fileID: 1131194369}
+        m_TargetAssemblyTypeName: DaySceneManager, Assembly-CSharp
         m_MethodName: MenuBtn
         m_Mode: 1
         m_Arguments:
@@ -7542,7 +7430,6 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 309438831}
-  - {fileID: 206330643}
   - {fileID: 1131194368}
   m_Father: {fileID: 0}
   m_RootOrder: 4
@@ -8221,8 +8108,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 206330642}
-        m_TargetAssemblyTypeName: RecipeManager, Assembly-CSharp
+      - m_Target: {fileID: 1131194369}
+        m_TargetAssemblyTypeName: DaySceneManager, Assembly-CSharp
         m_MethodName: MenuBtn
         m_Mode: 1
         m_Arguments:
@@ -9798,8 +9685,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 206330642}
-        m_TargetAssemblyTypeName: RecipeManager, Assembly-CSharp
+      - m_Target: {fileID: 1131194369}
+        m_TargetAssemblyTypeName: DaySceneManager, Assembly-CSharp
         m_MethodName: MenuBtn
         m_Mode: 1
         m_Arguments:
@@ -10186,7 +10073,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 808949551}
-  m_RootOrder: 2
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1131194369
 MonoBehaviour:
@@ -10247,6 +10134,74 @@ MonoBehaviour:
   timerText: {fileID: 377034776}
   orderText: {fileID: 1176259732}
   dayText: {fileID: 110956377}
+  recipeList:
+  - {fileID: 809823458}
+  - {fileID: 1024841441}
+  - {fileID: 224184968}
+  - {fileID: 468525035}
+  - {fileID: 2145719683}
+  - {fileID: 597451583}
+  - {fileID: 1135352998}
+  - {fileID: 680859443}
+  - {fileID: 1288418593}
+  - {fileID: 1160348697}
+  - {fileID: 1866129914}
+  - {fileID: 696028130}
+  - {fileID: 1724184990}
+  - {fileID: 1695961043}
+  - {fileID: 382658430}
+  - {fileID: 611957402}
+  - {fileID: 512338444}
+  - {fileID: 1575594670}
+  - {fileID: 1851449434}
+  - {fileID: 602013670}
+  - {fileID: 1443430495}
+  menuList:
+  - {fileID: 120772421}
+  - {fileID: 672236585}
+  - {fileID: 521623501}
+  - {fileID: 1416999958}
+  - {fileID: 1816066090}
+  - {fileID: 2115085127}
+  - {fileID: 2105060225}
+  - {fileID: 773691843}
+  - {fileID: 901666996}
+  - {fileID: 1527084213}
+  - {fileID: 393594422}
+  - {fileID: 568097060}
+  - {fileID: 464436369}
+  - {fileID: 2102421314}
+  - {fileID: 1073704622}
+  - {fileID: 1270685174}
+  - {fileID: 391733556}
+  - {fileID: 129827607}
+  - {fileID: 171080354}
+  - {fileID: 1234275579}
+  - {fileID: 515341478}
+  menuTextList:
+  - {fileID: 1178952233}
+  - {fileID: 927737045}
+  - {fileID: 649660149}
+  - {fileID: 1975433595}
+  - {fileID: 359099488}
+  - {fileID: 912637002}
+  - {fileID: 1578411530}
+  - {fileID: 1570291030}
+  - {fileID: 1709410158}
+  - {fileID: 589042528}
+  - {fileID: 1512468157}
+  - {fileID: 2140861997}
+  - {fileID: 734821449}
+  - {fileID: 1374409020}
+  - {fileID: 131326559}
+  - {fileID: 1959110489}
+  - {fileID: 2050646529}
+  - {fileID: 1603056052}
+  - {fileID: 398704369}
+  - {fileID: 1317143994}
+  - {fileID: 1859114191}
+  notActiveRecipe: {fileID: 1267405830}
+  notActiveRecipeText: {fileID: 2076433204}
   jsonManager: {fileID: 309438830}
 --- !u!1 &1135352998
 GameObject:
@@ -11386,8 +11341,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 206330642}
-        m_TargetAssemblyTypeName: RecipeManager, Assembly-CSharp
+      - m_Target: {fileID: 1131194369}
+        m_TargetAssemblyTypeName: DaySceneManager, Assembly-CSharp
         m_MethodName: MenuBtn
         m_Mode: 1
         m_Arguments:
@@ -11470,8 +11425,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 320, y: 210}
+  m_AnchoredPosition: {x: 22.454712, y: 0}
+  m_SizeDelta: {x: 364.9094, y: 210}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1235505315
 MonoBehaviour:
@@ -11809,8 +11764,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 206330642}
-        m_TargetAssemblyTypeName: RecipeManager, Assembly-CSharp
+      - m_Target: {fileID: 1131194369}
+        m_TargetAssemblyTypeName: DaySceneManager, Assembly-CSharp
         m_MethodName: MenuBtn
         m_Mode: 1
         m_Arguments:
@@ -13044,8 +12999,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 206330642}
-        m_TargetAssemblyTypeName: RecipeManager, Assembly-CSharp
+      - m_Target: {fileID: 1131194369}
+        m_TargetAssemblyTypeName: DaySceneManager, Assembly-CSharp
         m_MethodName: MenuBtn
         m_Mode: 1
         m_Arguments:
@@ -14056,8 +14011,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 206330642}
-        m_TargetAssemblyTypeName: RecipeManager, Assembly-CSharp
+      - m_Target: {fileID: 1131194369}
+        m_TargetAssemblyTypeName: DaySceneManager, Assembly-CSharp
         m_MethodName: MenuBtn
         m_Mode: 1
         m_Arguments:
@@ -17091,8 +17046,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 206330642}
-        m_TargetAssemblyTypeName: RecipeManager, Assembly-CSharp
+      - m_Target: {fileID: 1131194369}
+        m_TargetAssemblyTypeName: DaySceneManager, Assembly-CSharp
         m_MethodName: MenuBtn
         m_Mode: 1
         m_Arguments:
@@ -19316,8 +19271,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 300, y: 165}
+  m_AnchoredPosition: {x: 40.94098, y: 0}
+  m_SizeDelta: {x: 381.882, y: 165}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2076433204
 MonoBehaviour:
@@ -19678,8 +19633,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 206330642}
-        m_TargetAssemblyTypeName: RecipeManager, Assembly-CSharp
+      - m_Target: {fileID: 1131194369}
+        m_TargetAssemblyTypeName: DaySceneManager, Assembly-CSharp
         m_MethodName: MenuBtn
         m_Mode: 1
         m_Arguments:
@@ -19811,8 +19766,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 206330642}
-        m_TargetAssemblyTypeName: RecipeManager, Assembly-CSharp
+      - m_Target: {fileID: 1131194369}
+        m_TargetAssemblyTypeName: DaySceneManager, Assembly-CSharp
         m_MethodName: MenuBtn
         m_Mode: 1
         m_Arguments:
@@ -19944,8 +19899,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 206330642}
-        m_TargetAssemblyTypeName: RecipeManager, Assembly-CSharp
+      - m_Target: {fileID: 1131194369}
+        m_TargetAssemblyTypeName: DaySceneManager, Assembly-CSharp
         m_MethodName: MenuBtn
         m_Mode: 1
         m_Arguments:

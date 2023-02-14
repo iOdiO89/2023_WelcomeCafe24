@@ -35,7 +35,8 @@ public class DaySceneManager : MonoBehaviour
     Button[] cupMinusBtnArr;
 
     private string[] cupIngredientNameArr;
-    public int[] cupCapacityCountArr;          // (재료1의 개수, 재료2의 개수, 재료3의 개수)를 설정하는 배열.
+    // (재료1의 개수, 재료2의 개수, 재료3의 개수)를 설정하는 배열.
+    public int[] cupCapacityCountArr;
     [HideInInspector]
     Sprite nowIngredient;
 
@@ -60,6 +61,13 @@ public class DaySceneManager : MonoBehaviour
 
     public Text dayText;
 
+    public List<GameObject> recipeList = new List<GameObject>();
+    public List<GameObject> menuList = new List<GameObject>();
+    public List<Text> menuTextList = new List<Text>();
+    public GameObject notActiveRecipe;
+    public Text notActiveRecipeText;
+    private Color transparentColor;
+
     //데이터 관련
     public JsonManager jsonManager;
     private GameDataUnit gameDataUnit;
@@ -71,6 +79,9 @@ public class DaySceneManager : MonoBehaviour
         GameManager.instance.userData.day++;
         PrintDayText();
         Debug.Log($"Day {GameManager.instance.userData.day}");
+
+        //레시피
+        SetRecipeColor();
 
         //컵
         cupCapacityCountArr = new int[3];
@@ -533,6 +544,51 @@ public class DaySceneManager : MonoBehaviour
         {
             cupCapacityImageArr[i].color = new Color(1, 1, 1);
         }
+    }
+
+//-------------------------- 레시피 ----------------------------------------
+    public void SetRecipeColor(){
+        transparentColor = menuTextList[0].color;
+        transparentColor.a = 0.3f;
+        for(int i=0; i<21; i++){
+            if(!GameManager.instance.userData.recipeUnlock[i]){
+                menuTextList[i].color = transparentColor;
+            }
+        }
+    }
+
+    public void ShowRecipe(int index){
+        notActiveRecipe.SetActive(false);
+
+        int recipeSize = recipeList.Count;
+        for(int i=0; i<recipeSize; i++){
+            if(i==index){
+                if(GameManager.instance.userData.recipeUnlock[i]){
+                    recipeList[i].SetActive(true);
+                }
+                else{
+                    gameDataUnit = jsonManager.LoadJson<GameDataUnit>("Recipe");
+                    recipeData = gameDataUnit.recipeArray[i];
+                    notActiveRecipeText.text = recipeData.nameKor + " 제조법";
+                    notActiveRecipe.SetActive(true);
+                }
+            }
+            else{
+                recipeList[i].SetActive(false);
+            }
+        }
+    }
+
+    public void MenuBtn(){
+        GameObject clickObject = EventSystem.current.currentSelectedGameObject;
+        string name = clickObject.name;
+        string stringRes = name.Substring(name.Length-2);
+        int intRes=-1;
+        if(!int.TryParse(stringRes, out intRes)){ // 두자리수일때
+            stringRes = name.Substring(name.Length-1);
+        }
+        print(System.Convert.ToInt32(stringRes) + "번 메뉴");
+        ShowRecipe(System.Convert.ToInt32(stringRes));
     }
 
 // -------------- 일시정지 팝업창 -------------------------------------------
