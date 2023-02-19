@@ -22,6 +22,8 @@ public class DaySceneManager : MonoBehaviour
     [SerializeField]
     Image ingredientImage;
     [SerializeField]
+    Text ingredientText;
+    [SerializeField]
     Field[] fieldsArray;
     [SerializeField]
     GameObject cupPopupParnet;
@@ -70,7 +72,7 @@ public class DaySceneManager : MonoBehaviour
 
     //데이터 관련
     public JsonManager jsonManager;
-    private GameDataUnit gameDataUnit;
+    [SerializeField] GameDataUnit gameDataUnit;
     private Recipe recipeData;
     private Ingredient IngredientData;
 
@@ -95,6 +97,12 @@ public class DaySceneManager : MonoBehaviour
         timeLimit = 90;
         PrintOrderText();
         orderCount++;
+
+        //gameDataUnit을 초기화시키는 함수가 printOrderText에 있어서 여기에 두었습니다.
+        //만약 기존 코드 수정 거라면
+        //그냥 gameDataUnit = jsonManager.LoadJson<GameDataUnit>("Recipe") 이런것만 지워주시고
+        //이 함수를 start 함수 초반에 쓰시면 됩니다. 그럼 아마 오류 안날거에요.
+        SetGameDataUnit();
     }
 
     void Update()
@@ -105,6 +113,17 @@ public class DaySceneManager : MonoBehaviour
             CountDownTimer();
         }
    }
+
+    //정윤석: gameDataUnit을 일부에서 초기화하시길래 함수 추가해둡니다.
+    void SetGameDataUnit()
+    {
+        IngredientArray getIngredientArr = jsonManager.LoadJson<IngredientArray>("Ingredient");
+        RecipeArray getRecipeArr = jsonManager.LoadJson<RecipeArray>("Recipe");
+        MachineArray getMachineArr = jsonManager.LoadJson<MachineArray>("Machine");
+        gameDataUnit.ingredientArray = getIngredientArr.ingredientArray;
+        gameDataUnit.recipeArray = getRecipeArr.recipeArray;
+        gameDataUnit.machineArray = getMachineArr.machineArray;
+    }
 
     public void FinishBtn(){ // tempBtn 나중에 지울 예정
         jsonManager.SaveData(GameManager.instance.userData);
@@ -211,13 +230,28 @@ public class DaySceneManager : MonoBehaviour
     {
         Sprite[] imageArray = Resources.LoadAll<Sprite>(getPath);
         
+        int ingredientIndex;
         SetShelfPopup(true);
         for(int i =0; i < itemBtnArray.Length; i++)
         {
             if (i < imageArray.Length)
             {
+                ingredientIndex = int.Parse(imageArray[i].name);
                 itemBtnArray[i].gameObject.SetActive(true);
                 itemBtnArray[i].image.sprite = imageArray[i];
+
+                if (!GameManager.instance.userData.ingredientUnlock[ingredientIndex])
+                {
+                    itemBtnArray[i].enabled = false;
+                    //시각적으로 잠금되어있음을 보이기 위해 임시적으로 색 조정 합니다.
+                    itemBtnArray[i].image.color = new Color(0.5f, 0.5f, 0.5f);
+                }
+                else
+                {
+                    itemBtnArray[i].enabled = true;
+                    //시각적으로 잠금되어있음을 보이기 위해 임시적으로 색 조정 합니다.
+                    itemBtnArray[i].image.color = new Color(1f, 1f, 1f);
+                }
             }
             else
             {
@@ -246,6 +280,15 @@ public class DaySceneManager : MonoBehaviour
         SetIngredientPopup(true);
         nowIngredient = EventSystem.current.currentSelectedGameObject.GetComponent<Image>().sprite;
         ingredientImage.sprite = nowIngredient;
+        SetIngredientText();
+    }
+
+    void SetIngredientText()
+    {
+        ingredientText.text = "";
+        int ingredientIndex = int.Parse(ingredientImage.sprite.name);
+        
+        ingredientText.text = gameDataUnit.ingredientArray[ingredientIndex].detail;
     }
 
     //active가 참이면 재료 팝업창을 키고 아니면 끄고
