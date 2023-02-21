@@ -9,11 +9,12 @@ public class UserDataClass
     public int day;
 
     public List<bool> ingredientUnlock; // 재료 해금여부
-    public List<bool> recipeUnlock; // 레시피 해금여부
+    public List<int> recipeUnlock; // 레시피 해금여부
     public List<bool> machineUnlock; // 기계 해금여부
+    public int machineLevel; // 상점에 등장하는 기기의 레벨(보급, 고급, 하이엔드)
 
     public UserDataClass(){
-        gold = 0;
+        gold = 10000;
         reputation = 0;
         day = 0;
 
@@ -33,17 +34,17 @@ public class UserDataClass
             }
         }
 
-        recipeUnlock = new List<bool>();
+        recipeUnlock = new List<int>();
         recipeUnlock.Clear();
         for(int i=0; i<21; i++){
             switch(i){
                 case 0: // 에스프레소
                 case 1: // 아메리카노
                 case 15: // 민트 티
-                    recipeUnlock.Add(true);
+                    recipeUnlock.Add(1);
                     break;
                 default:
-                    recipeUnlock.Add(false);
+                    recipeUnlock.Add(0);
                     break;
             } 
         }
@@ -59,6 +60,8 @@ public class UserDataClass
             }
             
         }
+
+        machineLevel = 1;
 
     }
 

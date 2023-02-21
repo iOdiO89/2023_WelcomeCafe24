@@ -12,7 +12,7 @@ public class Machine
     public int level2Price;
     public int level3Price;
     public string detail;
-    public double level1Pos;
-    public double level2Pos;
-    public double level3Pos;
+    public float level1Pos;
+    public float level2Pos;
+    public float level3Pos;
 }

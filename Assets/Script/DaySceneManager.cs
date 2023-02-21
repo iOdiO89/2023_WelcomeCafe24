@@ -65,6 +65,7 @@ public class DaySceneManager : MonoBehaviour
 
     public List<GameObject> recipeList = new List<GameObject>();
     public List<GameObject> menuList = new List<GameObject>();
+    public List<Text> recipeTextList = new List<Text>();
     public List<Text> menuTextList = new List<Text>();
     public GameObject notActiveRecipe;
     public Text notActiveRecipeText;
@@ -72,7 +73,7 @@ public class DaySceneManager : MonoBehaviour
 
     //데이터 관련
     public JsonManager jsonManager;
-    [SerializeField] GameDataUnit gameDataUnit;
+    //[SerializeField] GameDataUnit gameDataUnit;
     private Recipe recipeData;
     private Ingredient IngredientData;
 
@@ -102,7 +103,7 @@ public class DaySceneManager : MonoBehaviour
         //만약 기존 코드 수정 거라면
         //그냥 gameDataUnit = jsonManager.LoadJson<GameDataUnit>("Recipe") 이런것만 지워주시고
         //이 함수를 start 함수 초반에 쓰시면 됩니다. 그럼 아마 오류 안날거에요.
-        SetGameDataUnit();
+        //SetGameDataUnit();
     }
 
     void Update()
@@ -114,31 +115,20 @@ public class DaySceneManager : MonoBehaviour
         }
    }
 
-    //정윤석: gameDataUnit을 일부에서 초기화하시길래 함수 추가해둡니다.
-    void SetGameDataUnit()
-    {
-        IngredientArray getIngredientArr = jsonManager.LoadJson<IngredientArray>("Ingredient");
-        RecipeArray getRecipeArr = jsonManager.LoadJson<RecipeArray>("Recipe");
-        MachineArray getMachineArr = jsonManager.LoadJson<MachineArray>("Machine");
-        gameDataUnit.ingredientArray = getIngredientArr.ingredientArray;
-        gameDataUnit.recipeArray = getRecipeArr.recipeArray;
-        gameDataUnit.machineArray = getMachineArr.machineArray;
-    }
-
     public void FinishBtn(){ // tempBtn 나중에 지울 예정
         jsonManager.SaveData(GameManager.instance.userData);
         SceneManager.LoadScene("EveningScene");
     }
 
     //명성, 재화 화면에 출력
-    public void SetValues(){
+    private void SetValues(){
         goldText.text = "G: " + GameManager.instance.userData.gold.ToString();
         reputationText.text = "명성: " + GameManager.instance.userData.reputation.ToString();
     }
 
     //90초 주문 타이머
     public void CountDownTimer(){
-        timeLimit -= Time.deltaTime; // 1초씩 제거
+        timeLimit -= Time.deltaTime;
         TimeSpan remainTime = TimeSpan.FromSeconds(timeLimit);
 
         if(timeLimit < 1){
@@ -177,7 +167,7 @@ public class DaySceneManager : MonoBehaviour
     public void SetNewOrder(){
         timeLimit = 90;
         PrintOrderText();
-        Debug.Log($"완료한 주문 수 : {orderCount}");
+        //Debug.Log($"완료한 주문 수 : {orderCount}");
         orderCount++;
 
         ClearIngredientImages();
@@ -190,13 +180,13 @@ public class DaySceneManager : MonoBehaviour
     }
 
     private string MakeOrderText(){
-        gameDataUnit = jsonManager.LoadJson<GameDataUnit>("Recipe");
+        //gameDataUnit = jsonManager.LoadJson<GameDataUnit>("Recipe");
         while(true){
             orderIndex = UnityEngine.Random.Range(0, 21);
-            if(GameManager.instance.userData.recipeUnlock[orderIndex])
+            if(GameManager.instance.userData.recipeUnlock[orderIndex]>0)
                 break;
         }
-        recipeData = gameDataUnit.recipeArray[orderIndex];
+        recipeData = GameManager.instance.gameDataUnit.recipeArray[orderIndex];
         return recipeData.nameKor;
     }
 
@@ -288,7 +278,7 @@ public class DaySceneManager : MonoBehaviour
         ingredientText.text = "";
         int ingredientIndex = int.Parse(ingredientImage.sprite.name);
         
-        ingredientText.text = gameDataUnit.ingredientArray[ingredientIndex].detail;
+        ingredientText.text = GameManager.instance.gameDataUnit.ingredientArray[ingredientIndex].detail;
     }
 
     //active가 참이면 재료 팝업창을 키고 아니면 끄고
@@ -554,7 +544,9 @@ public class DaySceneManager : MonoBehaviour
             failCount++;
 
             //명성
-            GameManager.instance.userData.reputation -= UnityEngine.Random.Range(1, 3);
+            int tempReputation = UnityEngine.Random.Range(1, 3);
+            todayReputation -= tempReputation;
+            GameManager.instance.userData.reputation -= tempReputation;
         }
     }
 
@@ -594,7 +586,7 @@ public class DaySceneManager : MonoBehaviour
         transparentColor = menuTextList[0].color;
         transparentColor.a = 0.3f;
         for(int i=0; i<21; i++){
-            if(!GameManager.instance.userData.recipeUnlock[i]){
+            if(GameManager.instance.userData.recipeUnlock[i]==0){
                 menuTextList[i].color = transparentColor;
             }
         }
@@ -606,15 +598,35 @@ public class DaySceneManager : MonoBehaviour
         int recipeSize = recipeList.Count;
         for(int i=0; i<recipeSize; i++){
             if(i==index){
-                if(GameManager.instance.userData.recipeUnlock[i]){
-                    recipeList[i].SetActive(true);
-                }
-                else{
-                    gameDataUnit = jsonManager.LoadJson<GameDataUnit>("Recipe");
-                    recipeData = gameDataUnit.recipeArray[i];
+                recipeData = GameManager.instance.gameDataUnit.recipeArray[i];
+
+                if(GameManager.instance.userData.recipeUnlock[i]==0){
                     notActiveRecipeText.text = recipeData.nameKor + " 제조법";
                     notActiveRecipe.SetActive(true);
                 }
+                else{
+                    string tempText;
+                    if(GameManager.instance.userData.recipeUnlock[i]==1){
+                        tempText = recipeData.level1Detail;                    
+                    }
+                    else if(GameManager.instance.userData.recipeUnlock[i]==2){
+                        tempText = recipeData.level2Detail;   
+                    }
+                    else{
+                        tempText = recipeData.level3Detail;    
+                    }
+
+                    string title = recipeData.nameKor + " 제조법";
+                    string line = "\n-----------------------------\n";
+                    string recipeDetail = "";
+                    string[] words = tempText.Split(',');
+                    for(int j=0; j<words.Length; j++){
+                        recipeDetail += words[j];
+                        if(j!=words.Length-1) recipeDetail+="\n";
+                    }
+                    recipeTextList[i].text = title+line+recipeDetail;
+                    recipeList[i].SetActive(true);
+                } 
             }
             else{
                 recipeList[i].SetActive(false);
@@ -630,7 +642,7 @@ public class DaySceneManager : MonoBehaviour
         if(!int.TryParse(stringRes, out intRes)){ // 두자리수일때
             stringRes = name.Substring(name.Length-1);
         }
-        print(System.Convert.ToInt32(stringRes) + "번 메뉴");
+        //print(System.Convert.ToInt32(stringRes) + "번 메뉴");
         ShowRecipe(System.Convert.ToInt32(stringRes));
     }
 

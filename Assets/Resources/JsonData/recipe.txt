@@ -40,7 +40,7 @@
          "level1Pos":-1,
          "level2Pos":-1,
          "level3Pos":-1,
-         "level1Detail":"물 6, 에스프레소 3, 민트 1",
+         "level1Detail":"물 6,에스프레소 3,민트 1",
          "level2Detail":"",
          "level3Detail":""
       },
@@ -62,9 +62,9 @@
          "level1Pos":0.3333,
          "level2Pos":0.3333,
          "level3Pos":0.3333,
-         "level1Detail":"우유, 에스프레소, 휘핑크림",
-         "level2Detail":"우유 6, 에스프레소, 휘핑크림",
-         "level3Detail":"우유 6, 에스프레소 3, 휘핑크림 1"
+         "level1Detail":"우유,에스프레소,휘핑크림",
+         "level2Detail":"우유 6,에스프레소,휘핑크림",
+         "level3Detail":"우유 6,에스프레소 3,휘핑크림 1"
       },
       {
          "index":3,
@@ -84,9 +84,9 @@
          "level1Pos":0.3333,
          "level2Pos":0.3333,
          "level3Pos":0.3333,
-         "level1Detail":"우유, 에스프레소, 밀크폼",
-         "level2Detail":"우유 4, 에스프레소, 밀크폼",
-         "level3Detail":"우유 4, 에스프레소 3, 밀크폼 3"
+         "level1Detail":"우유,에스프레소,밀크폼",
+         "level2Detail":"우유 4,에스프레소,밀크폼",
+         "level3Detail":"우유 4,에스프레소 3,밀크폼 3"
       },
       {
          "index":4,
@@ -106,9 +106,9 @@
          "level1Pos":0.3333,
          "level2Pos":0.3333,
          "level3Pos":0.3333,
-         "level1Detail":"물, 에스프레소, 휘핑크림",
-         "level2Detail":"물 5, 에스프레소, 휘핑크림",
-         "level3Detail":"물 5, 에스프레소 3, 휘핑크림 2"
+         "level1Detail":"물,에스프레소,휘핑크림",
+         "level2Detail":"물 5,에스프레소,휘핑크림",
+         "level3Detail":"물 5,에스프레소 3,휘핑크림 2"
       },
       {
          "index":5,
@@ -128,16 +128,16 @@
          "level1Pos":0.3333,
          "level2Pos":0.3333,
          "level3Pos":0.3333,
-         "level1Detail":"물, 에스프레소, 아이스크림",
-         "level2Detail":"물, 에스프레소, 아이스크림 5",
-         "level3Detail":"물 1, 에스프레소 4, 아이스크림 5"
+         "level1Detail":"물,에스프레소,아이스크림",
+         "level2Detail":"물,에스프레소,아이스크림 5",
+         "level3Detail":"물 1,에스프레소 4,아이스크림 5"
       },
       {
          "index":6,
          "nameEng":"cold brew coffee",
          "nameKor":"콜드 브루",
          "price":1800,
-         "unlock":6,
+         "unlock":5,
          "ing1Index":0,
          "ing2Index":8,
          "ing3Index":10,
@@ -150,16 +150,16 @@
          "level1Pos":0.3333,
          "level2Pos":0.3333,
          "level3Pos":0.3333,
-         "level1Detail":"물, 콜드브루, 휘핑크림",
-         "level2Detail":"물, 콜드브루 2, 휘핑크림",
-         "level3Detail":"물 7, 콜드브루 2, 휘핑크림 1"
+         "level1Detail":"물,콜드브루,휘핑크림",
+         "level2Detail":"물,콜드브루 2,휘핑크림",
+         "level3Detail":"물 7,콜드브루 2,휘핑크림 1"
       },
       {
          "index":7,
          "nameEng":"cold brew latte",
          "nameKor":"콜드 브루 라떼",
          "price":2000,
-         "unlock":6,
+         "unlock":5,
          "ing1Index":1,
          "ing2Index":8,
          "ing3Index":10,
@@ -172,16 +172,16 @@
          "level1Pos":0.3333,
          "level2Pos":0.3333,
          "level3Pos":0.3333,
-         "level1Detail":"우유, 콜드브루, 휘핑크림 ",
-         "level2Detail":"우유 6, 콜드브루, 휘핑크림",
-         "level3Detail":"우유 6, 콜드브루 2, 휘핑크림 2"
+         "level1Detail":"우유,콜드브루,휘핑크림 ",
+         "level2Detail":"우유 6,콜드브루,휘핑크림",
+         "level3Detail":"우유 6,콜드브루 2,휘핑크림 2"
       },
       {
          "index":8,
          "nameEng":"grapefruit ade",
          "nameKor":"자몽 에이드",
          "price":2300,
-         "unlock":5,
+         "unlock":4,
          "ing1Index":2,
          "ing2Index":6,
          "ing3Index":-1,
@@ -194,16 +194,16 @@
          "level1Pos":0.3333,
          "level2Pos":0.3333,
          "level3Pos":0.3333,
-         "level1Detail":"탄산수, 자몽청",
-         "level2Detail":"탄산수, 자몽청 3",
-         "level3Detail":"탄산수 7, 자몽청 3"
+         "level1Detail":"탄산수,자몽청",
+         "level2Detail":"탄산수,자몽청 3",
+         "level3Detail":"탄산수 7,자몽청 3"
       },
       {
          "index":9,
          "nameEng":"grapefruit cream soda",
          "nameKor":"자몽 크림 소다",
          "price":2500,
-         "unlock":5,
+         "unlock":4,
          "ing1Index":2,
          "ing2Index":6,
          "ing3Index":13,
@@ -216,16 +216,16 @@
          "level1Pos":0.3333,
          "level2Pos":0.3333,
          "level3Pos":0.3333,
-         "level1Detail":"탄산수, 자몽청, 아이스크림 ",
-         "level2Detail":"탄산수, 자몽청, 아이스크림 2 ",
-         "level3Detail":"탄산수 5, 자몽청 3, 아이스크림 2 "
+         "level1Detail":"탄산수,자몽청,아이스크림 ",
+         "level2Detail":"탄산수,자몽청,아이스크림 2 ",
+         "level3Detail":"탄산수 5,자몽청 3,아이스크림 2 "
       },
       {
          "index":10,
          "nameEng":"grapefruit smoothie",
          "nameKor":"자몽 스무디",
          "price":2300,
-         "unlock":5,
+         "unlock":4,
          "ing1Index":3,
          "ing2Index":6,
          "ing3Index":-1,
@@ -238,16 +238,16 @@
          "level1Pos":0.3333,
          "level2Pos":0.3333,
          "level3Pos":0.3333,
-         "level1Detail":"얼음, 자몽청",
-         "level2Detail":"얼음 6, 자몽청",
-         "level3Detail":"얼음 6, 자몽청 4"
+         "level1Detail":"얼음,자몽청",
+         "level2Detail":"얼음 6,자몽청",
+         "level3Detail":"얼음 6,자몽청 4"
       },
       {
          "index":11,
          "nameEng":"grapefruit sorbet",
          "nameKor":"자몽 샤베트",
          "price":2300,
-         "unlock":5,
+         "unlock":4,
          "ing1Index":3,
          "ing2Index":6,
          "ing3Index":9,
@@ -260,9 +260,9 @@
          "level1Pos":0.3333,
          "level2Pos":0.3333,
          "level3Pos":0.3333,
-         "level1Detail":"얼음, 자몽청, 민트",
-         "level2Detail":"얼음 6, 자몽청, 민트",
-         "level3Detail":"얼음 6, 자몽청 3, 민트 1"
+         "level1Detail":"얼음,자몽청,민트",
+         "level2Detail":"얼음 6,자몽청,민트",
+         "level3Detail":"얼음 6,자몽청 3,민트 1"
       },
       {
          "index":12,
@@ -282,9 +282,9 @@
          "level1Pos":0.3333,
          "level2Pos":0.3333,
          "level3Pos":0.3333,
-         "level1Detail":"우유, 얼그레이 티백, 타피오카 펄 ",
-         "level2Detail":"우유, 얼그레이 티백, 타피오카 펄 2 ",
-         "level3Detail":"우유 5, 얼그레이 티백 3, 타피오카 펄 2"
+         "level1Detail":"우유,얼그레이 티백,타피오카 펄 ",
+         "level2Detail":"우유,얼그레이 티백,타피오카 펄 2 ",
+         "level3Detail":"우유 5,얼그레이 티백 3,타피오카 펄 2"
       },
       {
          "index":13,
@@ -304,9 +304,9 @@
          "level1Pos":0.3333,
          "level2Pos":0.3333,
          "level3Pos":0.3333,
-         "level1Detail":"우유, 얼그레이 티백, 밀크폼 ",
-         "level2Detail":"우유, 얼그레이 티백 3, 밀크폼 ",
-         "level3Detail":"우유 6, 얼그레이 티백 3, 밀크폼 1"
+         "level1Detail":"우유,얼그레이 티백,밀크폼 ",
+         "level2Detail":"우유,얼그레이 티백 3,밀크폼 ",
+         "level3Detail":"우유 6,얼그레이 티백 3,밀크폼 1"
       },
       {
          "index":14,
@@ -326,9 +326,9 @@
          "level1Pos":0.3333,
          "level2Pos":0.3333,
          "level3Pos":0.3333,
-         "level1Detail":"물, 얼그레이 티백",
-         "level2Detail":"물, 얼그레이 티백 4",
-         "level3Detail":"물 6, 얼그레이 티백 4"
+         "level1Detail":"물,얼그레이 티백",
+         "level2Detail":"물,얼그레이 티백 4",
+         "level3Detail":"물 6,얼그레이 티백 4"
       },
       {
          "index":15,
@@ -348,7 +348,7 @@
          "level1Pos":-1,
          "level2Pos":-1,
          "level3Pos":-1,
-         "level1Detail":"물 6, 민트 4",
+         "level1Detail":"물 6,민트 4",
          "level2Detail":"",
          "level3Detail":""
       },
@@ -370,16 +370,16 @@
          "level1Pos":0.3333,
          "level2Pos":0.3333,
          "level3Pos":0.3333,
-         "level1Detail":"우유, 초콜릿 시럽, 민트 ",
-         "level2Detail":"우유, 초콜릿 시럽 2, 민트",
-         "level3Detail":"우유 6, 초콜릿 시럽 2, 민트 2"
+         "level1Detail":"우유,초콜릿 시럽,민트 ",
+         "level2Detail":"우유,초콜릿 시럽 2,민트",
+         "level3Detail":"우유 6,초콜릿 시럽 2,민트 2"
       },
       {
          "index":17,
          "nameEng":"mint chocolate smoothie",
          "nameKor":"민트 초코 스무디",
          "price":2000,
-         "unlock":4,
+         "unlock":3,
          "ing1Index":3,
          "ing2Index":7,
          "ing3Index":9,
@@ -392,9 +392,9 @@
          "level1Pos":0.3333,
          "level2Pos":0.3333,
          "level3Pos":0.3333,
-         "level1Detail":"얼음, 초콜릿 시럽, 민트",
-         "level2Detail":"얼음, 초콜릿 시럽, 민트 2",
-         "level3Detail":"얼음 6, 초콜릿 시럽 2, 민트 2"
+         "level1Detail":"얼음,초콜릿 시럽,민트",
+         "level2Detail":"얼음,초콜릿 시럽,민트 2",
+         "level3Detail":"얼음 6,초콜릿 시럽 2,민트 2"
       },
       {
          "index":18,
@@ -414,9 +414,9 @@
          "level1Pos":0.3333,
          "level2Pos":0.3333,
          "level3Pos":0.3333,
-         "level1Detail":"우유, 초콜릿 시럽, 타피오카 펄",
-         "level2Detail":"우유 5,  초콜릿 시럽, 타피오카 펄",
-         "level3Detail":"우유 5,  초콜릿 시럽 3, 타피오카 펄 2"
+         "level1Detail":"우유,초콜릿 시럽,타피오카 펄",
+         "level2Detail":"우유 5, 초콜릿 시럽,타피오카 펄",
+         "level3Detail":"우유 5, 초콜릿 시럽 3,타피오카 펄 2"
       },
       {
          "index":19,
@@ -436,16 +436,16 @@
          "level1Pos":0.3333,
          "level2Pos":0.3333,
          "level3Pos":0.3333,
-         "level1Detail":"우유, 초콜릿 시럽, 밀크폼 ",
-         "level2Detail":"우유, 초콜릿 시럽, 밀크폼 1",
-         "level3Detail":"우유 6, 초콜릿 시럽 3, 밀크폼 1"
+         "level1Detail":"우유,초콜릿 시럽,밀크폼 ",
+         "level2Detail":"우유,초콜릿 시럽,밀크폼 1",
+         "level3Detail":"우유 6,초콜릿 시럽 3,밀크폼 1"
       },
       {
          "index":20,
          "nameEng":"chocolate smoothie",
          "nameKor":"초코 스무디",
          "price":1800,
-         "unlock":4,
+         "unlock":3,
          "ing1Index":3,
          "ing2Index":7,
          "ing3Index":10,
@@ -458,9 +458,9 @@
          "level1Pos":0.3333,
          "level2Pos":0.3333,
          "level3Pos":0.3333,
-         "level1Detail":"얼음, 초콜릿 시럽, 휘핑크림",
-         "level2Detail":"얼음, 초콜릿 시럽 3, 휘핑크림",
-         "level3Detail":"얼음 6, 초콜릿 시럽 3, 휘핑크림 1"
+         "level1Detail":"얼음,초콜릿 시럽,휘핑크림",
+         "level2Detail":"얼음,초콜릿 시럽 3,휘핑크림",
+         "level3Detail":"얼음 6,초콜릿 시럽 3,휘핑크림 1"
       }
    ]
 }

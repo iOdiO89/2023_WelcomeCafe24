@@ -12,6 +12,7 @@ public class GameManager : MonoBehaviour
 
     public JsonManager jsonManager;
     public UserDataClass userData;
+    public GameDataUnit gameDataUnit;
 
     public static GameManager instance;
     public static GameManager Instance{
@@ -33,6 +34,10 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    void Start(){
+        SetGameDataUnit();
+    }
+
     public void ContinueBtn(){  // StartScene-이어하기
         userData = new UserDataClass();
         userData = jsonManager.LoadData();
@@ -42,7 +47,7 @@ public class GameManager : MonoBehaviour
         else{
             Debug.Log("File Exists");
             Debug.Log("Continue");
-            SceneManager.LoadScene("MainScene");
+            SceneManager.LoadScene("DayScene");
         }
     }
 
@@ -56,19 +61,16 @@ public class GameManager : MonoBehaviour
     public void ExitBtnStartScene(){ // StartScene-종료하기
         Application.Quit();
     }
-    
-    public void Temp22Btn(){
-        userData = new UserDataClass();
-        jsonManager.SaveData(userData);
-        Debug.Log(userData.gold);
+
+    public void SetGameDataUnit()
+    {
+        IngredientArray getIngredientArr = jsonManager.LoadJson<IngredientArray>("Ingredient");
+        RecipeArray getRecipeArr = jsonManager.LoadJson<RecipeArray>("Recipe");
+        MachineArray getMachineArr = jsonManager.LoadJson<MachineArray>("Machine");
+        gameDataUnit.ingredientArray = getIngredientArr.ingredientArray;
+        gameDataUnit.recipeArray = getRecipeArr.recipeArray;
+        gameDataUnit.machineArray = getMachineArr.machineArray;
     }
-
-    /*public void TempBtn(){
-        ingredientRoot = jsonManager.LoadJson<GameDataRoot>("ingredient");
-        ingData = ingredientRoot.ingredientArray[0];
-        Debug.Log(ingData.ingNameEng);
-    }*/
-
 
     /*private void OnApplicationPause(bool pause){
         if(pause){
