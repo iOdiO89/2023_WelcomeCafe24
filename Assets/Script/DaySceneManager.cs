@@ -36,8 +36,9 @@ public class DaySceneManager : MonoBehaviour
     [SerializeField]
     Button[] cupMinusBtnArr;
 
-    private string[] cupIngredientNameArr;
+    //private string[] cupIngredientNameArr;
     // (재료1의 개수, 재료2의 개수, 재료3의 개수)를 설정하는 배열.
+    private int totalCapacity;
     public int[] cupCapacityCountArr;
     [HideInInspector]
     Sprite nowIngredient;
@@ -51,6 +52,7 @@ public class DaySceneManager : MonoBehaviour
     public Text timerText;
 
     // 주문
+    public GameObject order;
     private int orderCount; // 현재까지 처리한 주문 수
     private int orderSum; // 하루에 받아야하는 주문 수
     public Text orderText;
@@ -62,6 +64,7 @@ public class DaySceneManager : MonoBehaviour
     [HideInInspector] public static int todayReputation=0;
 
     public Text dayText;
+    public Text dayFadeText;
 
     public List<GameObject> recipeList = new List<GameObject>();
     public List<GameObject> menuList = new List<GameObject>();
@@ -75,44 +78,54 @@ public class DaySceneManager : MonoBehaviour
     public JsonManager jsonManager;
     //[SerializeField] GameDataUnit gameDataUnit;
     private Recipe recipeData;
-    private Ingredient IngredientData;
+    private Ingredient ingredientData;
+
+    private NoticeUI notice;
+    private FadeUI fade;
+    
+    [SerializeField] private Image backImage;
 
     void Start(){
-        //날짜 관련
-        GameManager.instance.userData.day++;
+        GameManager.instance.daySceneActive = GameManager.instance.daySceneActive? false : true;
+
+        if(GameManager.instance.daySceneActive){
+            GameManager.instance.userData.day++;
+            Debug.Log($"Day {GameManager.instance.userData.day} - 낮");
+            order.SetActive(true);
+            CheckOrderCount();
+            timeLimit = 90;
+            PrintOrderText(); 
+            backImage.gameObject.SetActive(false);  
+        }
+        else{
+            Debug.Log($"Day {GameManager.instance.userData.day} - 밤");
+            backImage.gameObject.SetActive(true);
+            orderSum = 5;
+            order.SetActive(false);
+        }
+
         PrintDayText();
-        Debug.Log($"Day {GameManager.instance.userData.day}");
-
-        //레시피
+        notice = FindObjectOfType<NoticeUI>();
+        fade = FindObjectOfType<FadeUI>();
+        fade.FadeIn();
+        orderCount++;
         SetRecipeColor();
-
-        //컵
         cupCapacityCountArr = new int[3];
         for(int i =0; i<3; i++)
         {
             cupCapacityCountArr[i] = 0;
         }
-        
-        //주문 관련
-        CheckOrderCount();
-        timeLimit = 90;
-        PrintOrderText();
-        orderCount++;
-
-        //gameDataUnit을 초기화시키는 함수가 printOrderText에 있어서 여기에 두었습니다.
-        //만약 기존 코드 수정 거라면
-        //그냥 gameDataUnit = jsonManager.LoadJson<GameDataUnit>("Recipe") 이런것만 지워주시고
-        //이 함수를 start 함수 초반에 쓰시면 됩니다. 그럼 아마 오류 안날거에요.
-        //SetGameDataUnit();
     }
 
     void Update()
     {   
         SetValues();
-
-        if(timeLimit>=0 && pausePopUp.activeSelf==false && orderSuccess==false){
-            CountDownTimer();
+        if(GameManager.instance.daySceneActive){
+            if(timeLimit>=0 && pausePopUp.activeSelf==false && orderSuccess==false){
+                CountDownTimer();
+            }
         }
+
    }
 
     public void FinishBtn(){ // tempBtn 나중에 지울 예정
@@ -165,11 +178,12 @@ public class DaySceneManager : MonoBehaviour
 
     // 새 주문 설정
     public void SetNewOrder(){
-        timeLimit = 90;
-        PrintOrderText();
+        if(GameManager.instance.daySceneActive){
+            timeLimit = 90;
+            PrintOrderText();
+        }
         //Debug.Log($"완료한 주문 수 : {orderCount}");
         orderCount++;
-
         ClearIngredientImages();
         ClearFields();
         ClearCupCapacityImages();
@@ -180,7 +194,6 @@ public class DaySceneManager : MonoBehaviour
     }
 
     private string MakeOrderText(){
-        //gameDataUnit = jsonManager.LoadJson<GameDataUnit>("Recipe");
         while(true){
             orderIndex = UnityEngine.Random.Range(0, 21);
             if(GameManager.instance.userData.recipeUnlock[orderIndex]>0)
@@ -189,7 +202,6 @@ public class DaySceneManager : MonoBehaviour
         recipeData = GameManager.instance.gameDataUnit.recipeArray[orderIndex];
         return recipeData.nameKor;
     }
-
 
 
 //-----------------------필드, 선반 관련 함수--------------------------
@@ -349,7 +361,7 @@ public class DaySceneManager : MonoBehaviour
 
     public void TouchCupPlusBtn(int btnIdx)
     {
-        int totalCapacity = 0;
+        totalCapacity = 0;
         for(int i=0; i<3; i++)
         {
             totalCapacity += cupCapacityCountArr[i];
@@ -451,41 +463,71 @@ public class DaySceneManager : MonoBehaviour
     }
 
     public void CupGiveBtn(){ // #305 컵-드리기 버튼
-        bool check = CheckOrderSuccess();
-        if(check){
-            Debug.Log("레시피 제작 성공!");
-        }
-        else{
-            Debug.Log("레시피 제작 실패");
-        }
-        SetGoldandReput(check);
+        if(GameManager.instance.daySceneActive){ // 낮일 때
+            bool check = CheckOrderSuccess();
+            if(check){
+                Debug.Log("레시피 제작 성공!");
+            }
+            else{
+                Debug.Log("레시피 제작 실패");
+            }
+            SetGoldandReput(check);
+            cupPopupParnet.SetActive(false);
 
-        cupPopupParnet.SetActive(false);
-
-        if(orderCount != orderSum){
-            //Invoke("SetNewOrder", 1.5f); // 1.5초 후 새로운 주문 시작
-            SetNewOrder();
+            if(orderCount != orderSum){
+                //Invoke("SetNewOrder", 1.5f); // 1.5초 후 새로운 주문 시작
+                SetNewOrder();
+            }
+            else{ // 낮에 처리해야할 주문이 모두 끝난 경우
+                jsonManager.SaveData(GameManager.instance.userData);
+                Debug.Log("Data save Complete");
+                SceneManager.LoadScene("EveningScene");
+            }
         }
-        else{ // 낮에 처리해야할 주문이 모두 끝난 경우
-            jsonManager.SaveData(GameManager.instance.userData);
-            Debug.Log("Data save Complete");
-            SceneManager.LoadScene("EveningScene");
+        else{ // 밤일 때
+            /*int totalCapacity = 0;
+            for (int i = 0; i < 3; i++){
+                totalCapacity += cupCapacityCountArr[i];
+            }
+            if(totalCapacity!=10) {
+                notice.SUB("비율의 총합은 10을 맞춰주세요!");
+                return;
+            }*/
+
+            var returnValue = CheckOrderSuccessNight();
+            if(returnValue.Item1){
+                GameManager.instance.userData.recipeUnlock[returnValue.Item3] = 3;
+                jsonManager.SaveData(GameManager.instance.userData);
+                SetRecipeColor();
+            }
+            cupPopupParnet.SetActive(false);
+            notice.SUB(returnValue.Item2);
+
+            if(orderCount != orderSum){
+                SetNewOrder();
+            }
+            else{ // 밤에 처리해야할 주문이 모두 끝난 경우
+                jsonManager.SaveData(GameManager.instance.userData);
+                Debug.Log("Data save Complete");
+                fade.FadeOut();
+                SceneManager.LoadScene("DayScene");
+            }
         }
     }
 
-    // 주문이 맞는지 확인
+    // 낮 - 주문이 맞는지 확인
     private bool CheckOrderSuccess(){ 
         List<Tuple<int, int>> ingAnswerList = new List<Tuple<int, int>>(); // 정답
         ingAnswerList.Add(new Tuple<int, int>(recipeData.ing1Index, recipeData.ing1Ratio));
         ingAnswerList.Add(new Tuple<int, int>(recipeData.ing2Index, recipeData.ing2Ratio));
         ingAnswerList.Add(new Tuple<int, int>(recipeData.ing3Index, recipeData.ing3Ratio));
+        ingAnswerList.Sort((a, b) => a.Item1.CompareTo(b.Item1));
 
         List<Tuple<int, int>> ingList = new List<Tuple<int, int>>(); // 사용자가 입력한 답
         int temp;
         for(int i=0; i<3; i++){
             // 재료의 index, 비율을 tuple로 저장
-            if(fieldsArray[i].fieldImage.sprite == null){ // null 인 경우
-                //Debug.Log("it's Null!!!!");
+            if(fieldsArray[i].fieldImage.sprite == null){
                 ingList.Add(new Tuple<int, int>(-1, 0)); 
             }
             else{
@@ -493,14 +535,7 @@ public class DaySceneManager : MonoBehaviour
                 ingList.Add(new Tuple<int, int>(temp, cupCapacityCountArr[i])); 
             }
         }
-
-        // Item1기준으로 오름차순 정렬
-        ingAnswerList.Sort((a, b) => a.Item1.CompareTo(b.Item1));
         ingList.Sort((a, b) => a.Item1.CompareTo(b.Item1));
-
-        /*for(int i=0; i<3; i++){
-            Debug.Log($"answer : {ingAnswerList[i].Item1} : {ingAnswerList[i].Item2} / user : {ingList[i].Item1} : {ingList[i].Item2}");
-        }*/
 
         for(int i=0; i<3; i++){
             if(!ingAnswerList[i].Equals(ingList[i])){
@@ -508,6 +543,64 @@ public class DaySceneManager : MonoBehaviour
             }
         }
         return true;
+    }
+
+    // 밤 - 주문이 맞는지 확인
+    private (bool, string, int) CheckOrderSuccessNight(){
+        List<Tuple<int, int, int>> answerIngIndexList = new List<Tuple<int, int, int>>(); //레시피 재료 비율
+        List<Tuple<int, int, int>> answerIngRatioList = new List<Tuple<int, int, int>>();
+        for(int i=0; i<21; i++){
+            recipeData = GameManager.instance.gameDataUnit.recipeArray[i];
+            answerIngIndexList.Add(new Tuple<int, int, int>(recipeData.ing1Index, recipeData.ing2Index, recipeData.ing3Index));
+            answerIngRatioList.Add(new Tuple<int, int, int>(recipeData.ing1Ratio, recipeData.ing2Ratio, recipeData.ing3Ratio));
+        }
+        
+        List<Tuple<int, int>> ingList = new List<Tuple<int, int>>(); // 사용자가 입력한 답
+        int temp;
+        for(int i=0; i<3; i++){
+            // 재료의 index, 비율을 tuple로 저장
+            if(fieldsArray[i].fieldImage.sprite != null){
+                temp = System.Convert.ToInt32(fieldsArray[i].fieldImage.sprite.name);
+                ingList.Add(new Tuple<int, int>(temp, cupCapacityCountArr[i])); 
+                //ingList.Add(new Tuple<int, int>(-1, 0)); 
+            }
+        }
+        ingList.Sort((a, b) => a.Item1.CompareTo(b.Item1));
+        for(int i=ingList.Count; i<3; i++){
+            ingList.Add(new Tuple<int, int>(-1, 0)); 
+        }
+
+        Tuple<int, int, int> userIngIndex = new Tuple<int, int, int>(ingList[0].Item1, ingList[1].Item1, ingList[2].Item1);
+        Tuple<int, int, int> userIngRatio = new Tuple<int, int, int>(ingList[0].Item2, ingList[1].Item2, ingList[2].Item2);
+        //Debug.Log($"userIngIndex = {userIngIndex.Item1}, {userIngIndex.Item2}, {userIngIndex.Item3}");
+        //Debug.Log($"userIngRatio = {userIngRatio.Item1}, {userIngRatio.Item2}, {userIngRatio.Item3}");
+
+        for(int i=0; i<21; i++){
+            if(answerIngIndexList[i].Equals(userIngIndex)){
+                recipeData = GameManager.instance.gameDataUnit.recipeArray[i];
+                if(answerIngRatioList[i].Equals(userIngRatio)){ // 모두 일치
+                    return (true, $"{recipeData.nameKor}을(를) 제조하는데 성공했습니다!", i);
+                }
+
+                string temp1 = "", temp2 = "";
+                ingredientData = GameManager.instance.gameDataUnit.ingredientArray[userIngIndex.Item1];
+                Ingredient ingredientData2 = GameManager.instance.gameDataUnit.ingredientArray[userIngIndex.Item2];
+                if(userIngRatio.Item2 != answerIngRatioList[i].Item2){
+                    if(userIngRatio.Item2 > answerIngRatioList[i].Item2) temp2 = " " + ingredientData2.high1;
+                    else temp2 = " " + ingredientData2.low1;
+
+                    if(userIngRatio.Item1 == answerIngRatioList[i].Item1) temp1 = "";
+                    else if(userIngRatio.Item1 > answerIngRatioList[i].Item1) temp1 = ingredientData.high1;
+                    else temp1 = ingredientData.low1;
+                }
+                else{
+                    if(userIngRatio.Item1 > answerIngRatioList[i].Item1) temp1 = ingredientData.high2;
+                    else temp1 = ingredientData.low2;
+                }
+                return (false, $"{temp1}{temp2} {recipeData.nameKor}가 제조되었습니다.(제조실패)", -1);
+            }
+        }
+        return (false, "이도저도 아닌 무언가를 만들었습니다(제조실패)", -1);
     }
 
     // 주문성공/실패에 따라 명성/재화 지급
@@ -526,7 +619,7 @@ public class DaySceneManager : MonoBehaviour
             else if(GameManager.instance.userData.reputation<=60){ // 30 < 명성 <= 60
                 tempPrice = (double)recipeData.price * 1.6;
             } 
-            else if(GameManager.instance.userData.reputation<=90){ // 60 < 명성 <= 90
+            else if(GameManager.instance.userData.reputation<=90){ // 60 < 명성 <= 909
                 tempPrice = (double)recipeData.price * 1.9;
             }
             else{ // 90 < 명성 <= 100
@@ -589,6 +682,9 @@ public class DaySceneManager : MonoBehaviour
             if(GameManager.instance.userData.recipeUnlock[i]==0){
                 menuTextList[i].color = transparentColor;
             }
+            else{
+                menuTextList[i].color = menuTextList[0].color;
+            }
         }
     }
 
@@ -650,6 +746,12 @@ public class DaySceneManager : MonoBehaviour
     
     public void PrintDayText(){
         dayText.text = "DAY " + GameManager.instance.userData.day.ToString();
+        if(GameManager.instance.daySceneActive){
+            dayFadeText.text = "DAY " + GameManager.instance.userData.day.ToString() + "- 낮";
+        }
+        else{
+            dayFadeText.text = "DAY " + GameManager.instance.userData.day.ToString() + "- 밤";
+        }
     }
     
     public void ExitBtn(){    // dayScene-PauseBtn-게임종료

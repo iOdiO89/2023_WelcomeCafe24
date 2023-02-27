@@ -14,6 +14,8 @@ public class GameManager : MonoBehaviour
     public UserDataClass userData;
     public GameDataUnit gameDataUnit;
 
+    public bool daySceneActive;
+
     public static GameManager instance;
     public static GameManager Instance{
         get{
@@ -45,8 +47,8 @@ public class GameManager : MonoBehaviour
             Debug.Log("File Not Exists Yet");
         }
         else{
-            Debug.Log("File Exists");
-            Debug.Log("Continue");
+            Debug.Log("File Exists - Continue");
+            daySceneActive = false;
             SceneManager.LoadScene("DayScene");
         }
     }
@@ -55,6 +57,7 @@ public class GameManager : MonoBehaviour
         userData = new UserDataClass();
         jsonManager.SaveData<UserDataClass>(userData);
         Debug.Log("Start New");
+        daySceneActive = false;
         SceneManager.LoadScene("PrologScene");
     }
     

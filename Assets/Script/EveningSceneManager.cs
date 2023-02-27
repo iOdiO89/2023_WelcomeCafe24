@@ -49,10 +49,16 @@ public class EveningSceneManager : MonoBehaviour
     private Recipe recipeData;
     private Machine machineData;
 
+    private NoticeUI notice;
+    private FadeUI fade;
+
     void Start()
     {   
-        Invoke("ShowReceiptPopUp", 0.3f);
-        //ShowReceiptPopUp();
+        notice = FindObjectOfType<NoticeUI>();
+        fade = FindObjectOfType<FadeUI>(); 
+        fade.FadeIn();      
+        //Invoke("ShowReceiptPopUp", 0.3f);
+        ShowReceiptPopUp();
     }
 
     void Update(){
@@ -212,10 +218,11 @@ public class EveningSceneManager : MonoBehaviour
             //Debug.Log($"ingredientIndex = {ingredientIndex}");
             GameManager.instance.userData.ingredientUnlock[ingredientIndex]=true;
             GameManager.instance.userData.gold -= ingredientPrice;
-            Debug.Log($"남은 돈 = {GameManager.instance.userData.gold}");
+            //Debug.Log($"남은 돈 = {GameManager.instance.userData.gold}");
             jsonManager.SaveData(GameManager.instance.userData);
         }
         else{
+            notice.SUB("돈이 부족합니다 (구매불가)");
             Debug.Log("구매불가");
         }
     }
@@ -225,7 +232,8 @@ public class EveningSceneManager : MonoBehaviour
         if(recipeBuyBtn.activeSelf){
             recipeData = GameManager.instance.gameDataUnit.recipeArray[recipeIndex];
             recipeName.text = recipeData.nameKor;
-            recipeGrade = UnityEngine.Random.Range(1, 4);
+            int tempNum = GameManager.instance.userData.recipeUnlock[recipeIndex];
+            recipeGrade = UnityEngine.Random.Range(tempNum, 4);
             if(recipeGrade==1){
                 recipeGradeText.text = "초급";
                 recipePrice = recipeData.level1Price; 
@@ -249,7 +257,8 @@ public class EveningSceneManager : MonoBehaviour
     private int ChooseRecipe(){
         List<int> recipeList = new List<int>();
         for(int i=0; i<21; i++){
-            if(GameManager.instance.userData.recipeUnlock[i]==0) recipeList.Add(i);
+            recipeData = GameManager.instance.gameDataUnit.recipeArray[i];
+            if(GameManager.instance.userData.recipeUnlock[i]<3 && recipeData.level1Price!=-1) recipeList.Add(i);
         }
         int tempIndex = recipeList[UnityEngine.Random.Range(0, recipeList.Count)];
         return tempIndex;
@@ -282,7 +291,7 @@ public class EveningSceneManager : MonoBehaviour
                 machinePriceText.text = machinePrice.ToString() + " G";
             } 
             else if(GameManager.instance.userData.machineLevel==2){
-                machineGrade.text = "고급형";
+                machineGrade.text = "고급";
                 machinePrice = machineData.level2Price; 
                 machinePriceText.text = machinePrice.ToString() + " G";
             } 
@@ -358,6 +367,7 @@ public class EveningSceneManager : MonoBehaviour
             return;
         }
         else{
+            notice.SUB("돈이 부족합니다 (구매불가)");
             Debug.Log("구매불가");
         }
     }
@@ -380,11 +390,12 @@ public class EveningSceneManager : MonoBehaviour
                     || prevMachineIndex==machineIndex);
         }
         else{
+            notice.SUB("돈이 부족합니다 (구매불가)");
             Debug.Log("돈 부족");
         }
     }
 
     public void ExitBuyPopUp(){
-        SceneManager.LoadScene("NightScene");
+        SceneManager.LoadScene("DayScene");
     }
 }

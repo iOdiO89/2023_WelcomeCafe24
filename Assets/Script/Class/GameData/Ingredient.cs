@@ -16,5 +16,9 @@ public class Ingredient
     public float bOsX;
     public float bXsO;
     public float bOsO;
+    public string high1;
+    public string low1;
+    public string high2;
+    public string low2;
 }
 
