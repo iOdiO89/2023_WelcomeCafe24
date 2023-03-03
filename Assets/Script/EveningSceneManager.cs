@@ -347,6 +347,7 @@ public class EveningSceneManager : MonoBehaviour
             machineBuyBtn.SetActive(false);
             //Debug.Log($"machineIndex = {machineIndex}");
             GameManager.instance.userData.machineUnlock[machineIndex]=true;
+            if(machineIndex==3) GameManager.instance.userData.ingredientUnlock[3] = true;
             GameManager.instance.userData.gold -= machinePrice;
             Debug.Log($"남은 돈 = {GameManager.instance.userData.gold}");
 

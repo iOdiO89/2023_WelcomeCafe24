@@ -40,7 +40,7 @@
          "level1Pos":-1,
          "level2Pos":-1,
          "level3Pos":-1,
-         "level1Detail":"물 6,에스프레소 3,민트 1",
+         "level1Detail":"물 7,에스프레소 3",
          "level2Detail":"",
          "level3Detail":""
       },
@@ -306,7 +306,7 @@
          "level3Pos":0.3333,
          "level1Detail":"우유,얼그레이 티백,밀크폼 ",
          "level2Detail":"우유,얼그레이 티백 3,밀크폼 ",
-         "level3Detail":"우유 6,얼그레이 티백 3,밀크폼 1"
+         "level3Detail":"우유 5,얼그레이 티백 3,밀크폼 2"
       },
       {
          "index":14,
@@ -348,7 +348,7 @@
          "level1Pos":-1,
          "level2Pos":-1,
          "level3Pos":-1,
-         "level1Detail":"물 6,민트 4",
+         "level1Detail":"물 7,민트 3",
          "level2Detail":"",
          "level3Detail":""
       },

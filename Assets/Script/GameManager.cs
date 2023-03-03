@@ -15,6 +15,7 @@ public class GameManager : MonoBehaviour
     public GameDataUnit gameDataUnit;
 
     public bool daySceneActive;
+    public bool continueBool;
 
     public static GameManager instance;
     public static GameManager Instance{
@@ -49,6 +50,7 @@ public class GameManager : MonoBehaviour
         else{
             Debug.Log("File Exists - Continue");
             daySceneActive = false;
+            continueBool = true; 
             SceneManager.LoadScene("DayScene");
         }
     }
