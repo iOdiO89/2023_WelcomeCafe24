@@ -22,7 +22,9 @@ public class DaySceneManager : MonoBehaviour
     [SerializeField]
     Image ingredientImage;
     [SerializeField]
-    Text ingredientText;
+    Text ingredientDetailText;
+    [SerializeField]
+    Text ingredientNameText;
     [SerializeField]
     Field[] fieldsArray;
     [SerializeField]
@@ -221,7 +223,7 @@ public class DaySceneManager : MonoBehaviour
     public void TouchShelfBtn(int floor)
     {
         StringBuilder path = new StringBuilder();
-        path.Append("Images/TempImage/");
+        path.Append("Images/Ingredient/");
 
         switch (floor)
         {
@@ -264,7 +266,7 @@ public class DaySceneManager : MonoBehaviour
                 {
                     itemBtnArray[i].enabled = true;
                     //시각적으로 잠금되어있음을 보이기 위해 임시적으로 색 조정 합니다.
-                    itemBtnArray[i].image.color = new Color(1f, 1f, 1f);
+                    itemBtnArray[i].image.color = SetColor(ingredientIndex);   
                 }
             }
             else
@@ -272,6 +274,57 @@ public class DaySceneManager : MonoBehaviour
                 itemBtnArray[i].gameObject.SetActive(false);
             }
         }
+    }
+    
+    private Color SetColor(int ingredientIndex){
+        Color color = new Color(1f, 1f, 1f);
+        switch(ingredientIndex){
+            case 0:
+                color = new Color(148/255f, 218/255f, 255/255f);
+                break;
+            case 1:
+                color = new Color(182/255f, 226/255f, 161/255f);
+                break;
+            case 2:
+                color = new Color(147/255f, 191/255f, 207/255f);
+                break;
+            case 3:
+                color = new Color(228/255f, 251/255f, 255/255f);
+                break;
+            case 4:
+                color = new Color(60/255f, 42/255f, 33/255f);
+                break;
+            case 5:
+                color = new Color(134/255f, 88/255f, 88/255f);
+                break;
+            case 6:
+                color = new Color(255/255f, 119/255f, 119/255f);
+                break;
+            case 7:
+                color = new Color(129/255f, 91/255f, 91/255f);
+                break;
+            case 8:
+                color = new Color(89/255f, 69/255f, 69/255f);
+                break;
+            case 9:
+                color = new Color(200/255f, 219/255f, 190/255f);
+                break;
+            case 10:
+                color = new Color(246/255f, 223/255f, 235/255f);
+                break;
+            case 11:
+                color = new Color(105/255f, 78/255f, 78/255f);
+                break;
+            case 12:
+                color = new Color(255/255f, 248/255f, 234/255f);
+                break;
+            case 13:
+                color = new Color(240/255f, 235/255f, 204/255f);
+                break;
+            default:
+                break;
+        }
+        return color;
     }
 
     void SetShelfPopup(bool active)
@@ -293,16 +346,25 @@ public class DaySceneManager : MonoBehaviour
     {
         SetIngredientPopup(true);
         nowIngredient = EventSystem.current.currentSelectedGameObject.GetComponent<Image>().sprite;
-        ingredientImage.sprite = nowIngredient;
+        int ingredientIndex = System.Convert.ToInt32(nowIngredient.name);
+        
+        ingredientImage.sprite = nowIngredient; 
+        ingredientImage.color = SetColor(ingredientIndex);
+        //nowIngredient.gameObject.color = SetColor(nowIngredient.name);
+
+        
+        
         SetIngredientText();
     }
 
     void SetIngredientText()
     {
-        ingredientText.text = "";
+        ingredientDetailText.text = "";
+        ingredientNameText.text = "";
         int ingredientIndex = int.Parse(ingredientImage.sprite.name);
         
-        ingredientText.text = GameManager.instance.gameDataUnit.ingredientArray[ingredientIndex].detail;
+        ingredientNameText.text = GameManager.instance.gameDataUnit.ingredientArray[ingredientIndex].nameKor;
+        ingredientDetailText.text = GameManager.instance.gameDataUnit.ingredientArray[ingredientIndex].detail;
     }
 
     //active가 참이면 재료 팝업창을 키고 아니면 끄고
