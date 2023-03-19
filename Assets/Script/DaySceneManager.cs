@@ -223,7 +223,7 @@ public class DaySceneManager : MonoBehaviour
     public void TouchShelfBtn(int floor)
     {
         StringBuilder path = new StringBuilder();
-        path.Append("Images/Ingredient/");
+        path.Append("Images/Both/Ingredient/");
 
         switch (floor)
         {
@@ -347,13 +347,8 @@ public class DaySceneManager : MonoBehaviour
         SetIngredientPopup(true);
         nowIngredient = EventSystem.current.currentSelectedGameObject.GetComponent<Image>().sprite;
         int ingredientIndex = System.Convert.ToInt32(nowIngredient.name);
-        
         ingredientImage.sprite = nowIngredient; 
-        ingredientImage.color = SetColor(ingredientIndex);
-        //nowIngredient.gameObject.color = SetColor(nowIngredient.name);
-
-        
-        
+        ingredientImage.color = SetColor(ingredientIndex);       
         SetIngredientText();
     }
 
