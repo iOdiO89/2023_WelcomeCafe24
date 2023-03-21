@@ -84,8 +84,6 @@ public class DaySceneManager : MonoBehaviour
 
     private NoticeUI notice;
     private FadeUI fade;
-    
-    [SerializeField] private Image backImage;
 
     void Start(){
         GameManager.instance.daySceneActive = GameManager.instance.daySceneActive? false : true;
@@ -97,11 +95,9 @@ public class DaySceneManager : MonoBehaviour
             CheckOrderCount();
             timeLimit = 90;
             PrintOrderText(); 
-            backImage.gameObject.SetActive(false);  
         }
         else{
             Debug.Log($"Day {GameManager.instance.userData.day} - 밤");
-            backImage.gameObject.SetActive(true);
             orderSum = 5;
             order.SetActive(false);
         }
@@ -132,7 +128,6 @@ public class DaySceneManager : MonoBehaviour
                 CountDownTimer();
             }
         }
-
    }
 
     public void FinishBtn(){ // tempBtn 나중에 지울 예정
@@ -196,6 +191,7 @@ public class DaySceneManager : MonoBehaviour
             timeLimit = 90;
             PrintOrderText();
         }
+        SoundManager.instance.PlayEffect("bell", 0.7f);
         //Debug.Log($"완료한 주문 수 : {orderCount}");
         orderCount++;
         ClearIngredientImages();
@@ -222,6 +218,7 @@ public class DaySceneManager : MonoBehaviour
 
     public void TouchShelfBtn(int floor)
     {
+        SoundManager.instance.PlayEffect("button");
         StringBuilder path = new StringBuilder();
         path.Append("Images/Both/Ingredient/");
 
@@ -338,12 +335,14 @@ public class DaySceneManager : MonoBehaviour
 
     public void ExitPopup()
     {
+        SoundManager.instance.PlayEffect("button");
         SetShelfPopup(false);
     }
 
     //선반 팝업창에서 재료를 선택했을 때 재료를 담을 것인지를 선택하는 팝업창 키기.
     public void TouchIngredientBtn()
     {
+        SoundManager.instance.PlayEffect("click");
         SetIngredientPopup(true);
         nowIngredient = EventSystem.current.currentSelectedGameObject.GetComponent<Image>().sprite;
         int ingredientIndex = System.Convert.ToInt32(nowIngredient.name);
@@ -374,12 +373,14 @@ public class DaySceneManager : MonoBehaviour
 
     public void TouchPickUpBtn()
     {
+        SoundManager.instance.PlayEffect("button");
         SetIngredientPopup(false);
         SetFieldsArray();
     }
 
     public void TouchPutDownBtn()
     {
+        SoundManager.instance.PlayEffect("button");
         SetIngredientPopup(false);
     }
 
@@ -410,6 +411,7 @@ public class DaySceneManager : MonoBehaviour
 //-----------------------컵 함수----------------------------
     public void TouchCupBtn()
     {   
+        SoundManager.instance.PlayEffect("button");
         cupPopupParnet.SetActive(true);
         for(int i =0; i<3; i++)
         {
@@ -430,6 +432,7 @@ public class DaySceneManager : MonoBehaviour
 
     public void TouchCupPlusBtn(int btnIdx)
     {
+        SoundManager.instance.PlayEffect("water", 1f);
         totalCapacity = 0;
         for(int i=0; i<3; i++)
         {
@@ -460,6 +463,7 @@ public class DaySceneManager : MonoBehaviour
 
     public void TouchCupMinusBtn(int btnIdx)
     {
+        SoundManager.instance.PlayEffect("water");
         int totalCapacity = 0;
         for (int i = 0; i < 3; i++)
         {
@@ -532,6 +536,7 @@ public class DaySceneManager : MonoBehaviour
     }
 
     public void CupGiveBtn(){ // #305 컵-드리기 버튼
+        SoundManager.instance.PlayEffect("order");
         if(GameManager.instance.daySceneActive){ // 낮일 때
             bool check = CheckOrderSuccess();
             if(check){
@@ -646,6 +651,7 @@ public class DaySceneManager : MonoBehaviour
             if(answerIngIndexList[i].Equals(userIngIndex)){
                 recipeData = GameManager.instance.gameDataUnit.recipeArray[i];
                 if(answerIngRatioList[i].Equals(userIngRatio)){ // 모두 일치
+                    SoundManager.instance.PlayEffect("success", 0.7f);
                     return (true, $"{recipeData.nameKor}을(를) 제조하는데 성공했습니다!", i);
                 }
 
@@ -669,9 +675,11 @@ public class DaySceneManager : MonoBehaviour
                     if(userIngRatio.Item1 > answerIngRatioList[i].Item1) temp1 = ingredientData.high2;
                     else temp1 = ingredientData.low2;
                 }
+                SoundManager.instance.PlayEffect("fail", 0.7f);
                 return (false, $"{temp1}{temp2} {recipeData.nameKor}가 제조되었습니다.(제조실패)", -1);
             }
         }
+        SoundManager.instance.PlayEffect("fail", 0.7f);
         return (false, "이도저도 아닌 무언가를 만들었습니다(제조실패)", -1);
     }
 
@@ -803,6 +811,7 @@ public class DaySceneManager : MonoBehaviour
     }
 
     public void MenuBtn(){
+        SoundManager.instance.PlayEffect("button");
         GameObject clickObject = EventSystem.current.currentSelectedGameObject;
         string name = clickObject.name;
         string stringRes = name.Substring(name.Length-2);
@@ -827,8 +836,13 @@ public class DaySceneManager : MonoBehaviour
     }
     
     public void ExitBtn(){    // dayScene-PauseBtn-게임종료
+        SoundManager.instance.PlayEffect("button");
         jsonManager.SaveData(GameManager.instance.userData);
         Debug.Log("Data save Complete");
         Application.Quit();
+    }
+
+    public void BtnSound(){
+        SoundManager.instance.PlayEffect("button");
     }
 }

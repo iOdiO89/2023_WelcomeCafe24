@@ -79,6 +79,7 @@ public class EveningSceneManager : MonoBehaviour
     }
 
     public void ExitReceiptPopUp(){
+        SoundManager.instance.PlayEffect("button");
         receiptPopUp.SetActive(false);
 
         if(GameManager.instance.userData.day%3 == 0){
@@ -100,6 +101,7 @@ public class EveningSceneManager : MonoBehaviour
     }
 
     public void ExitRentalFeePopUp(){
+        SoundManager.instance.PlayEffect("button");
         int rentalFee = SetRentalFee();
         if(GameManager.instance.userData.gold < rentalFee){ // 가지고 있는 돈만 차감
             GameManager.instance.userData.gold = 0;
@@ -212,6 +214,7 @@ public class EveningSceneManager : MonoBehaviour
 
     // 재료 사기 버튼
     public void BuyIngredientBtn(){
+        SoundManager.instance.PlayEffect("money");
         if(GameManager.instance.userData.gold >= ingredientPrice){
             ingredientPurchaseDone.SetActive(true);
             ingredientBuyBtn.SetActive(false);
@@ -265,6 +268,7 @@ public class EveningSceneManager : MonoBehaviour
     }
 
     public void BuyRecipeBtn(){
+        SoundManager.instance.PlayEffect("money");
         if(GameManager.instance.userData.gold >= recipePrice){
             recipePurchaseDone.SetActive(true);
             recipeBuyBtn.SetActive(false);
@@ -342,6 +346,7 @@ public class EveningSceneManager : MonoBehaviour
 
     // 기계 사기 버튼
     public void BuyMachineBtn(){
+        SoundManager.instance.PlayEffect("money");
         if(GameManager.instance.userData.gold >= machinePrice){
             machinePurchaseDone.SetActive(true);
             machineBuyBtn.SetActive(false);
@@ -374,6 +379,7 @@ public class EveningSceneManager : MonoBehaviour
     }
 // -----------------------목록갱신, 그만사기 버튼-------------------------------------
     public void AnotherBtn(){
+        SoundManager.instance.PlayEffect("button");
         if(GameManager.instance.userData.gold>=100){
             if(ingredientBuyBtn.activeSelf || recipeBuyBtn.activeSelf || machineBuyBtn.activeSelf)
                 GameManager.instance.userData.gold -= 100;
@@ -397,6 +403,7 @@ public class EveningSceneManager : MonoBehaviour
     }
 
     public void ExitBuyPopUp(){
+        SoundManager.instance.PlayEffect("button");
         SceneManager.LoadScene("DayScene");
     }
 }
