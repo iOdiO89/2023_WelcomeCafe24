@@ -79,7 +79,7 @@ public class EveningSceneManager : MonoBehaviour
     }
 
     public void ExitReceiptPopUp(){
-        SoundManager.instance.PlayEffect("button");
+        SoundManager.instance.PlayEffect("bell");
         receiptPopUp.SetActive(false);
 
         if(GameManager.instance.userData.day%3 == 0){

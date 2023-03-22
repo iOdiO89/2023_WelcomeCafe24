@@ -191,7 +191,6 @@ public class DaySceneManager : MonoBehaviour
             timeLimit = 90;
             PrintOrderText();
         }
-        SoundManager.instance.PlayEffect("bell", 0.7f);
         //Debug.Log($"완료한 주문 수 : {orderCount}");
         orderCount++;
         ClearIngredientImages();
@@ -218,7 +217,7 @@ public class DaySceneManager : MonoBehaviour
 
     public void TouchShelfBtn(int floor)
     {
-        SoundManager.instance.PlayEffect("button");
+        SoundManager.instance.PlayEffect("shelf");
         StringBuilder path = new StringBuilder();
         path.Append("Images/Both/Ingredient/");
 
@@ -335,7 +334,7 @@ public class DaySceneManager : MonoBehaviour
 
     public void ExitPopup()
     {
-        SoundManager.instance.PlayEffect("button");
+        SoundManager.instance.PlayEffect("popup");
         SetShelfPopup(false);
     }
 
@@ -373,14 +372,14 @@ public class DaySceneManager : MonoBehaviour
 
     public void TouchPickUpBtn()
     {
-        SoundManager.instance.PlayEffect("button");
+        SoundManager.instance.PlayEffect("click");
         SetIngredientPopup(false);
         SetFieldsArray();
     }
 
     public void TouchPutDownBtn()
     {
-        SoundManager.instance.PlayEffect("button");
+        SoundManager.instance.PlayEffect("click");
         SetIngredientPopup(false);
     }
 
