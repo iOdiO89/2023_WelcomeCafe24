@@ -37,6 +37,7 @@ public class DaySceneManager : MonoBehaviour
     Button[] cupPlusBtnArr;
     [SerializeField]
     Button[] cupMinusBtnArr;
+    [SerializeField] Button cup;
 
     //private string[] cupIngredientNameArr;
     // (재료1의 개수, 재료2의 개수, 재료3의 개수)를 설정하는 배열.
@@ -75,10 +76,10 @@ public class DaySceneManager : MonoBehaviour
     public GameObject notActiveRecipe;
     public Text notActiveRecipeText;
     private Color transparentColor;
+    [SerializeField] private GameObject[] fieldOutline;
 
     //데이터 관련
     public JsonManager jsonManager;
-    //[SerializeField] GameDataUnit gameDataUnit;
     private Recipe recipeData;
     private Ingredient ingredientData;
 
@@ -87,7 +88,6 @@ public class DaySceneManager : MonoBehaviour
 
     void Start(){
         GameManager.instance.daySceneActive = GameManager.instance.daySceneActive? false : true;
-        SetRecipeColor();
         if(GameManager.instance.daySceneActive){
             if(!GameManager.instance.continueBool) GameManager.instance.userData.day++;
             Debug.Log($"Day {GameManager.instance.userData.day} - 낮");
@@ -108,6 +108,12 @@ public class DaySceneManager : MonoBehaviour
         fade.FadeIn();
         orderCount++;
         
+        ColorBlock color = cup.colors;
+        color.normalColor = SetColor();
+        cup.colors = color;
+        for(int i=0; i<3; i++){
+            fieldOutline[i].GetComponent<Outline>().effectColor = SetColor();
+        }
         cupCapacityCountArr = new int[3];
         for(int i =0; i<3; i++)
         {
@@ -129,18 +135,6 @@ public class DaySceneManager : MonoBehaviour
             }
         }
    }
-
-    public void FinishBtn(){ // tempBtn 나중에 지울 예정
-        jsonManager.SaveData(GameManager.instance.userData);
-        SceneManager.LoadScene("EveningScene");
-    }
-
-    public void Finish2Btn(){ // tempBtn 나중에 지울 예정
-        jsonManager.SaveData(GameManager.instance.userData);
-        Debug.Log("Data save Complete");
-        fade.FadeOut();
-        SceneManager.LoadScene("DayScene");
-    }
 
     //명성, 재화 화면에 출력
     private void SetValues(){
@@ -255,14 +249,12 @@ public class DaySceneManager : MonoBehaviour
                 if (!GameManager.instance.userData.ingredientUnlock[ingredientIndex])
                 {
                     itemBtnArray[i].enabled = false;
-                    //시각적으로 잠금되어있음을 보이기 위해 임시적으로 색 조정 합니다.
                     itemBtnArray[i].image.color = new Color(0.5f, 0.5f, 0.5f);
                 }
                 else
                 {
                     itemBtnArray[i].enabled = true;
-                    //시각적으로 잠금되어있음을 보이기 위해 임시적으로 색 조정 합니다.
-                    itemBtnArray[i].image.color = SetColor(ingredientIndex);   
+                    itemBtnArray[i].image.color = SetColor();   
                 }
             }
             else
@@ -272,55 +264,11 @@ public class DaySceneManager : MonoBehaviour
         }
     }
     
-    private Color SetColor(int ingredientIndex){
-        Color color = new Color(1f, 1f, 1f);
-        switch(ingredientIndex){
-            case 0:
-                color = new Color(148/255f, 218/255f, 255/255f);
-                break;
-            case 1:
-                color = new Color(182/255f, 226/255f, 161/255f);
-                break;
-            case 2:
-                color = new Color(147/255f, 191/255f, 207/255f);
-                break;
-            case 3:
-                color = new Color(228/255f, 251/255f, 255/255f);
-                break;
-            case 4:
-                color = new Color(60/255f, 42/255f, 33/255f);
-                break;
-            case 5:
-                color = new Color(134/255f, 88/255f, 88/255f);
-                break;
-            case 6:
-                color = new Color(255/255f, 119/255f, 119/255f);
-                break;
-            case 7:
-                color = new Color(129/255f, 91/255f, 91/255f);
-                break;
-            case 8:
-                color = new Color(89/255f, 69/255f, 69/255f);
-                break;
-            case 9:
-                color = new Color(200/255f, 219/255f, 190/255f);
-                break;
-            case 10:
-                color = new Color(246/255f, 223/255f, 235/255f);
-                break;
-            case 11:
-                color = new Color(105/255f, 78/255f, 78/255f);
-                break;
-            case 12:
-                color = new Color(255/255f, 248/255f, 234/255f);
-                break;
-            case 13:
-                color = new Color(240/255f, 235/255f, 204/255f);
-                break;
-            default:
-                break;
-        }
-        return color;
+    private Color SetColor(){
+        if(GameManager.instance.daySceneActive)
+            return new Color(235/255f, 226/255f, 116/255f);
+        else
+            return new Color(70/255f, 130/255f, 180/255f);
     }
 
     void SetShelfPopup(bool active)
@@ -346,7 +294,7 @@ public class DaySceneManager : MonoBehaviour
         nowIngredient = EventSystem.current.currentSelectedGameObject.GetComponent<Image>().sprite;
         int ingredientIndex = System.Convert.ToInt32(nowIngredient.name);
         ingredientImage.sprite = nowIngredient; 
-        ingredientImage.color = SetColor(ingredientIndex);       
+        ingredientImage.color = SetColor();       
         SetIngredientText();
     }
 
@@ -395,6 +343,7 @@ public class DaySceneManager : MonoBehaviour
             {
                 fieldsArray[i].fieldImage.sprite = nowIngredient;
                 fieldsArray[i].isSpriteExist = true;
+                fieldsArray[i].fieldImage.color = SetColor();
                 break;
             }
             else if (fieldsArray[2].isSpriteExist)
@@ -402,6 +351,9 @@ public class DaySceneManager : MonoBehaviour
                 fieldsArray[0].fieldImage.sprite = fieldsArray[1].fieldImage.sprite;
                 fieldsArray[1].fieldImage.sprite = fieldsArray[2].fieldImage.sprite;
                 fieldsArray[2].fieldImage.sprite = nowIngredient;
+                for(int j=0; j<3; j++){
+                    fieldsArray[j].fieldImage.color = SetColor();
+                }
                 break;
             }
         }
@@ -418,7 +370,7 @@ public class DaySceneManager : MonoBehaviour
             {
                 cupPlusBtnArr[i].enabled = true;
                 cupMinusBtnArr[i].enabled = true;
-                cupIngredientImageArr[i].color = new Color(1, 1, 1);
+                cupIngredientImageArr[i].color = SetColor();
                 cupIngredientImageArr[i].sprite = fieldsArray[i].fieldImage.sprite;
             }
             else
@@ -650,7 +602,7 @@ public class DaySceneManager : MonoBehaviour
             if(answerIngIndexList[i].Equals(userIngIndex)){
                 recipeData = GameManager.instance.gameDataUnit.recipeArray[i];
                 if(answerIngRatioList[i].Equals(userIngRatio)){ // 모두 일치
-                    SoundManager.instance.PlayEffect("success", 0.7f);
+                    SoundManager.instance.PlayEffect("success");
                     return (true, $"{recipeData.nameKor}을(를) 제조하는데 성공했습니다!", i);
                 }
 
@@ -674,11 +626,11 @@ public class DaySceneManager : MonoBehaviour
                     if(userIngRatio.Item1 > answerIngRatioList[i].Item1) temp1 = ingredientData.high2;
                     else temp1 = ingredientData.low2;
                 }
-                SoundManager.instance.PlayEffect("fail", 0.7f);
+                SoundManager.instance.PlayEffect("fail");
                 return (false, $"{temp1}{temp2} {recipeData.nameKor}가 제조되었습니다.(제조실패)", -1);
             }
         }
-        SoundManager.instance.PlayEffect("fail", 0.7f);
+        SoundManager.instance.PlayEffect("fail");
         return (false, "이도저도 아닌 무언가를 만들었습니다(제조실패)", -1);
     }
 
@@ -742,6 +694,8 @@ public class DaySceneManager : MonoBehaviour
         {
             fieldsArray[i].isSpriteExist = false;
             fieldsArray[i].fieldImage.sprite = null;
+            Color color = new Color(1f, 1f, 1f);
+            fieldsArray[i].fieldImage.color = color;
         }
     }
 
@@ -843,5 +797,17 @@ public class DaySceneManager : MonoBehaviour
 
     public void BtnSound(){
         SoundManager.instance.PlayEffect("button");
+    }
+
+    public void FinishBtn(){ // tempBtn 나중에 지울 예정
+        jsonManager.SaveData(GameManager.instance.userData);
+        SceneManager.LoadScene("EveningScene");
+    }
+
+    public void Finish2Btn(){ // tempBtn 나중에 지울 예정
+        jsonManager.SaveData(GameManager.instance.userData);
+        Debug.Log("Data save Complete");
+        fade.FadeOut();
+        SceneManager.LoadScene("DayScene");
     }
 }

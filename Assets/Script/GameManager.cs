@@ -44,7 +44,7 @@ public class GameManager : MonoBehaviour
     public void ContinueBtn(){  // StartScene-이어하기
         userData = new UserDataClass();
         userData = jsonManager.LoadData();
-        SoundManager.instance.PlayEffect("button", 0.7f);
+        SoundManager.instance.PlayEffect("button");
         if(userData == null){ // 저장된 데이터가 없는데 이어하기 하려는 경우
             Debug.Log("File Not Exists Yet");
         }
@@ -61,12 +61,12 @@ public class GameManager : MonoBehaviour
         jsonManager.SaveData<UserDataClass>(userData);
         Debug.Log("Start New");
         daySceneActive = false;
-        SoundManager.instance.PlayEffect("button", 0.7f);
-        SceneManager.LoadScene("PrologScene");
+        SoundManager.instance.PlayEffect("button");
+        SceneManager.LoadScene("DayScene");
     }
     
     public void ExitBtnStartScene(){ // StartScene-종료하기
-        SoundManager.instance.PlayEffect("button", 0.7f);
+        SoundManager.instance.PlayEffect("button");
         Application.Quit();
     }
 
