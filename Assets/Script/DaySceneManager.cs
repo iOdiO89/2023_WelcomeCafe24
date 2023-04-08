@@ -112,9 +112,6 @@ public class DaySceneManager : MonoBehaviour
         ColorBlock color = cup.colors;
         color.normalColor = SetColor();
         cup.colors = color;
-        for(int i=0; i<3; i++){
-            fieldOutline[i].GetComponent<Outline>().effectColor = SetColor();
-        }
         cupCapacityCountArr = new int[3];
         for(int i =0; i<3; i++)
         {
