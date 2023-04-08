@@ -404,6 +404,6 @@ public class EveningSceneManager : MonoBehaviour
 
     public void ExitBuyPopUp(){
         SoundManager.instance.PlayEffect("button");
-        SceneManager.LoadScene("DayScene");
+        SceneManager.LoadScene("NightScene");
     }
 }
