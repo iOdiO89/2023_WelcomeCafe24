@@ -102,6 +102,7 @@ public class DaySceneManager : MonoBehaviour
             order.SetActive(false);
         }
 
+        SetRecipeColor();
         PrintDayText();
         notice = FindObjectOfType<NoticeUI>();
         fade = FindObjectOfType<FadeUI>();
@@ -746,7 +747,7 @@ public class DaySceneManager : MonoBehaviour
                     }
 
                     string title = recipeData.nameKor + " 제조법";
-                    string line = "\n-----------------------------\n";
+                    string line = "\n\n";
                     string recipeDetail = "";
                     string[] words = tempText.Split(',');
                     for(int j=0; j<words.Length; j++){

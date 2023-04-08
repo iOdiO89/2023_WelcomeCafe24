@@ -267,7 +267,7 @@
       {
          "index":12,
          "nameEng":"earl grey bubble latte",
-         "nameKor":"얼그레이 버블 라떼",
+         "nameKor":"얼그레이버블라떼",
          "price":1800,
          "unlock":0,
          "ing1Index":1,
