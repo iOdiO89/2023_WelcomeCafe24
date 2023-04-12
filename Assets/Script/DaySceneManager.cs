@@ -69,12 +69,11 @@ public class DaySceneManager : MonoBehaviour
     public Text dayText;
     public Text dayFadeText;
 
-    public List<GameObject> recipeList = new List<GameObject>();
     public List<GameObject> menuList = new List<GameObject>();
-    public List<Text> recipeTextList = new List<Text>();
+    [SerializeField] private GameObject recipeObject;
+    [SerializeField] private Text recipeTitleText;
+    [SerializeField] private Text recipeDetailText;
     public List<Text> menuTextList = new List<Text>();
-    public GameObject notActiveRecipe;
-    public Text notActiveRecipeText;
     private Color transparentColor;
     [SerializeField] private GameObject[] fieldOutline;
 
@@ -467,15 +466,15 @@ public class DaySceneManager : MonoBehaviour
                 {
                     case 0:
                         //Debug.Log("1: " + capacityIdx);
-                        cupCapacityImageArr[capacityIdx].color = new Color(1, 0, 0);
+                        cupCapacityImageArr[capacityIdx].color = new Color(255/255f, 217/255f, 61/255f);
                         break;
                     case 1:
                         //Debug.Log("2: " + capacityIdx);
-                        cupCapacityImageArr[capacityIdx].color = new Color(0, 1, 0);
+                        cupCapacityImageArr[capacityIdx].color = new Color(79/255f, 32/255f, 13/255f);
                         break;
                     case 2:
                         //Debug.Log("3: " + capacityIdx);
-                        cupCapacityImageArr[capacityIdx].color = new Color(0, 0, 1);
+                        cupCapacityImageArr[capacityIdx].color = new Color(255/255f, 132/255f, 0);
                         break;
                 }
             }
@@ -550,7 +549,7 @@ public class DaySceneManager : MonoBehaviour
         int temp;
         for(int i=0; i<3; i++){
             // 재료의 index, 비율을 tuple로 저장
-            if(fieldsArray[i].fieldImage.sprite == null){
+            if(fieldsArray[i].fieldImage.sprite.name == "default"){
                 ingList.Add(new Tuple<int, int>(-1, 0)); 
             }
             else{
@@ -582,7 +581,7 @@ public class DaySceneManager : MonoBehaviour
         int temp;
         for(int i=0; i<3; i++){
             // 재료의 index, 비율을 tuple로 저장
-            if(fieldsArray[i].fieldImage.sprite != null){
+            if(fieldsArray[i].fieldImage.sprite.name != "default"){
                 temp = System.Convert.ToInt32(fieldsArray[i].fieldImage.sprite.name);
                 ingList.Add(new Tuple<int, int>(temp, cupCapacityCountArr[i])); 
                 //ingList.Add(new Tuple<int, int>(-1, 0)); 
@@ -676,7 +675,7 @@ public class DaySceneManager : MonoBehaviour
     {
         for(int i =0; i<cupIngredientImageArr.Length; i++)
         {
-            cupIngredientImageArr[i].sprite = null;
+            cupIngredientImageArr[i].sprite = Resources.Load<Sprite>("Images/Both/default");
             cupIngredientImageArr[i].color = new Color(0, 0, 0);
         }
         
@@ -691,7 +690,7 @@ public class DaySceneManager : MonoBehaviour
         for(int i =0; i<fieldsArray.Length; i++)
         {
             fieldsArray[i].isSpriteExist = false;
-            fieldsArray[i].fieldImage.sprite = null;
+            fieldsArray[i].fieldImage.sprite = Resources.Load<Sprite>("Images/Both/default");
             Color color = new Color(1f, 1f, 1f);
             fieldsArray[i].fieldImage.color = color;
         }
@@ -720,16 +719,15 @@ public class DaySceneManager : MonoBehaviour
     }
 
     public void ShowRecipe(int index){
-        notActiveRecipe.SetActive(false);
-
-        int recipeSize = recipeList.Count;
+        recipeObject.SetActive(true);
+        int recipeSize = 21;
         for(int i=0; i<recipeSize; i++){
             if(i==index){
                 recipeData = GameManager.instance.gameDataUnit.recipeArray[i];
 
                 if(GameManager.instance.userData.recipeUnlock[i]==0){
-                    notActiveRecipeText.text = recipeData.nameKor + " 제조법";
-                    notActiveRecipe.SetActive(true);
+                    recipeTitleText.text = recipeData.nameKor + " 제조법";
+                    recipeDetailText.text = "아직 모르는\n레시피입니다.";
                 }
                 else{
                     string tempText;
@@ -743,20 +741,16 @@ public class DaySceneManager : MonoBehaviour
                         tempText = recipeData.level3Detail;    
                     }
 
-                    string title = recipeData.nameKor + " 제조법";
-                    string line = "\n\n";
+                    recipeTitleText.text = recipeData.nameKor + " 제조법";
+
                     string recipeDetail = "";
                     string[] words = tempText.Split(',');
                     for(int j=0; j<words.Length; j++){
                         recipeDetail += words[j];
                         if(j!=words.Length-1) recipeDetail+="\n";
                     }
-                    recipeTextList[i].text = title+line+recipeDetail;
-                    recipeList[i].SetActive(true);
+                    recipeDetailText.text = recipeDetail;
                 } 
-            }
-            else{
-                recipeList[i].SetActive(false);
             }
         }
     }
