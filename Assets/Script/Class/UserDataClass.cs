@@ -18,7 +18,7 @@ public class UserDataClass
 
 
     public UserDataClass(){
-        gold = 10000;
+        gold = 0;
         reputation = 0;
         day = 0;
 
@@ -69,7 +69,6 @@ public class UserDataClass
 
         bgmVolume = 0.4f;
         effectVolume = 0.7f;
-
     }
 
 }

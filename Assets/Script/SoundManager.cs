@@ -21,15 +21,14 @@ public class SoundManager : MonoBehaviour
     }
     
     void Start(){
-        PlayBGM("MainBGM", GameManager.instance.userData.bgmVolume);
+        PlayBGM();
     }
 
-
-    public void PlayBGM(string soundName, float volume = 0.4f){
+    public void PlayBGM(float volume = 0.3f){
         Sound sound = bgmSounds[0];
 
         if(sound == null){
-            Debug.Log("Sound Error");
+            Debug.Log("BGM Sound Error");
         }
         else{
             bgmSource.clip = sound.clip;
@@ -38,16 +37,20 @@ public class SoundManager : MonoBehaviour
         }
     }
 
-    public void PlayEffect(string name, float volume = 0.7f){
+    public void PlayEffect(string name){
         Sound sound = Array.Find(effectSounds, e => e.soundName == name);
 
         if(sound == null){
             Debug.Log($"Sound Error - name : {name}");
         }
         else{
-            effectSource.volume = volume;
+            effectSource.volume = GameManager.instance.userData.effectVolume;
             effectSource.PlayOneShot(sound.clip);
         }
+    }
+
+    public void ChangeBGMVolume(float volume){
+        bgmSource.volume = volume;
     }
 
 }

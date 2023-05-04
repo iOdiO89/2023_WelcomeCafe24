@@ -68,8 +68,9 @@ public class DaySceneManager : MonoBehaviour
     private Recipe recipeData;
     private Ingredient ingredientData;
 
-    [SerializeField] private Slider BGMSlider;
-    [SerializeField] private Slider VolumeSlider;
+    [SerializeField] private Slider totalVolumeSlider;
+    [SerializeField] private Slider bgmSlider;
+    [SerializeField] private Slider effectSlider;
 
     private NoticeUI notice;
     private FadeUI fade;
@@ -369,7 +370,7 @@ public class DaySceneManager : MonoBehaviour
 
     public void TouchCupPlusBtn(int btnIdx)
     {
-        SoundManager.instance.PlayEffect("water", 1f);
+        SoundManager.instance.PlayEffect("water");
         totalCapacity = 0;
         for(int i=0; i<3; i++)
         {
@@ -475,13 +476,15 @@ public class DaySceneManager : MonoBehaviour
     public void CupGiveBtn(){ // #305 컵-드리기 버튼
         SoundManager.instance.PlayEffect("order");
         if(GameManager.instance.daySceneActive){ // 낮일 때
-            bool check = CheckOrderSuccess();
+            var returnValue = CheckOrderSuccess();
+            bool check = returnValue.Item1;
             if(check){
                 Debug.Log("레시피 제작 성공!");
             }
             else{
                 Debug.Log("레시피 제작 실패");
             }
+            notice.SUB(returnValue.Item2);
             SetGoldandReput(check);
             cupPopupParnet.SetActive(false);
 
@@ -527,7 +530,7 @@ public class DaySceneManager : MonoBehaviour
     }
 
     // 낮 - 주문이 맞는지 확인
-    private bool CheckOrderSuccess(){ 
+    private (bool, string) CheckOrderSuccess(){ 
         List<Tuple<int, int>> ingAnswerList = new List<Tuple<int, int>>(); // 정답
         ingAnswerList.Add(new Tuple<int, int>(recipeData.ing1Index, recipeData.ing1Ratio));
         ingAnswerList.Add(new Tuple<int, int>(recipeData.ing2Index, recipeData.ing2Ratio));
@@ -550,10 +553,10 @@ public class DaySceneManager : MonoBehaviour
 
         for(int i=0; i<3; i++){
             if(!ingAnswerList[i].Equals(ingList[i])){
-                return false;
+                return (false, $"{recipeData.nameKor} 을(를) 제조하는데 실패했습니다!");
             }
         }
-        return true;
+        return (true, $"{recipeData.nameKor} 을(를) 제조하는데 성공했습니다!");
     }
 
     // 밤 - 주문이 맞는지 확인
@@ -589,7 +592,7 @@ public class DaySceneManager : MonoBehaviour
                 recipeData = GameManager.instance.gameDataUnit.recipeArray[i];
                 if(answerIngRatioList[i].Equals(userIngRatio)){ // 모두 일치
                     SoundManager.instance.PlayEffect("success");
-                    return (true, $"{recipeData.nameKor}을(를) 제조하는데 성공했습니다!", i);
+                    return (true, $"{recipeData.nameKor} 을(를) 제조하는데 성공했습니다!", i);
                 }
 
                 Debug.Log($"answerIngIndexList = {answerIngIndexList[i].Item1}, {answerIngIndexList[i].Item2}, {answerIngIndexList[i].Item3}");
@@ -780,12 +783,23 @@ public class DaySceneManager : MonoBehaviour
         SoundManager.instance.PlayEffect("button");
     }
 
-    public void BGMChangeVolume(){
+    public void ChangeTotalVolume(){
+        float temp = totalVolumeSlider.value*0.6f;
+        GameManager.instance.userData.bgmVolume = temp;
+        bgmSlider.value = temp;
+        SoundManager.instance.ChangeBGMVolume(temp);
 
+        GameManager.instance.userData.effectVolume = totalVolumeSlider.value;
+        effectSlider.value = totalVolumeSlider.value;
     }
 
-    public void EffectChangeVolume(){
+    public void ChangeBGMVolume(){
+        GameManager.instance.userData.bgmVolume = bgmSlider.value;
+        SoundManager.instance.ChangeBGMVolume(bgmSlider.value);
+    }
 
+    public void ChangeEffectVolume(){
+        GameManager.instance.userData.effectVolume = effectSlider.value;
     }
 
     public void FinishBtn(){ // tempBtn 나중에 지울 예정
