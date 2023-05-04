@@ -9,34 +9,20 @@ using UnityEngine.SceneManagement;
 
 public class DaySceneManager : MonoBehaviour
 {
-    [SerializeField]
-    GameObject popupParent;
-    [SerializeField]
-    GameObject popupBackGround;
-    [SerializeField]
-    GameObject shelfPopupBoard;
-    [SerializeField]
-    Button[] itemBtnArray;
-    [SerializeField]
-    GameObject ingredientPopupBoard;
-    [SerializeField]
-    Image ingredientImage;
-    [SerializeField]
-    Text ingredientDetailText;
-    [SerializeField]
-    Text ingredientNameText;
-    [SerializeField]
-    Field[] fieldsArray;
-    [SerializeField]
-    GameObject cupPopupParnet;
-    [SerializeField]
-    Image[] cupIngredientImageArr;
-    [SerializeField]
-    Image[] cupCapacityImageArr;
-    [SerializeField]
-    Button[] cupPlusBtnArr;
-    [SerializeField]
-    Button[] cupMinusBtnArr;
+    [SerializeField] GameObject popupParent;
+    [SerializeField] GameObject popupBackGround;
+    [SerializeField] GameObject shelfPopupBoard;
+    [SerializeField] Button[] itemBtnArray;
+    [SerializeField] GameObject ingredientPopupBoard;
+    [SerializeField] Image ingredientImage;
+    [SerializeField] Text ingredientDetailText;
+    [SerializeField] Text ingredientNameText;
+    [SerializeField] Field[] fieldsArray;
+    [SerializeField] GameObject cupPopupParnet;
+    [SerializeField] Image[] cupIngredientImageArr;
+    [SerializeField] Image[] cupCapacityImageArr;
+    [SerializeField] Button[] cupPlusBtnArr;
+    [SerializeField] Button[] cupMinusBtnArr;
     [SerializeField] Button cup;
 
     //private string[] cupIngredientNameArr;
@@ -81,6 +67,9 @@ public class DaySceneManager : MonoBehaviour
     public JsonManager jsonManager;
     private Recipe recipeData;
     private Ingredient ingredientData;
+
+    [SerializeField] private Slider BGMSlider;
+    [SerializeField] private Slider VolumeSlider;
 
     private NoticeUI notice;
     private FadeUI fade;
@@ -726,7 +715,7 @@ public class DaySceneManager : MonoBehaviour
                 recipeData = GameManager.instance.gameDataUnit.recipeArray[i];
 
                 if(GameManager.instance.userData.recipeUnlock[i]==0){
-                    recipeTitleText.text = recipeData.nameKor + " 제조법";
+                    recipeTitleText.text = recipeData.nameKor;
                     recipeDetailText.text = "아직 모르는\n레시피입니다.";
                 }
                 else{
@@ -741,7 +730,7 @@ public class DaySceneManager : MonoBehaviour
                         tempText = recipeData.level3Detail;    
                     }
 
-                    recipeTitleText.text = recipeData.nameKor + " 제조법";
+                    recipeTitleText.text = recipeData.nameKor;
 
                     string recipeDetail = "";
                     string[] words = tempText.Split(',');
@@ -789,6 +778,14 @@ public class DaySceneManager : MonoBehaviour
 
     public void BtnSound(){
         SoundManager.instance.PlayEffect("button");
+    }
+
+    public void BGMChangeVolume(){
+
+    }
+
+    public void EffectChangeVolume(){
+
     }
 
     public void FinishBtn(){ // tempBtn 나중에 지울 예정

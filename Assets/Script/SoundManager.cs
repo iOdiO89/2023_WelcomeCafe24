@@ -21,7 +21,7 @@ public class SoundManager : MonoBehaviour
     }
     
     void Start(){
-        PlayBGM("MainBGM");
+        PlayBGM("MainBGM", GameManager.instance.userData.bgmVolume);
     }
 
 

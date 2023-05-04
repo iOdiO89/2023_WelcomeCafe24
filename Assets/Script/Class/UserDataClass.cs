@@ -13,6 +13,10 @@ public class UserDataClass
     public List<bool> machineUnlock; // 기계 해금여부
     public int machineLevel; // 상점에 등장하는 기기의 레벨(보급, 고급, 하이엔드)
 
+    public float bgmVolume;
+    public float effectVolume;
+
+
     public UserDataClass(){
         gold = 10000;
         reputation = 0;
@@ -62,6 +66,9 @@ public class UserDataClass
         }
 
         machineLevel = 1;
+
+        bgmVolume = 0.4f;
+        effectVolume = 0.7f;
 
     }
 
