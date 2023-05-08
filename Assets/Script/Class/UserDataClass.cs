@@ -16,9 +16,8 @@ public class UserDataClass
     public float bgmVolume;
     public float effectVolume;
 
-
     public UserDataClass(){
-        gold = 0;
+        gold = 10000;
         reputation = 0;
         day = 0;
 

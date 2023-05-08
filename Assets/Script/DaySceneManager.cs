@@ -75,8 +75,11 @@ public class DaySceneManager : MonoBehaviour
     private NoticeUI notice;
     private FadeUI fade;
 
-    void Start(){
+    void Awake(){
         GameManager.instance.daySceneActive = GameManager.instance.daySceneActive? false : true;
+    }
+
+    void Start(){
         if(GameManager.instance.daySceneActive){
             if(!GameManager.instance.continueBool) GameManager.instance.userData.day++;
             Debug.Log($"Day {GameManager.instance.userData.day} - 낮");
@@ -765,10 +768,10 @@ public class DaySceneManager : MonoBehaviour
     public void PrintDayText(){
         dayText.text = "DAY " + GameManager.instance.userData.day.ToString();
         if(GameManager.instance.daySceneActive){
-            dayFadeText.text = "DAY " + GameManager.instance.userData.day.ToString() + "- 낮";
+            dayFadeText.text = "DAY " + GameManager.instance.userData.day.ToString() + " - 낮";
         }
         else{
-            dayFadeText.text = "DAY " + GameManager.instance.userData.day.ToString() + "- 밤";
+            dayFadeText.text = "DAY " + GameManager.instance.userData.day.ToString() + " - 밤";
         }
     }
     
