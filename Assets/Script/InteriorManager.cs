@@ -36,26 +36,10 @@ public class InteriorManager : MonoBehaviour
 
         for(int i=0, j=0; i<machines.Length; i++, j++){
             if(GameManager.instance.userData.machineUnlock[j]){
-                Debug.Log($"{i}번째 machine 이미지 교체");
                 machines[i].sprite = imageArray[i];
 
             }
             if(j==1) j++;
         }
-        // string path = "Images/Day/Machine/level";
-        // path.append(GameManager.instance.userData.machineLevel.ToString());
-        // Image[] tempArr = Resources.LoadAll<Image>(path);
-        // for(int i=0; i<6; i++){     
-        //     if(GameManager.instance.userData.machineUnlock){
-
-        //     }
-        //     else{
-                
-        //     }
-        // }
     }
 }
-
-// 디폴트로 들어가는 기계 말고 나머지들은 일단 투명 png 처리하고
-// 씬 스타트할 때 마다 확인해서 이미지 바꾸기
-// 스크립트는 같이 쓰고 dayScene인지 nightScene인지만 확인해서 하면 될듯??

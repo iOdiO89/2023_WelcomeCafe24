@@ -66,8 +66,8 @@ public class UserDataClass
 
         machineLevel = 1;
 
-        bgmVolume = 0.4f;
-        effectVolume = 0.7f;
+        bgmVolume = 0.3f;
+        effectVolume = 0.3f;
     }
 
 }

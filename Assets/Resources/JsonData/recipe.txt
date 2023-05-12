@@ -415,8 +415,8 @@
          "level2Pos":0.3333,
          "level3Pos":0.3333,
          "level1Detail":"우유,초콜릿 시럽,타피오카 펄",
-         "level2Detail":"우유 5, 초콜릿 시럽,타피오카 펄",
-         "level3Detail":"우유 5, 초콜릿 시럽 3,타피오카 펄 2"
+         "level2Detail":"우유 5,초콜릿 시럽,타피오카 펄",
+         "level3Detail":"우유 5,초콜릿 시럽 3,타피오카 펄 2"
       },
       {
          "index":19,

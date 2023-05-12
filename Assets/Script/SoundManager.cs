@@ -45,7 +45,6 @@ public class SoundManager : MonoBehaviour
         }
         else{
             effectSource.volume = GameManager.instance.userData.effectVolume;
-            Debug.Log($"이펙트 볼륨 : {GameManager.instance.userData.effectVolume}");
             effectSource.PlayOneShot(sound.clip);
         }
     }

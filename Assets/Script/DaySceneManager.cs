@@ -239,7 +239,7 @@ public class DaySceneManager : MonoBehaviour
                 if (!GameManager.instance.userData.ingredientUnlock[ingredientIndex])
                 {
                     itemBtnArray[i].enabled = false;
-                    itemBtnArray[i].image.color = new Color(0.5f, 0.5f, 0.5f);
+                    // itemBtnArray[i].image.color = new Color(0.5f, 0.5f, 0.5f);
                 }
                 else
                 {
@@ -524,12 +524,16 @@ public class DaySceneManager : MonoBehaviour
                 SetNewOrder();
             }
             else{ // 밤에 처리해야할 주문이 모두 끝난 경우
-                jsonManager.SaveData(GameManager.instance.userData);
-                Debug.Log("Data save Complete");
-                fade.FadeOut();
-                SceneManager.LoadScene("DayScene");
+                Invoke("ChangeSceneNightToDay", 0.5f);
             }
         }
+    }
+
+    private void ChangeSceneNightToDay(){
+        jsonManager.SaveData(GameManager.instance.userData);
+        Debug.Log("Data save Complete");
+        fade.FadeOut();
+        SceneManager.LoadScene("DayScene");
     }
 
     // 낮 - 주문이 맞는지 확인

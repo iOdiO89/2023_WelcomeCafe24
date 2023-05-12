@@ -38,11 +38,12 @@ public class GameManager : MonoBehaviour
     }
 
     void Start(){
+        userData = new UserDataClass();
         SetGameDataUnit();
     }
 
     public void ContinueBtn(){  // StartScene-이어하기
-        userData = new UserDataClass();
+        // userData = new UserDataClass();
         userData = jsonManager.LoadData();
         SoundManager.instance.PlayEffect("button");
         if(userData == null){ // 저장된 데이터가 없는데 이어하기 하려는 경우
@@ -57,7 +58,7 @@ public class GameManager : MonoBehaviour
     }
 
     public void StartNewBtn(){    // StartScene-새로하기
-        userData = new UserDataClass();
+        // userData = new UserDataClass();
         jsonManager.SaveData<UserDataClass>(userData);
         Debug.Log("Start New");
         daySceneActive = false;
