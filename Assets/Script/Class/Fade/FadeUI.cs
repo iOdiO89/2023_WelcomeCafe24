@@ -28,7 +28,6 @@ public class FadeUI : MonoBehaviour
             yield return null;
         }
         yield return null;
-        //yield return new WaitForSeconds(1f);
     }
 
     private IEnumerator FadeInImage(){
@@ -44,32 +43,4 @@ public class FadeUI : MonoBehaviour
         fadeImage.gameObject.SetActive(false);
         yield return null;
     }
-
-    /*private IEnumerator FadeInText(){
-        fadeText.gameObject.SetActive(true);
-        Color alpha = fadeText.color;
-        time = 0f;
-        while(alpha.a > 0f){
-            time += Time.deltaTime / fadeTime;
-            alpha.a = Mathf.Lerp(1, 0, time);
-            fadeImage.color = alpha;
-            yield return null;
-        }
-        fadeImage.gameObject.SetActive(false);
-        yield return null;
-    }
-
-    private IEnumerator FadeOutText(){
-        fadeText.gameObject.SetActive(true);
-        Color alpha = fadeText.color;
-        time = 0f;
-        while(alpha.a < 1f){
-            time += Time.deltaTime / fadeTime;
-            alpha.a = Mathf.Lerp(0, 1, time);
-            fadeText.color = alpha;
-            yield return null;
-        }
-        fadeImage.gameObject.SetActive(false);
-        yield return null;
-    }*/
 }

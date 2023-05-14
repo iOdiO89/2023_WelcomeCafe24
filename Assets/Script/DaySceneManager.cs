@@ -74,6 +74,7 @@ public class DaySceneManager : MonoBehaviour
 
     private NoticeUI notice;
     private FadeUI fade;
+    private BouncyUI bouncy;
 
     void Awake(){
         GameManager.instance.daySceneActive = GameManager.instance.daySceneActive? false : true;
@@ -96,6 +97,7 @@ public class DaySceneManager : MonoBehaviour
 
         SetRecipeColor();
         PrintDayText();
+        bouncy = FindObjectOfType<BouncyUI>();
         notice = FindObjectOfType<NoticeUI>();
         fade = FindObjectOfType<FadeUI>();
         fade.FadeIn();
@@ -496,9 +498,7 @@ public class DaySceneManager : MonoBehaviour
                 SetNewOrder();
             }
             else{ // 낮에 처리해야할 주문이 모두 끝난 경우
-                jsonManager.SaveData(GameManager.instance.userData);
-                Debug.Log("Data save Complete");
-                SceneManager.LoadScene("EveningScene");
+                Invoke("ChangeSceneDayToEvening", 0.3f);
             }
         }
         else{ // 밤일 때
@@ -526,7 +526,13 @@ public class DaySceneManager : MonoBehaviour
             else{ // 밤에 처리해야할 주문이 모두 끝난 경우
                 Invoke("ChangeSceneNightToDay", 0.5f);
             }
-        }
+        }   
+    }
+
+    private void ChangeSceneDayToEvening(){
+        jsonManager.SaveData(GameManager.instance.userData);
+        Debug.Log("Data save Complete");
+        SceneManager.LoadScene("EveningScene");
     }
 
     private void ChangeSceneNightToDay(){
@@ -654,11 +660,13 @@ public class DaySceneManager : MonoBehaviour
             }
             todayCoin += (int)tempPrice;
             GameManager.instance.userData.gold += (int)tempPrice;
+            bouncy.Up(0);
 
             //명성
             int tempReputation = UnityEngine.Random.Range(1, 3);
             todayReputation += tempReputation;
             GameManager.instance.userData.reputation += tempReputation;
+            bouncy.Up(1);
         }
         else{ // 주문 실패시
             failCount++;
@@ -667,6 +675,7 @@ public class DaySceneManager : MonoBehaviour
             int tempReputation = UnityEngine.Random.Range(1, 3);
             todayReputation -= tempReputation;
             GameManager.instance.userData.reputation -= tempReputation;
+            bouncy.Down();
         }
     }
 
