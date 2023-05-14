@@ -260,7 +260,7 @@ public class DaySceneManager : MonoBehaviour
         if(GameManager.instance.daySceneActive)
             return new Color(235/255f, 226/255f, 116/255f);
         else
-            return new Color(70/255f, 130/255f, 180/255f);
+            return new Color(178/255f, 218/255f, 253/255f);
     }
 
     void SetShelfPopup(bool active)

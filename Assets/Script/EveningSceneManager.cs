@@ -274,12 +274,13 @@ public class EveningSceneManager : MonoBehaviour
             recipeBuyBtn.SetActive(false);
             //Debug.Log($"recipeIndex = {recipeIndex}");
             GameManager.instance.userData.recipeUnlock[recipeIndex]=recipeGrade;
-            GameManager.instance.userData.gold -= machinePrice;
+            GameManager.instance.userData.gold -= recipePrice;
             Debug.Log($"남은 돈 = {GameManager.instance.userData.gold}");
 
             jsonManager.SaveData(GameManager.instance.userData);
         }
         else{
+            notice.SUB("돈이 부족합니다 (구매불가)");
             Debug.Log("구매불가");
         }
     }
@@ -384,6 +385,13 @@ public class EveningSceneManager : MonoBehaviour
             if(ingredientBuyBtn.activeSelf || recipeBuyBtn.activeSelf || machineBuyBtn.activeSelf)
                 GameManager.instance.userData.gold -= 100;
             
+            ingredientPurchaseDone.SetActive(false);
+            recipePurchaseDone.SetActive(false);
+            machinePurchaseDone.SetActive(false);
+            ingredientBuyBtn.SetActive(true);
+            recipeBuyBtn.SetActive(true);
+            machineBuyBtn.SetActive(true);
+
             int prevIngredientIndex = ingredientIndex;
             int prevRecipeIndex = recipeIndex;
             int prevMachineIndex = machineIndex;
