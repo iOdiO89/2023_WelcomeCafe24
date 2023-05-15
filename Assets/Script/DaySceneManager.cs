@@ -241,7 +241,7 @@ public class DaySceneManager : MonoBehaviour
                 if (!GameManager.instance.userData.ingredientUnlock[ingredientIndex])
                 {
                     itemBtnArray[i].enabled = false;
-                    // itemBtnArray[i].image.color = new Color(0.5f, 0.5f, 0.5f);
+                    itemBtnArray[i].image.color = new Color(0.8f, 0.8f, 0.8f);
                 }
                 else
                 {
@@ -498,7 +498,9 @@ public class DaySceneManager : MonoBehaviour
                 SetNewOrder();
             }
             else{ // 낮에 처리해야할 주문이 모두 끝난 경우
-                Invoke("ChangeSceneDayToEvening", 0.3f);
+                jsonManager.SaveData(GameManager.instance.userData);
+                Debug.Log("Data save Complete");
+                SceneManager.LoadScene("EveningScene");
             }
         }
         else{ // 밤일 때
@@ -527,12 +529,6 @@ public class DaySceneManager : MonoBehaviour
                 Invoke("ChangeSceneNightToDay", 0.5f);
             }
         }   
-    }
-
-    private void ChangeSceneDayToEvening(){
-        jsonManager.SaveData(GameManager.instance.userData);
-        Debug.Log("Data save Complete");
-        SceneManager.LoadScene("EveningScene");
     }
 
     private void ChangeSceneNightToDay(){
@@ -566,10 +562,10 @@ public class DaySceneManager : MonoBehaviour
 
         for(int i=0; i<3; i++){
             if(!ingAnswerList[i].Equals(ingList[i])){
-                return (false, $"{recipeData.nameKor} 을(를) 제조하는데 실패했습니다!");
+                return (false, $"{recipeData.nameKor} 제조에 실패했습니다!");
             }
         }
-        return (true, $"{recipeData.nameKor} 을(를) 제조하는데 성공했습니다!");
+        return (true, $"{recipeData.nameKor} 제조에 성공했습니다!");
     }
 
     // 밤 - 주문이 맞는지 확인
