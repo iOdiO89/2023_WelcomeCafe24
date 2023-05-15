@@ -11,26 +11,26 @@ public class BouncyUI : MonoBehaviour
     void Start(){ 
         originalPos = new Vector3[3];  
         for(int i=0; i<3; i++){
-            originalPos[i] = innerText[i].transform.position;
+            originalPos[i] = innerText[i].transform.localPosition;
         }
     }
 
     public void Up(int index){
         StartCoroutine("UPBounce", index);
-        innerText[index].transform.position = originalPos[index];
+        innerText[index].transform.localPosition = originalPos[index];
     }
 
     public void Down(){
         StartCoroutine("DownBounce");
-        innerText[2].transform.position = originalPos[2];
+        innerText[2].transform.localPosition = originalPos[2];
     }
 
     IEnumerator UPBounce(int index){
         innerText[index].gameObject.SetActive(true);
         float fadeCount = 1.0f;
         while(fadeCount > 0.0f){
-            fadeCount -= 0.005f;
-            innerText[index].transform.position += new Vector3(0, 5, 0) * speed * Time.deltaTime;
+            fadeCount -= 0.02f;
+            innerText[index].transform.localPosition += new Vector3(0, 5, 0) * speed * Time.deltaTime;
             yield return null;
             innerText[index].color = new Color(94/255f, 50/255f, 6/255f, fadeCount);
         }
@@ -41,8 +41,8 @@ public class BouncyUI : MonoBehaviour
         innerText[2].gameObject.SetActive(true);
         float fadeCount = 1.0f;
         while(fadeCount > 0.0f){
-            fadeCount -= 0.005f;
-            innerText[2].transform.position += new Vector3(0, -5, 0) * speed * Time.deltaTime;
+            fadeCount -= 0.02f;
+            innerText[2].transform.localPosition += new Vector3(0, -5, 0) * speed * Time.deltaTime;
             yield return null;
             innerText[2].color = new Color(94/255f, 50/255f, 6/255f, fadeCount);
         }
