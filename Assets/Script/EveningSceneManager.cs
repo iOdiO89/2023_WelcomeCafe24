@@ -236,7 +236,8 @@ public class EveningSceneManager : MonoBehaviour
             recipeData = GameManager.instance.gameDataUnit.recipeArray[recipeIndex];
             recipeName.text = recipeData.nameKor;
             int tempNum = GameManager.instance.userData.recipeUnlock[recipeIndex];
-            recipeGrade = UnityEngine.Random.Range(tempNum, 4);
+            recipeGrade = UnityEngine.Random.Range(tempNum+1, 4);
+            Debug.Log($"등급 : {recipeGrade} / 이름 : {recipeData.nameKor}");
             if(recipeGrade==1){
                 recipeGradeText.text = "초급";
                 recipePrice = recipeData.level1Price; 
