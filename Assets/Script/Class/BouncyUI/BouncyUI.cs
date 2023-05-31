@@ -29,7 +29,7 @@ public class BouncyUI : MonoBehaviour
         innerText[index].gameObject.SetActive(true);
         float fadeCount = 1.0f;
         while(fadeCount > 0.0f){
-            fadeCount -= 0.02f;
+            fadeCount -= 0.01f; // 값이 작을수록 천천히 fadeout
             innerText[index].transform.localPosition += new Vector3(0, 5, 0) * speed * Time.deltaTime;
             yield return null;
             innerText[index].color = new Color(94/255f, 50/255f, 6/255f, fadeCount);
@@ -41,7 +41,7 @@ public class BouncyUI : MonoBehaviour
         innerText[2].gameObject.SetActive(true);
         float fadeCount = 1.0f;
         while(fadeCount > 0.0f){
-            fadeCount -= 0.02f;
+            fadeCount -= 0.01f;
             innerText[2].transform.localPosition += new Vector3(0, -5, 0) * speed * Time.deltaTime;
             yield return null;
             innerText[2].color = new Color(94/255f, 50/255f, 6/255f, fadeCount);

@@ -143,7 +143,7 @@ public class DaySceneManager : MonoBehaviour
             CupGiveBtn();
             timerText.text = "00:00";
         }
-        else if(timeLimit<6){ // 5초 이하일 때는 텍스트 색상 변경
+        else if(timeLimit<6){ // 남은 시간이 5초 이하인 경우 시간 색상 변경
             timerText.text = "<color=#DC143C>" + remainTime.ToString(@"mm\:ss") + "</color>";
         }
         else{
@@ -174,27 +174,31 @@ public class DaySceneManager : MonoBehaviour
     // 새 주문 설정
     public void SetNewOrder(){
         if(GameManager.instance.daySceneActive){
-            timeLimit = 90;
+            timeLimit = 90; // 90초로 주문시간 설정
             PrintOrderText();
         }
-        //Debug.Log($"완료한 주문 수 : {orderCount}");
-        orderCount++;
+
+        orderCount++; // 처리한 주문개수 +1
+
+        // 초기화
         ClearIngredientImages();
         ClearFields();
         ClearCupCapacityImages();
     }
 
+    // 정한 레시피를 주문창에 출력
     public void PrintOrderText(){
         orderText.text = MakeOrderText() + "\n1잔 주세요!";
     }
 
+    // 주문창에 뜰 레시피 종류 정하기
     private string MakeOrderText(){
         while(true){
             orderIndex = UnityEngine.Random.Range(0, 21);
-            if(GameManager.instance.userData.recipeUnlock[orderIndex]>0)
+            if(GameManager.instance.userData.recipeUnlock[orderIndex]>0) // 해금된 레시피 중 하나를 골라
                 break;
         }
-        recipeData = GameManager.instance.gameDataUnit.recipeArray[orderIndex];
+        recipeData = GameManager.instance.gameDataUnit.recipeArray[orderIndex]; // 사용할 recipeData 에 담기
         return recipeData.nameKor;
     }
 
@@ -241,12 +245,12 @@ public class DaySceneManager : MonoBehaviour
                 if (!GameManager.instance.userData.ingredientUnlock[ingredientIndex])
                 {
                     itemBtnArray[i].enabled = false;
-                    itemBtnArray[i].image.color = new Color(0.8f, 0.8f, 0.8f);
+                    itemBtnArray[i].image.color = new Color(0.8f, 0.8f, 0.8f); // 해금되지 않은 경우 약간 어둡게
                 }
                 else
                 {
                     itemBtnArray[i].enabled = true;
-                    itemBtnArray[i].image.color = SetColor();   
+                    itemBtnArray[i].image.color = SetColor(); // 낮, 밤에 맞게 해금된 이미지 색 변경
                 }
             }
             else
@@ -256,6 +260,7 @@ public class DaySceneManager : MonoBehaviour
         }
     }
     
+    // 낮, 밤에 맞게 해금된 이미지 색상 코드 알려주기
     private Color SetColor(){
         if(GameManager.instance.daySceneActive)
             return new Color(235/255f, 226/255f, 116/255f);
@@ -272,6 +277,7 @@ public class DaySceneManager : MonoBehaviour
         ingredientPopupBoard.SetActive(false);
     }
 
+    // 재료선반 창에서 X 버튼 눌렀을 때
     public void ExitPopup()
     {
         SoundManager.instance.PlayEffect("popup");
@@ -290,14 +296,15 @@ public class DaySceneManager : MonoBehaviour
         SetIngredientText();
     }
 
+    // 좌상단 메뉴창 클릭시 나타나는 레시피 문구 출력
     void SetIngredientText()
     {
         ingredientDetailText.text = "";
         ingredientNameText.text = "";
         int ingredientIndex = int.Parse(ingredientImage.sprite.name);
         
-        ingredientNameText.text = GameManager.instance.gameDataUnit.ingredientArray[ingredientIndex].nameKor;
-        ingredientDetailText.text = GameManager.instance.gameDataUnit.ingredientArray[ingredientIndex].detail;
+        ingredientNameText.text = GameManager.instance.gameDataUnit.ingredientArray[ingredientIndex].nameKor; // 레시피 이름
+        ingredientDetailText.text = GameManager.instance.gameDataUnit.ingredientArray[ingredientIndex].detail; // 레시피 설명 (물7 ..  등)
     }
 
     //active가 참이면 재료 팝업창을 키고 아니면 끄고
@@ -310,6 +317,7 @@ public class DaySceneManager : MonoBehaviour
             popupBackGround.transform.SetSiblingIndex(0);
     }
 
+    // 컵 - 드리기 버튼 클릭시
     public void TouchPickUpBtn()
     {
         SoundManager.instance.PlayEffect("click");
@@ -317,6 +325,7 @@ public class DaySceneManager : MonoBehaviour
         SetFieldsArray();
     }
 
+    // 컵 - 내려놓기 버튼 클릭시
     public void TouchPutDownBtn()
     {
         SoundManager.instance.PlayEffect("click");
@@ -531,6 +540,7 @@ public class DaySceneManager : MonoBehaviour
         }   
     }
 
+    // 밤>낮으로 화면 전환
     private void ChangeSceneNightToDay(){
         jsonManager.SaveData(GameManager.instance.userData);
         Debug.Log("Data save Complete");
@@ -551,21 +561,21 @@ public class DaySceneManager : MonoBehaviour
         for(int i=0; i<3; i++){
             // 재료의 index, 비율을 tuple로 저장
             if(fieldsArray[i].fieldImage.sprite.name == "default"){
-                ingList.Add(new Tuple<int, int>(-1, 0)); 
+                ingList.Add(new Tuple<int, int>(-1, 0)); // 재료가 비어있는 경우
             }
-            else{
+            else{ // 재료의 index와 얼마나 넣었는지를 기록
                 temp = System.Convert.ToInt32(fieldsArray[i].fieldImage.sprite.name);
                 ingList.Add(new Tuple<int, int>(temp, cupCapacityCountArr[i])); 
             }
         }
-        ingList.Sort((a, b) => a.Item1.CompareTo(b.Item1));
+        ingList.Sort((a, b) => a.Item1.CompareTo(b.Item1)); // 재료 index 기준으로 오름차순 정렬
 
         for(int i=0; i<3; i++){
-            if(!ingAnswerList[i].Equals(ingList[i])){
+            if(!ingAnswerList[i].Equals(ingList[i])){ // 정답과 불일치한 경우
                 return (false, $"{recipeData.nameKor} 제조에 실패했습니다!");
             }
-        }
-        return (true, $"{recipeData.nameKor} 제조에 성공했습니다!");
+        } 
+        return (true, $"{recipeData.nameKor} 제조에 성공했습니다!"); // 정답과 일치할 때
     }
 
     // 밤 - 주문이 맞는지 확인
@@ -582,7 +592,7 @@ public class DaySceneManager : MonoBehaviour
         int temp;
         for(int i=0; i<3; i++){
             // 재료의 index, 비율을 tuple로 저장
-            if(fieldsArray[i].fieldImage.sprite.name != "default"){
+            if(fieldsArray[i].fieldImage.sprite.name != "default"){ // 재료를 넣지 않은 경우
                 temp = System.Convert.ToInt32(fieldsArray[i].fieldImage.sprite.name);
                 ingList.Add(new Tuple<int, int>(temp, cupCapacityCountArr[i])); 
                 //ingList.Add(new Tuple<int, int>(-1, 0)); 
@@ -593,39 +603,39 @@ public class DaySceneManager : MonoBehaviour
             ingList.Add(new Tuple<int, int>(-1, 0)); 
         }
 
-        Tuple<int, int, int> userIngIndex = new Tuple<int, int, int>(ingList[0].Item1, ingList[1].Item1, ingList[2].Item1);
-        Tuple<int, int, int> userIngRatio = new Tuple<int, int, int>(ingList[0].Item2, ingList[1].Item2, ingList[2].Item2);
+        Tuple<int, int, int> userIngIndex = new Tuple<int, int, int>(ingList[0].Item1, ingList[1].Item1, ingList[2].Item1); // 사용자가 입력한 재료의 각 index
+        Tuple<int, int, int> userIngRatio = new Tuple<int, int, int>(ingList[0].Item2, ingList[1].Item2, ingList[2].Item2); // 사용자가 입력한 재료의 각 비율
         
         for(int i=0; i<21; i++){
-            if(answerIngIndexList[i].Equals(userIngIndex)){
-                recipeData = GameManager.instance.gameDataUnit.recipeArray[i];
-                if(answerIngRatioList[i].Equals(userIngRatio)){ // 모두 일치
+            if(answerIngIndexList[i].Equals(userIngIndex)){ 
+                recipeData = GameManager.instance.gameDataUnit.recipeArray[i]; 
+                if(answerIngRatioList[i].Equals(userIngRatio)){ // 재료 이름이 모두 일치하고 && 비율도 모두 맞춘 경우
                     SoundManager.instance.PlayEffect("success");
                     return (true, $"{recipeData.nameKor} 을(를) 제조하는데 성공했습니다!", i);
                 }
 
-                Debug.Log($"answerIngIndexList = {answerIngIndexList[i].Item1}, {answerIngIndexList[i].Item2}, {answerIngIndexList[i].Item3}");
-                Debug.Log($"userIngIndex = {userIngIndex.Item1}, {userIngIndex.Item2}, {userIngIndex.Item3}");
-                Debug.Log($"answerIngRatioList = {answerIngRatioList[i].Item1}, {answerIngRatioList[i].Item2}, {answerIngRatioList[i].Item3}");
-                Debug.Log($"userIngRatio = {userIngRatio.Item1}, {userIngRatio.Item2}, {userIngRatio.Item3}");
+                // Debug.Log($"answerIngIndexList = {answerIngIndexList[i].Item1}, {answerIngIndexList[i].Item2}, {answerIngIndexList[i].Item3}");
+                // Debug.Log($"userIngIndex = {userIngIndex.Item1}, {userIngIndex.Item2}, {userIngIndex.Item3}");
+                // Debug.Log($"answerIngRatioList = {answerIngRatioList[i].Item1}, {answerIngRatioList[i].Item2}, {answerIngRatioList[i].Item3}");
+                // Debug.Log($"userIngRatio = {userIngRatio.Item1}, {userIngRatio.Item2}, {userIngRatio.Item3}");
 
                 string temp1 = "", temp2 = "";
                 ingredientData = GameManager.instance.gameDataUnit.ingredientArray[userIngIndex.Item1];
                 Ingredient ingredientData2 = GameManager.instance.gameDataUnit.ingredientArray[userIngIndex.Item2];
-                if(userIngRatio.Item2 != answerIngRatioList[i].Item2){
-                    if(userIngRatio.Item2 > answerIngRatioList[i].Item2) temp2 = " " + ingredientData2.high1;
-                    else temp2 = " " + ingredientData2.low1;
+                if(userIngRatio.Item2 != answerIngRatioList[i].Item2){ // 재료 2의 비율이 불일치 한 경우
+                    if(userIngRatio.Item2 > answerIngRatioList[i].Item2) temp2 = " " + ingredientData2.high1; // 정답보다 비율이 높은 경우, 해당 수식어구 출력
+                    else temp2 = " " + ingredientData2.low1; // 정답보다 비율이 적은 경우, 그에 맞는 수식어구 출력
 
-                    if(userIngRatio.Item1 == answerIngRatioList[i].Item1) temp1 = "";
-                    else if(userIngRatio.Item1 > answerIngRatioList[i].Item1) temp1 = ingredientData.high1;
-                    else temp1 = ingredientData.low1;
+                    if(userIngRatio.Item1 == answerIngRatioList[i].Item1) temp1 = ""; // 재료 1의 비율이 일치하는 경우
+                    else if(userIngRatio.Item1 > answerIngRatioList[i].Item1) temp1 = ingredientData.high1; // 재료 1의 비율이 정답보다 많은 경우
+                    else temp1 = ingredientData.low1; // 재료 1의 비율이 정답보다 적은 경우
                 }
-                else{
-                    if(userIngRatio.Item1 > answerIngRatioList[i].Item1) temp1 = ingredientData.high2;
+                else{  // 재료1 비율이 불일치하면서 && 재료2 비율은 일치하는 경우
+                    if(userIngRatio.Item1 > answerIngRatioList[i].Item1) temp1 = ingredientData.high2; 
                     else temp1 = ingredientData.low2;
                 }
                 SoundManager.instance.PlayEffect("fail");
-                return (false, $"{temp1}{temp2} {recipeData.nameKor}가 제조되었습니다.(제조실패)", -1);
+                return (false, $"{temp1}{temp2} {recipeData.nameKor}가 제조되었습니다.(제조실패)", -1); // 저장된 수식어구와 함께 실패 메시지 출력
             }
         }
         SoundManager.instance.PlayEffect("fail");
@@ -656,13 +666,13 @@ public class DaySceneManager : MonoBehaviour
             }
             todayCoin += (int)tempPrice;
             GameManager.instance.userData.gold += (int)tempPrice;
-            bouncy.Up(0);
+            bouncy.Up(0); // 우상단에 보이는 돈에 +++ 표시
 
             //명성
             int tempReputation = UnityEngine.Random.Range(1, 3);
             todayReputation += tempReputation;
             GameManager.instance.userData.reputation += tempReputation;
-            bouncy.Up(1);
+            bouncy.Up(1); // 우상단에 보이는 명성에 +++ 표시하기
         }
         else{ // 주문 실패시
             failCount++;
@@ -671,7 +681,7 @@ public class DaySceneManager : MonoBehaviour
             int tempReputation = UnityEngine.Random.Range(1, 3);
             todayReputation -= tempReputation;
             GameManager.instance.userData.reputation -= tempReputation;
-            bouncy.Down();
+            bouncy.Down(); // 우상단에 보이는 명성에 --- 표시하기
         }
     }
 
@@ -714,14 +724,15 @@ public class DaySceneManager : MonoBehaviour
         transparentColor.a = 0.3f;
         for(int i=0; i<21; i++){
             if(GameManager.instance.userData.recipeUnlock[i]==0){
-                menuTextList[i].color = transparentColor;
+                menuTextList[i].color = transparentColor; // 해금되지 않은 레시피의 경우 옅은 색으로 표시
             }
             else{
-                menuTextList[i].color = menuTextList[0].color;
+                menuTextList[i].color = menuTextList[0].color; //  해금된 레시피의 경우 진하게 (menuTextList[0] == 에스프레소는 항상 해금되어 있는 레시피)
             }
         }
     }
 
+    // 좌상단 메뉴창 클릭 했을 때 출력되는 서브창 메시지 결정
     public void ShowRecipe(int index){
         recipeObject.SetActive(true);
         int recipeSize = 21;
@@ -729,29 +740,29 @@ public class DaySceneManager : MonoBehaviour
             if(i==index){
                 recipeData = GameManager.instance.gameDataUnit.recipeArray[i];
 
-                if(GameManager.instance.userData.recipeUnlock[i]==0){
+                if(GameManager.instance.userData.recipeUnlock[i]==0){ // 해금되지 않은 레시피인 경우
                     recipeTitleText.text = recipeData.nameKor;
                     recipeDetailText.text = "아직 모르는\n레시피입니다.";
                 }
                 else{
                     string tempText;
-                    if(GameManager.instance.userData.recipeUnlock[i]==1){
+                    if(GameManager.instance.userData.recipeUnlock[i]==1){ // 초급으로 해금된 경우
                         tempText = recipeData.level1Detail;                    
                     }
-                    else if(GameManager.instance.userData.recipeUnlock[i]==2){
+                    else if(GameManager.instance.userData.recipeUnlock[i]==2){ //  중급으로 해금된 경우
                         tempText = recipeData.level2Detail;   
                     }
-                    else{
+                    else{ // 고급으로 해금된 경우
                         tempText = recipeData.level3Detail;    
                     }
 
                     recipeTitleText.text = recipeData.nameKor;
 
                     string recipeDetail = "";
-                    string[] words = tempText.Split(',');
+                    string[] words = tempText.Split(','); // , 으로 붙어있는 상세 레시피 분리
                     for(int j=0; j<words.Length; j++){
                         recipeDetail += words[j];
-                        if(j!=words.Length-1) recipeDetail+="\n";
+                        if(j!=words.Length-1) recipeDetail+="\n"; //  3줄에 나누어 출력
                     }
                     recipeDetailText.text = recipeDetail;
                 } 
@@ -759,6 +770,7 @@ public class DaySceneManager : MonoBehaviour
         }
     }
 
+    // 좌상단 메뉴창 클릭시 사용
     public void MenuBtn(){
         SoundManager.instance.PlayEffect("button");
         GameObject clickObject = EventSystem.current.currentSelectedGameObject;
