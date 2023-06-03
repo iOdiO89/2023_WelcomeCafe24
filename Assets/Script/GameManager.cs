@@ -63,7 +63,7 @@ public class GameManager : MonoBehaviour
         Debug.Log("Start New");
         daySceneActive = false;
         SoundManager.instance.PlayEffect("button");
-        SceneManager.LoadScene("DayScene");
+        SceneManager.LoadScene("TutorialScene");
     }
     
     public void ExitBtnStartScene(){ // StartScene-종료하기

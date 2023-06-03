@@ -1,31 +1,31 @@
 {
-    "gold": 10000,
+    "gold": 3000,
     "reputation": 0,
-    "day": 1,
+    "day": 0,
     "ingredientUnlock": [
         true,
         true,
+        false,
+        false,
         true,
+        false,
+        false,
+        false,
+        false,
         true,
-        true,
-        true,
-        true,
-        true,
-        true,
-        true,
-        true,
-        true,
-        true,
-        true
+        false,
+        false,
+        false,
+        false
     ],
     "recipeUnlock": [
         1,
         1,
-        3,
-        2,
-        1,
         0,
-        3,
+        0,
+        0,
+        0,
+        0,
         0,
         0,
         0,
@@ -50,5 +50,7 @@
         false,
         false
     ],
-    "machineLevel": 1
+    "machineLevel": 1,
+    "bgmVolume": 0.30000001192092898,
+    "effectVolume": 0.30000001192092898
 }
