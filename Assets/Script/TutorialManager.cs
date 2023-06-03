@@ -180,6 +180,10 @@ public class TutorialManager : MonoBehaviour
                 nightBg.SetActive(false);
                 break;
             case TutorialEvent.TutorialEnd:
+                pauseBtn.transform.SetParent(canvasTransform);
+                pauseBtn.transform.SetSiblingIndex(9);
+                tutorialTextParent.transform.SetParent(canvasTransform);
+                tutorialTextParent.transform.SetSiblingIndex(10);
                 StartCoroutine(EndTutorial());
                 break;
         }
@@ -208,6 +212,7 @@ public class TutorialManager : MonoBehaviour
         else
         {
             fadeImageTransform.SetParent(canvasTransform);
+            fadeImageTransform.SetSiblingIndex(18);
         }
     }
 }
