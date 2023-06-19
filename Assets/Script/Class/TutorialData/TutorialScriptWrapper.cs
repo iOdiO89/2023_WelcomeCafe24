@@ -12,9 +12,9 @@ public class TutorialScriptWrapper
     {
         for(int i =0; i< tutorialScriptArray.Length; i++)
         {
-            Debug.Log("index: " + tutorialScriptArray[i].tutorialIndex 
-                + " / EventName: " + tutorialScriptArray[i].tutorialEventName
-                + " / Script: " + tutorialScriptArray[i].tutorialScript);
+            // Debug.Log("index: " + tutorialScriptArray[i].tutorialIndex 
+            //     + " / EventName: " + tutorialScriptArray[i].tutorialEventName
+            //     + " / Script: " + tutorialScriptArray[i].tutorialScript);
             tutorialScriptArray[i].Parse();
         }
     }

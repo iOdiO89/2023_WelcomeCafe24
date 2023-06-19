@@ -3627,7 +3627,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -266, y: -90}
+  m_AnchoredPosition: {x: -323, y: -90}
   m_SizeDelta: {x: 432, y: 84}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1691782942
@@ -4127,6 +4127,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rentalFeePopUp: {fileID: 464970723}
   rentalFeeText: {fileID: 2023098842}
+  rentalFeePay: {fileID: 394503906}
   receiptPopUp: {fileID: 303826822}
   goldGainText: {fileID: 720849210}
   reputGainText: {fileID: 1701797056}

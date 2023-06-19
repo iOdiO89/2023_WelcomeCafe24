@@ -52,8 +52,14 @@ public class GameManager : MonoBehaviour
         else{
             Debug.Log("File Exists - Continue");
             daySceneActive = false;
-            continueBool = true; 
-            SceneManager.LoadScene("DayScene");
+            if(userData.day == 0){
+                Debug.Log($"go to TutorialScene");
+                SceneManager.LoadScene("TutorialScene"); 
+            }
+            else{
+                continueBool = true; 
+                SceneManager.LoadScene("DayScene");
+            }
         }
     }
 
@@ -63,7 +69,7 @@ public class GameManager : MonoBehaviour
         Debug.Log("Start New");
         daySceneActive = false;
         SoundManager.instance.PlayEffect("button");
-        SceneManager.LoadScene("TutorialScene");
+        SceneManager.LoadScene("DayScene");
     }
     
     public void ExitBtnStartScene(){ // StartScene-종료하기

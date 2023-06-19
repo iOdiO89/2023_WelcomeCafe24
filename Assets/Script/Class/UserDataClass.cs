@@ -17,7 +17,7 @@ public class UserDataClass
     public float effectVolume;
 
     public UserDataClass(){
-        gold = 3000;
+        gold = 100000;
         reputation = 0;
         day = 0;
 

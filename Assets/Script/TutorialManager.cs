@@ -26,7 +26,7 @@ public class TutorialManager : MonoBehaviour
     [SerializeField]
     Transform brightObjectsTransform;
 
-    //¹à¾ÆÁú ºÎºÐ
+    //ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Îºï¿½
     [SerializeField]
     GameObject[] brightObjectMaskArray;
     [SerializeField]
@@ -60,7 +60,6 @@ public class TutorialManager : MonoBehaviour
 
     public void ScreenTouchEvent()
     {
-        Debug.Log(1);
         if (!isScriptEnd)
             PrintDialogue();
 
@@ -88,9 +87,9 @@ public class TutorialManager : MonoBehaviour
             if (nowScriptIndex < tutorialScriptWrapper.tutorialScriptArray.Length)
             {
                 TutorialScript nowScript = tutorialScriptWrapper.tutorialScriptArray[nowScriptIndex];
-                Debug.Log("PrintDialog: " + nowScriptIndex + "/" + tutorialScriptWrapper.tutorialScriptArray.Length);
+                // Debug.Log("PrintDialog: " + nowScriptIndex + "/" + tutorialScriptWrapper.tutorialScriptArray.Length);
 
-                //Event°¡ Á¸ÀçÇÏ¸é ½ÇÇà
+                //Eventï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï¸ï¿½ ï¿½ï¿½ï¿½ï¿½
                 if (nowScript.tutorialEvent != TutorialEvent.None)
                 {
                     SetAction(nowScript.tutorialEvent);
@@ -202,7 +201,7 @@ public class TutorialManager : MonoBehaviour
         nowObject.transform.SetParent(brightObjectsTransform);
     }
 
-    //¸¶½ºÅ©¸¦ »ç¿ëÇÏ¸é isActive°¡ ÂüÀÌ µÈ´Ù.
+    //ï¿½ï¿½ï¿½ï¿½Å©ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Ï¸ï¿½ isActiveï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½È´ï¿½.
     void SetMask(bool isActive, int nowMask)
     {
         if(isActive)

@@ -111,7 +111,6 @@ public class DaySceneManager : MonoBehaviour
         {
             cupCapacityCountArr[i] = 0;
         }
-
         todayCoin = 0;
         todayReputation = 0;
         successCount = 0;
@@ -182,7 +181,7 @@ public class DaySceneManager : MonoBehaviour
 
         // 초기화
         ClearIngredientImages();
-        ClearFields();
+        // ClearFields();
         ClearCupCapacityImages();
     }
 
@@ -193,13 +192,68 @@ public class DaySceneManager : MonoBehaviour
 
     // 주문창에 뜰 레시피 종류 정하기
     private string MakeOrderText(){
+        int isOk;
         while(true){
             orderIndex = UnityEngine.Random.Range(0, 21);
-            if(GameManager.instance.userData.recipeUnlock[orderIndex]>0) // 해금된 레시피 중 하나를 골라
-                break;
+            if(GameManager.instance.userData.recipeUnlock[orderIndex]>0){ // 해금된 레시피 중 하나를 골라
+                recipeData = GameManager.instance.gameDataUnit.recipeArray[orderIndex];
+                isOk = 0; // 값이 3이 되면 제조 가능한 레시피 (레시피도 해금되어있고 + 재료도 모두 해금된 상태)
+
+                if(recipeData.ing1Index == -1 || GameManager.instance.userData.ingredientUnlock[recipeData.ing1Index]){
+                    isOk += 1;
+                }
+                if(recipeData.ing2Index == -1 || GameManager.instance.userData.ingredientUnlock[recipeData.ing2Index]){
+                    isOk += 1;
+                }
+                if(recipeData.ing3Index == -1 || GameManager.instance.userData.ingredientUnlock[recipeData.ing3Index]){
+                    isOk += 1;
+                }
+
+                if(isOk==3) {
+                    Debug.Log($"[1] orderIndex = {orderIndex} / recipe = {recipeData.nameKor}");
+                    break;
+                } // 조건 검사에서 모두 통과하면 이 레시피 사용
+                Debug.Log($"[2] orderIndex = {orderIndex} / recipe = {recipeData.nameKor}");
+            } 
         }
-        recipeData = GameManager.instance.gameDataUnit.recipeArray[orderIndex]; // 사용할 recipeData 에 담기
+        // temp222();
+        // recipeData = GameManager.instance.gameDataUnit.recipeArray[orderIndex]; // 사용할 recipeData 에 담기
+        // Debug.Log($"최종 recipe = {recipeData.nameKor}");
+        Debug.Log($"[3] orderIndex = {orderIndex} / recipe = {recipeData.nameKor}");
         return recipeData.nameKor;
+    }
+
+    void temp222(){
+        string enable = "가능한 모든 레시피 인덱스 : ";
+        int isOk;
+
+        for(int i=0; i<21; i++){
+            orderIndex = i;
+            if(GameManager.instance.userData.recipeUnlock[orderIndex]>0){ // 해금된 레시피 중 하나를 골라
+                recipeData = GameManager.instance.gameDataUnit.recipeArray[orderIndex]; // 사용할 recipeData 에 담기
+                
+                isOk = 0; // 값이 3이 되면 제조 가능한 레시피 (레시피도 해금되어있고 + 재료도 모두 해금된 상태)
+
+                if(recipeData.ing1Index == -1 || GameManager.instance.userData.ingredientUnlock[recipeData.ing1Index]){
+                    isOk += 1;
+                    // Debug.Log($"조건 1 통과");
+                }
+                if(recipeData.ing2Index == -1 || GameManager.instance.userData.ingredientUnlock[recipeData.ing2Index]){
+                    isOk += 1;
+                    // Debug.Log($"조건 2 통과");
+                }
+                if(recipeData.ing3Index == -1 || GameManager.instance.userData.ingredientUnlock[recipeData.ing3Index]){
+                    isOk += 1;
+                    // Debug.Log($"조건 3 통과");
+                }
+
+                if(isOk==3) {
+                    // Debug.Log(recipeData.index.ToString());
+                    enable += recipeData.nameKor + " "; // 조건 검사에서 모두 통과하면 이 레시피 사용
+                }
+            } 
+        }
+        Debug.Log(enable);
     }
 
 
@@ -507,6 +561,7 @@ public class DaySceneManager : MonoBehaviour
                 SetNewOrder();
             }
             else{ // 낮에 처리해야할 주문이 모두 끝난 경우
+                ClearFields();
                 jsonManager.SaveData(GameManager.instance.userData);
                 Debug.Log("Data save Complete");
                 SceneManager.LoadScene("EveningScene");
@@ -535,6 +590,7 @@ public class DaySceneManager : MonoBehaviour
                 SetNewOrder();
             }
             else{ // 밤에 처리해야할 주문이 모두 끝난 경우
+
                 Invoke("ChangeSceneNightToDay", 0.5f);
             }
         }   
@@ -542,6 +598,7 @@ public class DaySceneManager : MonoBehaviour
 
     // 밤>낮으로 화면 전환
     private void ChangeSceneNightToDay(){
+        ClearFields();
         jsonManager.SaveData(GameManager.instance.userData);
         Debug.Log("Data save Complete");
         fade.FadeOut();
@@ -560,7 +617,7 @@ public class DaySceneManager : MonoBehaviour
         int temp;
         for(int i=0; i<3; i++){
             // 재료의 index, 비율을 tuple로 저장
-            if(fieldsArray[i].fieldImage.sprite.name == "default"){
+            if(fieldsArray[i].fieldImage.sprite.name == "default" || cupCapacityCountArr[i] == 0){
                 ingList.Add(new Tuple<int, int>(-1, 0)); // 재료가 비어있는 경우
             }
             else{ // 재료의 index와 얼마나 넣었는지를 기록
@@ -592,10 +649,9 @@ public class DaySceneManager : MonoBehaviour
         int temp;
         for(int i=0; i<3; i++){
             // 재료의 index, 비율을 tuple로 저장
-            if(fieldsArray[i].fieldImage.sprite.name != "default"){ // 재료를 넣지 않은 경우
+            if(fieldsArray[i].fieldImage.sprite.name != "default" && cupCapacityCountArr[i] != 0){ 
                 temp = System.Convert.ToInt32(fieldsArray[i].fieldImage.sprite.name);
-                ingList.Add(new Tuple<int, int>(temp, cupCapacityCountArr[i])); 
-                //ingList.Add(new Tuple<int, int>(-1, 0)); 
+                ingList.Add(new Tuple<int, int>(temp, cupCapacityCountArr[i])); // 컵에 있는 재료들을 기록
             }
         }
         ingList.Sort((a, b) => a.Item1.CompareTo(b.Item1));

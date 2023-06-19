@@ -10,6 +10,7 @@ public class EveningSceneManager : MonoBehaviour
 {
     public GameObject rentalFeePopUp;
     public Text rentalFeeText;
+    public Text rentalFeePay;
 
     public GameObject receiptPopUp;
     public Text goldGainText;
@@ -95,6 +96,7 @@ public class EveningSceneManager : MonoBehaviour
     public void ShowRentalFeePopUp(){
         if(GameManager.instance.userData.day%3 == 0){
             rentalFeeText.text = "이번엔 " + SetRentalFee().ToString() + " G 야!"; 
+            rentalFeePay.text = "알겠어요... (-" + SetRentalFee().ToString() + "G)";
             Debug.Log($"rentalFee : {SetRentalFee()}");
             rentalFeePopUp.SetActive(true);
         }
@@ -149,7 +151,10 @@ public class EveningSceneManager : MonoBehaviour
 
     private void Ingredient(){
         ingredientIndex = ChooseIngredient();
-        if(ingredientBuyBtn.activeSelf){
+        if(ingredientIndex == -1){
+            ingredientName.text = "구매가능 \n품목 없음";
+        }
+        else if(ingredientBuyBtn.activeSelf){
             ingredientData = GameManager.instance.gameDataUnit.ingredientArray[ingredientIndex];
             ingredientName.text = ingredientData.nameKor; // 이름
             ingredientPrice = ingredientData.price; 
@@ -200,6 +205,7 @@ public class EveningSceneManager : MonoBehaviour
         }
         
         probList.Sort((a, b) => a.Item2.CompareTo(b.Item2)); //확률 오름차순 정렬
+        if(probList.Count == 0) return -1; // 모든 재료를 구매한 경우
         while(true){
             float randomValue = UnityEngine.Random.value;
             float criteria = 0.0f;
