@@ -8865,6 +8865,9 @@ MonoBehaviour:
   popupParent: {fileID: 1184263692}
   popupBackGround: {fileID: 1581314232}
   shelfPopupBoard: {fileID: 41614918}
+  shelf1: {fileID: 189070686}
+  shelf2: {fileID: 1061148732}
+  shelf3: {fileID: 1434362359}
   itemBtnArray:
   - {fileID: 59929375}
   - {fileID: 1025545122}

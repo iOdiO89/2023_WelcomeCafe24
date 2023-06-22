@@ -12,6 +12,9 @@ public class DaySceneManager : MonoBehaviour
     [SerializeField] GameObject popupParent;
     [SerializeField] GameObject popupBackGround;
     [SerializeField] GameObject shelfPopupBoard;
+    [SerializeField] Button shelf1;
+    [SerializeField] Button shelf2;
+    [SerializeField] Button shelf3;
     [SerializeField] Button[] itemBtnArray;
     [SerializeField] GameObject ingredientPopupBoard;
     [SerializeField] Image ingredientImage;
@@ -75,6 +78,7 @@ public class DaySceneManager : MonoBehaviour
     private NoticeUI notice;
     private FadeUI fade;
     private BouncyUI bouncy;
+    private InteriorManager interior;
 
     void Awake(){
         GameManager.instance.daySceneActive = GameManager.instance.daySceneActive? false : true;
@@ -100,15 +104,15 @@ public class DaySceneManager : MonoBehaviour
         bouncy = FindObjectOfType<BouncyUI>();
         notice = FindObjectOfType<NoticeUI>();
         fade = FindObjectOfType<FadeUI>();
+        interior = FindObjectOfType<InteriorManager>();
+        interior.SetInterior();
         fade.FadeIn();
         orderCount++;
-        
-        ColorBlock color = cup.colors;
-        color.normalColor = SetColor();
-        cup.colors = color;
+
+        SetObjectColor(); // 컵, 선반 명암 조절
+
         cupCapacityCountArr = new int[3];
-        for(int i =0; i<3; i++)
-        {
+        for(int i =0; i<3; i++){
             cupCapacityCountArr[i] = 0;
         }
         todayCoin = 0;
@@ -210,16 +214,16 @@ public class DaySceneManager : MonoBehaviour
                 }
 
                 if(isOk==3) {
-                    Debug.Log($"[1] orderIndex = {orderIndex} / recipe = {recipeData.nameKor}");
+                    // Debug.Log($"[1] orderIndex = {orderIndex} / recipe = {recipeData.nameKor}");
                     break;
                 } // 조건 검사에서 모두 통과하면 이 레시피 사용
-                Debug.Log($"[2] orderIndex = {orderIndex} / recipe = {recipeData.nameKor}");
+                // Debug.Log($"[2] orderIndex = {orderIndex} / recipe = {recipeData.nameKor}");
             } 
         }
         // temp222();
         // recipeData = GameManager.instance.gameDataUnit.recipeArray[orderIndex]; // 사용할 recipeData 에 담기
         // Debug.Log($"최종 recipe = {recipeData.nameKor}");
-        Debug.Log($"[3] orderIndex = {orderIndex} / recipe = {recipeData.nameKor}");
+        // Debug.Log($"[3] orderIndex = {orderIndex} / recipe = {recipeData.nameKor}");
         return recipeData.nameKor;
     }
 
@@ -892,5 +896,25 @@ public class DaySceneManager : MonoBehaviour
         Debug.Log("Data save Complete");
         fade.FadeOut();
         SceneManager.LoadScene("DayScene");
+    }
+
+    private void SetObjectColor(){
+        ColorBlock color = cup.colors;
+        color.normalColor = SetColor();
+        cup.colors = color;
+
+        if(!GameManager.instance.daySceneActive){
+            color = shelf1.colors;
+            color.normalColor = new Color(192/255f, 192/255f, 192/255f);
+            shelf1.colors = color;
+
+            color = shelf2.colors;
+            color.normalColor = new Color(192/255f, 192/255f, 192/255f);
+            shelf2.colors = color;
+
+            color = shelf3.colors;
+            color.normalColor = new Color(192/255f, 192/255f, 192/255f);
+            shelf3.colors = color;
+        }
     }
 }

@@ -2016,8 +2016,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -505, y: 86}
-  m_SizeDelta: {x: 227.4734, y: 75}
+  m_AnchoredPosition: {x: -500, y: 51.587}
+  m_SizeDelta: {x: 456, y: 143.83}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &898994764
 MonoBehaviour:
@@ -2052,7 +2052,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "\uC790\uB3D9\uD0EC\uD551\uAE30"
+  m_Text: "\uAD6C\uB9E4\uAC00\uB2A5 \uD488\uBAA9\uC774 \n\uC5C6\uC2B5\uB2C8\uB2E4"
 --- !u!222 &898994765
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -2376,8 +2376,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -500, y: 84.75}
-  m_SizeDelta: {x: 387.8759, y: 77.5}
+  m_AnchoredPosition: {x: -500, y: 51.587}
+  m_SizeDelta: {x: 387.8759, y: 143.83}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1003888530
 MonoBehaviour:
@@ -2412,7 +2412,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "\uC5BC\uADF8\uB808\uC774 \uBC84\uBE14 \uB77C\uB5BC"
+  m_Text: "\uAD6C\uB9E4\uAC00\uB2A5 \uD488\uBAA9\uC774\n\uC5C6\uC2B5\uB2C8\uB2E4"
 --- !u!222 &1003888531
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -3027,8 +3027,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -500, y: 86}
-  m_SizeDelta: {x: 313.96, y: 76.466}
+  m_AnchoredPosition: {x: -500, y: 51.587}
+  m_SizeDelta: {x: 313.96, y: 143.83}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1466469144
 MonoBehaviour:
@@ -3063,7 +3063,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "\uC5BC\uADF8\uB808\uC774 \uD2F0\uBC31"
+  m_Text: "\uAD6C\uB9E4\uAC00\uB2A5 \uD488\uBAA9\uC774\n\uC5C6\uC2B5\uB2C8\uB2E4"
 --- !u!222 &1466469145
 CanvasRenderer:
   m_ObjectHideFlags: 0

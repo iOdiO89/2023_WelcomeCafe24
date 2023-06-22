@@ -152,9 +152,14 @@ public class EveningSceneManager : MonoBehaviour
     private void Ingredient(){
         ingredientIndex = ChooseIngredient();
         if(ingredientIndex == -1){
-            ingredientName.text = "구매가능 \n품목 없음";
+            ingredientBuyBtn.SetActive(false);
+            ingredientPriceText.gameObject.SetActive(false);
+            ingredientName.text = "구매가능 품목이\n없습니다";
         }
         else if(ingredientBuyBtn.activeSelf){
+            ingredientBuyBtn.SetActive(true);
+            ingredientPriceText.gameObject.SetActive(true);
+
             ingredientData = GameManager.instance.gameDataUnit.ingredientArray[ingredientIndex];
             ingredientName.text = ingredientData.nameKor; // 이름
             ingredientPrice = ingredientData.price; 
@@ -174,7 +179,7 @@ public class EveningSceneManager : MonoBehaviour
         if(blenderUnlock && swingBottleUnlock){ // 블렌더, 스윙보틀 모두 해금
             for(int i=0; i<GameManager.instance.gameDataUnit.ingredientArray.Length; i++){
                 ingredientData = GameManager.instance.gameDataUnit.ingredientArray[i];
-                if(ingredientData.bOsO != 0){
+                if(ingredientData.bOsO != 0 && !GameManager.instance.userData.ingredientUnlock[i]){
                     probList.Add(new Tuple<int, float>(ingredientData.index, (float)ingredientData.bOsO));
                 }
             }
@@ -182,7 +187,7 @@ public class EveningSceneManager : MonoBehaviour
         else if(blenderUnlock && swingBottleUnlock==false){ // 블렌더만 해금
             for(int i=0; i<GameManager.instance.gameDataUnit.ingredientArray.Length; i++){
                 ingredientData = GameManager.instance.gameDataUnit.ingredientArray[i];
-                if(ingredientData.bOsX != 0){
+                if(ingredientData.bOsX != 0 && !GameManager.instance.userData.ingredientUnlock[i]){
                     probList.Add(new Tuple<int, float>(ingredientData.index, ingredientData.bOsX));
                 }
             }
@@ -190,7 +195,7 @@ public class EveningSceneManager : MonoBehaviour
         else if(blenderUnlock==false && swingBottleUnlock){ // 스윙보틀만 해금
             for(int i=0; i<GameManager.instance.gameDataUnit.ingredientArray.Length; i++){
                 ingredientData = GameManager.instance.gameDataUnit.ingredientArray[i];
-                if(ingredientData.bXsO != 0){
+                if(ingredientData.bXsO != 0 && !GameManager.instance.userData.ingredientUnlock[i]){
                     probList.Add(new Tuple<int, float>(ingredientData.index, ingredientData.bXsO));
                 }
             } 
@@ -198,14 +203,21 @@ public class EveningSceneManager : MonoBehaviour
         else{ // 블렌더, 스윙보틀 둘다 해금 X
             for(int i=0; i<GameManager.instance.gameDataUnit.ingredientArray.Length; i++){
                 ingredientData = GameManager.instance.gameDataUnit.ingredientArray[i];
-                if(ingredientData.bXsX != 0){
+                if(ingredientData.bXsX != 0 && !GameManager.instance.userData.ingredientUnlock[i] ){
                     probList.Add(new Tuple<int, float>(ingredientData.index, ingredientData.bXsX));
                 }
             }
         }
-        
-        probList.Sort((a, b) => a.Item2.CompareTo(b.Item2)); //확률 오름차순 정렬
+
+        string temp = "";
+        for(int i=0; i<probList.Count; i++){
+            temp += probList[i].Item1.ToString() + " ";
+        }
+        Debug.Log($"ingredient 가능한 경우의 수 : {temp}");
         if(probList.Count == 0) return -1; // 모든 재료를 구매한 경우
+
+        probList.Sort((a, b) => a.Item2.CompareTo(b.Item2)); //확률 오름차순 정렬
+
         while(true){
             float randomValue = UnityEngine.Random.value;
             float criteria = 0.0f;
@@ -238,12 +250,23 @@ public class EveningSceneManager : MonoBehaviour
 
     private void Recipe(){
         recipeIndex = ChooseRecipe();
-        if(recipeBuyBtn.activeSelf){
+        if(recipeIndex == -1){
+            recipeBuyBtn.SetActive(false);
+            recipeGradeText.gameObject.SetActive(false);
+            recipePriceText.gameObject.SetActive(false);
+
+            recipeName.text = "구매가능 품목이\n없습니다";
+        }
+        else if(recipeBuyBtn.activeSelf){
+            recipeBuyBtn.SetActive(true);
+            recipeGradeText.gameObject.SetActive(true);
+            recipePriceText.gameObject.SetActive(true);
+
             recipeData = GameManager.instance.gameDataUnit.recipeArray[recipeIndex];
             recipeName.text = recipeData.nameKor;
             int tempNum = GameManager.instance.userData.recipeUnlock[recipeIndex];
             recipeGrade = UnityEngine.Random.Range(tempNum+1, 4);
-            Debug.Log($"등급 : {recipeGrade} / 이름 : {recipeData.nameKor}");
+            // Debug.Log($"등급 : {recipeGrade} / 이름 : {recipeData.nameKor}");
             if(recipeGrade==1){
                 recipeGradeText.text = "초급";
                 recipePrice = recipeData.level1Price; 
@@ -270,6 +293,14 @@ public class EveningSceneManager : MonoBehaviour
             recipeData = GameManager.instance.gameDataUnit.recipeArray[i];
             if(GameManager.instance.userData.recipeUnlock[i]<3 && recipeData.level1Price!=-1) recipeList.Add(i);
         }
+
+        string temp = "";
+        for(int i=0; i<recipeList.Count; i++){
+            temp += recipeList[i].ToString() + " ";
+        }
+        Debug.Log($"recipe 가능한 경우의 수 : {temp}");
+        if(recipeList.Count == 0) return -1;
+
         int tempIndex = recipeList[UnityEngine.Random.Range(0, recipeList.Count)];
         return tempIndex;
     }
@@ -294,7 +325,18 @@ public class EveningSceneManager : MonoBehaviour
 
     private void Machine(){
         machineIndex = ChooseMachine();
-        if(machineBuyBtn.activeSelf){
+        if(machineIndex == -1){
+            machineBuyBtn.SetActive(false);
+            machinePriceText.gameObject.SetActive(false);
+            machineGrade.gameObject.SetActive(false);
+
+            machineName.text = "구매가능 품목이\n없습니다";
+        }
+        else if(machineBuyBtn.activeSelf){
+            machineBuyBtn.SetActive(true);
+            machinePriceText.gameObject.SetActive(true);
+            machineGrade.gameObject.SetActive(true);
+
             machineData = GameManager.instance.gameDataUnit.machineArray[machineIndex];
             machineName.text = machineData.nameKor;
             if(GameManager.instance.userData.machineLevel==1){
@@ -323,10 +365,21 @@ public class EveningSceneManager : MonoBehaviour
             case 1:
                 List<Tuple<int, float>> probList = new List<Tuple<int, float>>();
                 for(int i=3; i<7; i++){
-                    machineData = GameManager.instance.gameDataUnit.machineArray[i];
-                    probList.Add(new Tuple<int, float>(machineData.index, machineData.level1Pos));
+                    if(!GameManager.instance.userData.machineUnlock[i]){
+                        machineData = GameManager.instance.gameDataUnit.machineArray[i];
+                        probList.Add(new Tuple<int, float>(machineData.index, machineData.level1Pos));
+                    }
                 }
                 probList.Sort((a, b) => a.Item2.CompareTo(b.Item2));
+
+                string temp = "";
+                for(int i=0; i<probList.Count; i++){
+                    temp += probList[i].Item1.ToString() + " ";
+                }
+                Debug.Log($"machine level1 가능한 경우의 수 : {temp}");
+
+                if(probList.Count == 0) return -1;
+
                 while(true){
                     float randomValue = UnityEngine.Random.value;
                     float criteria = 0.0f;
@@ -343,8 +396,16 @@ public class EveningSceneManager : MonoBehaviour
                 for(int i=0; i<7; i++){
                     if(!GameManager.instance.userData.machineUnlock[i]) machineList.Add(i);
                 }
+
+                temp = "";
+                for(int i=0; i<machineList.Count; i++){
+                    temp += machineList[i].ToString() + " ";
+                }
+                Debug.Log($"machine level 2/3 가능한 경우의 수 : {temp}");
+
+                if(machineList.Count == 0) return -1;
+
                 int tempIndex = machineList[UnityEngine.Random.Range(0, machineList.Count)];
-                //machineData = GameManager.instance.gameDataUnit.machineArray[tempIndex];
                 return tempIndex;
             default:
                 Debug.Log("Machine-error");
@@ -404,12 +465,13 @@ public class EveningSceneManager : MonoBehaviour
             int prevMachineIndex = machineIndex;
             do{
                 Ingredient();// 재료
+            } while(prevIngredientIndex != -1 && prevIngredientIndex==ingredientIndex);
+            do{
                 Recipe();// 레시피
+            } while(prevRecipeIndex != -1 && prevRecipeIndex==recipeIndex);
+            do{
                 Machine();//기계             
-            }
-            while(prevIngredientIndex==ingredientIndex 
-                    || prevRecipeIndex==recipeIndex 
-                    || prevMachineIndex==machineIndex);
+            } while(prevMachineIndex != -1 && prevMachineIndex==machineIndex);
         }
         else{
             notice.SUB("돈이 부족합니다 (구매불가)");
