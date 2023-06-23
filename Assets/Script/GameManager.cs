@@ -53,7 +53,7 @@ public class GameManager : MonoBehaviour
             Debug.Log("File Exists - Continue");
             daySceneActive = false;
             if(userData.day == 0){
-                Debug.Log($"go to TutorialScene");
+                Debug.Log("go to TutorialScene");
                 SceneManager.LoadScene("TutorialScene"); 
             }
             else{
@@ -69,7 +69,7 @@ public class GameManager : MonoBehaviour
         Debug.Log("Start New");
         daySceneActive = false;
         SoundManager.instance.PlayEffect("button");
-        SceneManager.LoadScene("DayScene");
+        SceneManager.LoadScene("TutorialScene");
     }
     
     public void ExitBtnStartScene(){ // StartScene-종료하기

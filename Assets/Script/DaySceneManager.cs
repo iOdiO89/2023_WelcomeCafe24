@@ -98,7 +98,7 @@ public class DaySceneManager : MonoBehaviour
             orderSum = 5;
             order.SetActive(false);
         }
-
+        jsonManager.SaveData(GameManager.instance.userData);
         SetRecipeColor();
         PrintDayText();
         bouncy = FindObjectOfType<BouncyUI>();
@@ -391,7 +391,14 @@ public class DaySceneManager : MonoBehaviour
     }
 
     void SetFieldsArray()
-    {
+    {   
+        for(int i=0; i<3; i++){
+            if(nowIngredient.name == fieldsArray[i].fieldImage.sprite.name){
+                notice.SUB("필드에 이미 담겨있는 재료입니다");
+                return;
+            }
+        }
+
         //1. 필드에 아무것도 없으면 1번
         //2. 필드에 1개 있으면 2번
         //3. 필드에 2개 있으면 3번
