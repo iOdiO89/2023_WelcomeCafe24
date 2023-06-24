@@ -9065,6 +9065,9 @@ MonoBehaviour:
   popupParent: {fileID: 1184263692}
   popupBackGround: {fileID: 1581314232}
   shelfPopupBoard: {fileID: 41614918}
+  shelf1: {fileID: 0}
+  shelf2: {fileID: 0}
+  shelf3: {fileID: 0}
   itemBtnArray:
   - {fileID: 59929375}
   - {fileID: 1025545122}
@@ -9419,7 +9422,7 @@ MonoBehaviour:
     m_RichText: 1
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
-    m_LineSpacing: 1
+    m_LineSpacing: 1.2
   m_Text: 
 --- !u!222 &1176259733
 CanvasRenderer:

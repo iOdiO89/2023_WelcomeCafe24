@@ -3,11 +3,11 @@
 		[
 			{
 				"tutorialIndex":0,
-				"tutorialScript":"10년동안,, 많은 일이 있었지,,"
+				"tutorialScript":"10년동안... 많은 일이 있었지..."
 			},
 			{
 				"tutorialIndex":1,
-				"tutorialScript":"아침 청소도 오늘로 끝인가"
+				"tutorialScript":"아침 청소도 오늘로 끝인가..."
 			},
 			{
 				"tutorialIndex":2,
@@ -15,59 +15,59 @@
 			},
 			{
 				"tutorialIndex":3,
-				"tutorialScript":"자네가 ‘후임자’인가?"
+				"tutorialScript":"자네가 '후임자'인가?"
 			},
 			{
 				"tutorialIndex":4,
-				"tutorialScript":"뭐 인사는 생략하고 인수인계나 빠르게 진행하자고."
+				"tutorialScript":"뭐 인사는 생략하고 \n인수인계나 빠르게 진행하자고."
 			},
 			{
 				"tutorialIndex":5,
-				"tutorialScript":"우리 카페에 대해 설명해주자면, 간단한 시스템일세"
+				"tutorialScript":"우리 카페에 대해 설명해 주자면,\n간단한 시스템일세"
 			},
 			{
 				"tutorialIndex":6,
-				"tutorialScript":"레시피를 참고해서, 선반에서 재료를 꺼낸 뒤,"
+				"tutorialScript":"레시피를 참고해서\n선반에서 재료를 꺼낸 뒤"
 			},
 			{
 				"tutorialIndex":7,
-				"tutorialScript":"컵에서 원하는 비율로 넣어서 손님에게 내놓으면 되는 간단한 구조지"
+				"tutorialScript":"컵에서 원하는 비율로 넣어서 \n손님에게 내놓으면 되는 간단한 구조지"
 			},
 			{
 				"tutorialIndex":8,
 				"tutorialEventName":"Money",
-				"tutorialScript":"성공하면 돈과 명성을 얻을 수 있고, 실패하면 명성이 깎이니 조심하시게"
+				"tutorialScript":"성공하면 돈과 명성을 얻을 수 있고, \n실패하면 명성이 깎이니 조심하시게"
 			},
 			{
 				"tutorialIndex":9,
 				"tutorialEventName":"MoneyEnd",
-				"tutorialScript":"‘명성’을 많이 쌓으면 커피 가격도 올라가니 명성 관리에 주의하면 좋을 걸세"
+				"tutorialScript":"'명성'을 많이 쌓으면 음료 가격도 올라가니 명성 관리를 소홀히 하지 말게"
 			},
 			{
 				"tutorialIndex":10,
-				"tutorialScript":"인사말은 바꿔도 상관은 없는데 난 10년동안 이거로 했네"
+				"tutorialScript":"인사말은 바꿔도 상관은 없는데 \n난 10년동안 이거로 했네"
 			},
 			{
 				"tutorialIndex":11,
-				"tutorialScript":"‘어서오세요 카페 24에’"
+				"tutorialScript":"'어서오세요 카페 24에'"
 			},
 			{
 				"tutorialIndex":12,
 				"tutorialEventName":"Recipe",
-				"tutorialScript":"우선 저기 왼쪽 상단에 보이는 포스트잇은 ‘레시피’ 일세"
+				"tutorialScript":"우선 저기 왼쪽 상단에 보이는 포스트잇은 '레시피' 일세"
 			},
 			{
 				"tutorialIndex":13,
-				"tutorialScript":"원하는 레시피를 선택하면 옆에 어떤 재료를 얼마의 비율로 넣어야 하는지 알려주지"
+				"tutorialScript":"원하는 레시피를 선택하면 \n옆에 재료와 비율을 알려주지"
 			},
 			{
 				"tutorialIndex":14,
-				"tutorialScript":"아! 참고로, 어제 우리 집에서 고양이가 레시피책을 찢어놔서 ‘일부’가 손실되었네"
+				"tutorialScript":"아! 참고로, 어제 우리 집에서 고양이가 레시피책을 찢어놔서 '일부'가 손실되었네"
 			},
 			{
 				"tutorialIndex":15,
 				"tutorialEventName":"RecipeEnd",
-				"tutorialScript":"부족한 레시피는 낮에서 밤으로 넘어갈 때, 구매할 수 있어"
+				"tutorialScript":"부족한 레시피는 '낮'과 '밤' 사이인 \n'저녁'에 구매할 수 있어"
 			},
 			{
 				"tutorialIndex":16,
@@ -76,17 +76,17 @@
 			},
 			{
 				"tutorialIndex":17,
-				"tutorialScript":"‘소유한 재료’만 꺼낼 수 있고, 재료의 추가는 역시 저녁에 구매할 수 있지"
+				"tutorialScript":"'소유한 재료'만 꺼낼 수 있고, \n부족한 재료도 역시 '저녁'에 구매할 수 있지"
 			},
 			{
 				"tutorialIndex":18,
 				"tutorialEventName":"ShelfEnd",
-				"tutorialScript":"‘재료를 집으면’ 좌측 하단의 ‘핸드’에 들어가게 되고, 여기 안의 재료들로 최종적으로 커피를 만들게 된다네"
+				"tutorialScript":"'재료를 집으면' 좌측 하단의 '핸드'에 들어가게 되고, '핸드'의 재료들로 최종적으로 음료를 만들게 된다네"
 			},
 			{
 				"tutorialIndex":19,
 				"tutorialEventName":"Cup",
-				"tutorialScript":"원하는 재료를 핸드에 다 집으면, 컵을 볼 차례일세"
+				"tutorialScript":"원하는 재료를 핸드에 다 집으면, \n컵을 볼 차례일세"
 			},
 			{
 				"tutorialIndex":20,
@@ -94,20 +94,20 @@
 			},
 			{
 				"tutorialIndex":21,
-				"tutorialScript":"모든 재료들의 총량은 10일세. 넘거나 모자르는 일은 없어"
+				"tutorialScript":"모든 재료들의 총량은 10일세. \n넘거나 모자르는 일은 없어"
 			},
 			{
 				"tutorialIndex":22,
 				"tutorialEventName":"CupEnd",
-				"tutorialScript":"아무튼, 그렇게 커피를 만들어서 손님들에게 ‘드리면’ 된다네"
+				"tutorialScript":"아무튼, 그렇게 커피를 만들어서 \n손님들에게 '드리면' 된다네"
 			},
 			{
 				"tutorialIndex":23,
-				"tutorialScript":"그렇게 커피를 일정 개수 판매하면 ‘밤’으로 넘어가는 ‘저녁’이 된다네"
+				"tutorialScript":"그렇게 커피를 일정 개수 판매하면 \n'밤'으로 넘어가는 '저녁'이 된다네"
 			},
 			{
 				"tutorialIndex":24,
-				"tutorialScript":"저녁에는 재료, 레시피, 제조기기등을 살 수 있으니 돈 많이 벌어두라구"
+				"tutorialScript":"저녁에는 재료, 레시피, 제조기기 등을 \n살 수 있으니 돈 많이 벌어두라구"
 			},
 			{
 				"tutorialIndex":25,
@@ -120,15 +120,15 @@
 			},
 			{
 				"tutorialIndex":27,
-				"tutorialScript":"레시피를 산다고 무조건 그 커피를 만들 수 있다고 착각하는건 애송이들의 보편적 행동이야"
+				"tutorialScript":"레시피를 산다고 무조건 그 커피를 \n만들 수 있다고 착각하는 건 \n애송이들의 보편적 행동이야"
 			},
 			{
 				"tutorialIndex":28,
-				"tutorialScript":"너가 사오는 레시피에는 재료와 비율을 완전히 나와있지 않아"
+				"tutorialScript":"너가 사오는 레시피에는 재료와 비율이 완전히 나와있지 않아"
 			},
 			{
 				"tutorialIndex":29,
-				"tutorialScript":"그 부족한 재료와 비율을 맞추고 찾아나가는 것이 ‘밤’에 너가 해야 할 일이지"
+				"tutorialScript":"그 부족한 재료와 비율을 찾아나가는 것이 \n'밤'에 너가 해야 할 일이지"
 			},
 			{
 				"tutorialIndex":30,
@@ -136,31 +136,31 @@
 			},
 			{
 				"tutorialIndex":31,
-				"tutorialScript":"찾고싶은 레시피를 보고 선반에서 재료를 선택해서 컵에서 커피를 만들어"
+				"tutorialScript":"레시피를 먼저 확인한 후 \n선반에서 필요한 재료들을 선택하고 \n컵에서 음료를 만들면 되네"
 			},
 			{
 				"tutorialIndex":32,
-				"tutorialScript":"만약 비율과 재료가 맞는다면, 새로운 레시피가 자동으로 추가될거야"
+				"tutorialScript":"만약 비율과 재료가 맞는다면, \n새로운 레시피가 자동으로 추가될거야"
 			},
 			{
 				"tutorialIndex":33,
 				"tutorialEventName":"NightEnd",
-				"tutorialScript":"만약 그렇지 않다면, 그냥 시간 날린 거지 뭐."
+				"tutorialScript":"만약 그렇지 않다면, \n그냥 시간 날린 거지 뭐."
 			},
 			{
 				"tutorialIndex":34,
 				"tutorialScript":"설명은 이정도일세"},
 			{
 				"tutorialIndex":35,
-				"tutorialScript":"자 자영업자의 눈물과 땀의 시간이 도래했네"
+				"tutorialScript":"자, 자영업자의 \n눈물과 땀의 시간이 도래했네"
 			},
 			{
 				"tutorialIndex":36,
-				"tutorialScript":"어줍잖은 마음가짐으로는 해낼 수 없을거야"
+				"tutorialScript":"어쭙잖은 마음가짐으로는 해낼 수 없을거야"
 			},
 			{
 				"tutorialIndex":37,
-				"tutorialScript":"건투를 비네"
+				"tutorialScript":"건투를 비네!"
 			},
 			{
 				"tutorialIndex":38,

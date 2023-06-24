@@ -86,7 +86,8 @@ public class DaySceneManager : MonoBehaviour
 
     void Start(){
         if(GameManager.instance.daySceneActive){
-            if(!GameManager.instance.continueBool) GameManager.instance.userData.day++;
+            if(!GameManager.instance.continueBool) GameManager.instance.userData.day++; // 이어하기가 아닌 경우만 날짜 ++
+            GameManager.instance.continueBool = false;
             Debug.Log($"Day {GameManager.instance.userData.day} - 낮");
             order.SetActive(true);
             CheckOrderCount();
@@ -706,7 +707,7 @@ public class DaySceneManager : MonoBehaviour
             }
         }
         SoundManager.instance.PlayEffect("fail");
-        return (false, "이도저도 아닌 무언가를 만들었습니다(제조실패)", -1);
+        return (false, "이도 저도 아닌 무언가를 만들었습니다 (제조실패)", -1);
     }
 
     // 주문성공/실패에 따라 명성/재화 지급
