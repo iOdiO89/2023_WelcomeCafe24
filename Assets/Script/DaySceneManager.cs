@@ -893,18 +893,6 @@ public class DaySceneManager : MonoBehaviour
         GameManager.instance.userData.effectVolume = effectSlider.value;
     }
 
-    public void FinishBtn(){ // tempBtn 나중에 지울 예정
-        jsonManager.SaveData(GameManager.instance.userData);
-        SceneManager.LoadScene("EveningScene");
-    }
-
-    public void Finish2Btn(){ // tempBtn 나중에 지울 예정
-        jsonManager.SaveData(GameManager.instance.userData);
-        Debug.Log("Data save Complete");
-        fade.FadeOut();
-        SceneManager.LoadScene("DayScene");
-    }
-
     private void SetObjectColor(){
         ColorBlock color = cup.colors;
         color.normalColor = SetColor();
