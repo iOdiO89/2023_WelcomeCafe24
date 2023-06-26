@@ -7,6 +7,7 @@ public class UserDataClass
     public int gold;
     public int reputation;
     public int day;
+    public bool daySceneActive;
 
     public List<bool> ingredientUnlock; // 재료 해금여부
     public List<int> recipeUnlock; // 레시피 해금여부
@@ -20,6 +21,7 @@ public class UserDataClass
         gold = 3000;
         reputation = 0;
         day = 0;
+        daySceneActive = false;
 
         ingredientUnlock = new List<bool>();
         ingredientUnlock.Clear();

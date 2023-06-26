@@ -58,13 +58,15 @@ public class GameManager : MonoBehaviour
             }
             else{
                 continueBool = true; 
-                SceneManager.LoadScene("DayScene");
+                if(userData.daySceneActive)SceneManager.LoadScene("DayScene");
+                else SceneManager.LoadScene("NightScene");
             }
         }
     }
 
     public void StartNewBtn(){    // StartScene-새로하기
         // userData = new UserDataClass();
+        continueBool = false;
         jsonManager.SaveData<UserDataClass>(userData);
         Debug.Log("Start New");
         daySceneActive = false;

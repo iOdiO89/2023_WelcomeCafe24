@@ -81,13 +81,16 @@ public class DaySceneManager : MonoBehaviour
     private InteriorManager interior;
 
     void Awake(){
-        GameManager.instance.daySceneActive = GameManager.instance.daySceneActive? false : true;
+        GameManager.instance.userData.daySceneActive = GameManager.instance.userData.daySceneActive? false : true;
+        if(GameManager.instance.continueBool){
+            GameManager.instance.userData.daySceneActive = GameManager.instance.userData.daySceneActive? false : true;
+        }
     }
 
     void Start(){
-        if(GameManager.instance.daySceneActive){
+        if(GameManager.instance.userData.daySceneActive){
             if(!GameManager.instance.continueBool) GameManager.instance.userData.day++; // 이어하기가 아닌 경우만 날짜 ++
-            GameManager.instance.continueBool = false;
+            
             Debug.Log($"Day {GameManager.instance.userData.day} - 낮");
             order.SetActive(true);
             CheckOrderCount();
@@ -99,6 +102,7 @@ public class DaySceneManager : MonoBehaviour
             orderSum = 5;
             order.SetActive(false);
         }
+        GameManager.instance.continueBool = false;
         jsonManager.SaveData(GameManager.instance.userData);
         SetRecipeColor();
         PrintDayText();
@@ -125,7 +129,7 @@ public class DaySceneManager : MonoBehaviour
     void Update()
     {   
         SetValues();
-        if(GameManager.instance.daySceneActive){
+        if(GameManager.instance.userData.daySceneActive){
             if(timeLimit>=0 && pausePopUp.activeSelf==false && orderSuccess==false){
                 CountDownTimer();
             }
@@ -177,7 +181,7 @@ public class DaySceneManager : MonoBehaviour
 
     // 새 주문 설정
     public void SetNewOrder(){
-        if(GameManager.instance.daySceneActive){
+        if(GameManager.instance.userData.daySceneActive){
             timeLimit = 90; // 90초로 주문시간 설정
             PrintOrderText();
         }
@@ -321,7 +325,7 @@ public class DaySceneManager : MonoBehaviour
     
     // 낮, 밤에 맞게 해금된 이미지 색상 코드 알려주기
     private Color SetColor(){
-        if(GameManager.instance.daySceneActive)
+        if(GameManager.instance.userData.daySceneActive)
             return new Color(235/255f, 226/255f, 116/255f);
         else
             return new Color(178/255f, 218/255f, 253/255f);
@@ -555,7 +559,7 @@ public class DaySceneManager : MonoBehaviour
 
     public void CupGiveBtn(){ // #305 컵-드리기 버튼
         SoundManager.instance.PlayEffect("order");
-        if(GameManager.instance.daySceneActive){ // 낮일 때
+        if(GameManager.instance.userData.daySceneActive){ // 낮일 때
             var returnValue = CheckOrderSuccess();
             bool check = returnValue.Item1;
             if(check){
@@ -703,7 +707,7 @@ public class DaySceneManager : MonoBehaviour
                     else temp1 = ingredientData.low2;
                 }
                 SoundManager.instance.PlayEffect("fail");
-                return (false, $"{temp1}{temp2} {recipeData.nameKor}가 제조되었습니다.(제조실패)", -1); // 저장된 수식어구와 함께 실패 메시지 출력
+                return (false, $"{temp1}{temp2} {recipeData.nameKor}가 제조되었습니다 (제조실패)", -1); // 저장된 수식어구와 함께 실패 메시지 출력
             }
         }
         SoundManager.instance.PlayEffect("fail");
@@ -856,7 +860,7 @@ public class DaySceneManager : MonoBehaviour
     
     public void PrintDayText(){
         dayText.text = "DAY " + GameManager.instance.userData.day.ToString();
-        if(GameManager.instance.daySceneActive){
+        if(GameManager.instance.userData.daySceneActive){
             dayFadeText.text = "DAY " + GameManager.instance.userData.day.ToString() + " - 낮";
         }
         else{
@@ -899,7 +903,7 @@ public class DaySceneManager : MonoBehaviour
         color.normalColor = SetColor();
         cup.colors = color;
 
-        if(!GameManager.instance.daySceneActive){
+        if(!GameManager.instance.userData.daySceneActive){
             color = shelf1.colors;
             color.normalColor = new Color(192/255f, 192/255f, 192/255f);
             shelf1.colors = color;
@@ -912,5 +916,9 @@ public class DaySceneManager : MonoBehaviour
             color.normalColor = new Color(192/255f, 192/255f, 192/255f);
             shelf3.colors = color;
         }
+    }
+
+    public void SkipBtn(){
+        Invoke("ChangeSceneNightToDay", 0.5f);
     }
 }

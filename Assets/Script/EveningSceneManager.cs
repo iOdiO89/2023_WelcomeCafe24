@@ -213,7 +213,7 @@ public class EveningSceneManager : MonoBehaviour
         for(int i=0; i<probList.Count; i++){
             temp += probList[i].Item1.ToString() + " ";
         }
-        Debug.Log($"ingredient 가능한 경우의 수 : {temp}");
+        // Debug.Log($"ingredient 가능한 경우의 수 : {temp}");
         if(probList.Count == 0) return -1; // 모든 재료를 구매한 경우
 
         probList.Sort((a, b) => a.Item2.CompareTo(b.Item2)); //확률 오름차순 정렬
@@ -294,11 +294,6 @@ public class EveningSceneManager : MonoBehaviour
             if(GameManager.instance.userData.recipeUnlock[i]<3 && recipeData.level1Price!=-1) recipeList.Add(i);
         }
 
-        string temp = "";
-        for(int i=0; i<recipeList.Count; i++){
-            temp += recipeList[i].ToString() + " ";
-        }
-        Debug.Log($"recipe 가능한 경우의 수 : {temp}");
         if(recipeList.Count == 0) return -1;
 
         int tempIndex = recipeList[UnityEngine.Random.Range(0, recipeList.Count)];
@@ -372,12 +367,6 @@ public class EveningSceneManager : MonoBehaviour
                 }
                 probList.Sort((a, b) => a.Item2.CompareTo(b.Item2));
 
-                string temp = "";
-                for(int i=0; i<probList.Count; i++){
-                    temp += probList[i].Item1.ToString() + " ";
-                }
-                Debug.Log($"machine level1 가능한 경우의 수 : {temp}");
-
                 if(probList.Count == 0) return -1;
 
                 while(true){
@@ -396,12 +385,6 @@ public class EveningSceneManager : MonoBehaviour
                 for(int i=0; i<7; i++){
                     if(!GameManager.instance.userData.machineUnlock[i]) machineList.Add(i);
                 }
-
-                temp = "";
-                for(int i=0; i<machineList.Count; i++){
-                    temp += machineList[i].ToString() + " ";
-                }
-                Debug.Log($"machine level 2/3 가능한 경우의 수 : {temp}");
 
                 if(machineList.Count == 0) return -1;
 
@@ -423,7 +406,7 @@ public class EveningSceneManager : MonoBehaviour
             GameManager.instance.userData.machineUnlock[machineIndex]=true;
             if(machineIndex==3) GameManager.instance.userData.ingredientUnlock[3] = true;
             GameManager.instance.userData.gold -= machinePrice;
-            Debug.Log($"남은 돈 = {GameManager.instance.userData.gold}");
+            // Debug.Log($"남은 돈 = {GameManager.instance.userData.gold}");
 
             for(int i=0; i<7; i++){ 
                 if(!GameManager.instance.userData.machineUnlock[i]){
